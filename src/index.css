@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Infinite Scroll Animation for Brand Logos */
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-scroll-wrapper {
+  display: inline-block;
+  width: 100%;
+}
+
+.brand-scroll-track {
+  animation: infinite-scroll 30s linear infinite;
+  width: max-content;
+}
+
+.brand-scroll-wrapper:hover .brand-scroll-track {
+  animation-play-state: paused;
+}
