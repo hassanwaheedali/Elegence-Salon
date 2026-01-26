@@ -9,7 +9,7 @@ A React-based salon/barbershop landing page built with Vite, React 19, React Rou
 - Uses `createBrowserRouter` with `createRoutesFromElements` pattern in [src/main.jsx](../src/main.jsx)
 - Layout wrapper pattern: [src/Layout.jsx](../src/Layout.jsx) wraps all routes with persistent `<Header/>` and `<Footer/>`
 - Route definitions use `<Outlet />` for nested rendering
-- Most page routes are commented out (About, Services, Contact) - only Home is active
+- Active routes: Home, Contact, and internal section navigation for Services/About
 
 ### Component Organization
 ```
@@ -60,6 +60,19 @@ All navigation uses React Router's `<NavLink>` with consistent active state styl
 - State managed with `useState(isMobileMenuOpen)`
 - Animated hamburger icon with CSS transforms
 - Mobile menu visible on `md:hidden`, desktop nav on `hidden md:flex`
+- **Header behavior:**
+  - `fixed` positioning (stays at top while scrolling)
+  - Scroll detection: background changes to `bg-[#0F0F0F]` when scrolled > 50px, returns to transparent when scrolling up
+  - Smooth transition with `transition-colors duration-300`
+
+### Navigation Patterns - Section Scrolling
+- Uses `useNavigate()` from React Router to handle cross-page navigation
+- `goToSection(sectionId)` function:
+  1. Navigates to Home page
+  2. Waits 100ms for page load
+  3. Finds element with matching ID and scrolls smoothly to it
+- Services & About links use this pattern for smooth navigation from any page
+- Works on both desktop and mobile navigation menus
 
 ## Icon Usage
 - **Font Awesome 7.1.0** imported globally in [src/index.css](../src/index.css)
@@ -87,11 +100,18 @@ bun preview   # Preview production build
 
 ## Key Patterns to Follow
 
+### Page Scroll Behavior
+- **Contact Page** ([src/Pages/Contact.jsx](../src/Pages/Contact.jsx)):
+  - Automatically scrolls to top when page loads using `window.scrollTo(0, 0)`
+  - Parallax scroll effect: background image moves slower than content (`transform: translateY(scrollY * 0.5)px`)
+  - Track scroll position with `useState` and `useEffect` scroll event listener
+
 ### Adding New Pages
 1. Create component in `src/Pages/`
 2. Import in [src/main.jsx](../src/main.jsx)
 3. Add `<Route>` inside `<Layout>` wrapper
 4. Update navigation in both [Header.jsx](../src/Components/Header.jsx) and [Footer.jsx](../src/Components/Footer.jsx)
+5. Add `window.scrollTo(0, 0)` in `useEffect` to scroll to top on page load
 
 ### Image Imports
 - Store in `src/assets/`
@@ -103,6 +123,11 @@ bun preview   # Preview production build
 - Primary CTA: `bg-transparent border-3 border-yellow-500 hover:bg-yellow-500 hover:text-white`
 - Secondary: `border-2 border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10`
 - Always include `transition-all duration-300` for smooth interactions
+
+### Section Navigation on Home Page
+- Sections must have unique IDs: `id="services"`, `id="about"`
+- Clicking Services/About from any page will navigate to Home and scroll to that section
+- Smooth scrolling is automatic with `scrollIntoView({ behavior: 'smooth' })`
 
 ## Common Pitfalls
 - **Gradient syntax:** Use `bg-linear-to-r` (Tailwind shorthand), not CSS gradient syntax

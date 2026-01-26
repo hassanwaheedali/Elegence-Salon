@@ -1,6 +1,18 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+
 
 function Footer() {
+    const navigate = useNavigate();
+    // Simple function to navigate to section
+    const goToSection = (sectionId) => {
+        navigate('/')
+        setTimeout(() => {
+            const section = document.getElementById(sectionId)
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' })
+            }
+        }, 100)
+    }
     return (
         <footer className='bg-[#121212] border-t border-white'>
             <div className="py-10 px-4 sm:px-6 lg:px-8 flex md:flex-row flex-col justify-center md:justify-between space-y-4 md:space-y-0 items-center mx-auto max-w-7xl">
@@ -37,7 +49,11 @@ function Footer() {
                         Home
                     </NavLink>
                     <a
-                        href="#services"
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            goToSection('services')
+                        }}
                         className='text-white hover:text-yellow-500 transition-colors'
                     >
                         Services

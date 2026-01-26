@@ -8,10 +8,12 @@ import CustomerReview from '../Components/CustomerReview.jsx'
 import { customerReviews } from '../data/reviews.js'
 import { sampleImages } from '../data/sample-images.js'
 import BrandCarousel from '../Components/BrandCarousel.jsx'
+import Header from '../Components/Header.jsx'
 
 function Home() {
     return (
         <>
+            <Header bgImage="bg-transparent"/>
             <main className="relative min-h-screen overflow-hidden">
                 {/* Background Image Layer */}
                 <div

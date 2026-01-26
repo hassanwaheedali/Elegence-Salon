@@ -1,10 +1,11 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useState } from 'react'
-import Landing from '../assets/Landing.jpg'  // Add this import
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
-function Header() {
+function Header({bgImage = "bg-transparent"}) {
+    const navigate = useNavigate()
     // Step 1: Create state to track if mobile menu is open or closed
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [scrollY, setScrollY] = useState(0)
 
     // Step 2: Function to toggle mobile menu
     const toggleMobileMenu = () => {
@@ -16,8 +17,31 @@ function Header() {
         setIsMobileMenuOpen(false)
     }
 
+    // Step 4: Handle scroll to change background
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    const headerBg = scrollY > 50 ? 'bg-[#0F0F0F]' : bgImage
+
+    // Simple function to navigate to section
+    const goToSection = (sectionId) => {
+        navigate('/')
+        setTimeout(() => {
+            const section = document.getElementById(sectionId)
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' })
+            }
+        }, 100)
+    }
+
     return (
-        <header className='absolute top-0 left-0 w-full z-50 bg-transparent text-white'>
+        <header className={`fixed top-0 left-0 w-full z-50 text-white pb-2 transition-colors duration-300 ${headerBg}`}>
             <nav>
                 <div className="flex flex-wrap justify-between items-center py-4 px-6 md:px-14 relative">
                     <div className="logo ">
@@ -58,10 +82,10 @@ function Header() {
 
                     {/* Desktop Navigation - Hidden on mobile  */}
                     <div className="pages hidden md:flex items-center gap-10 justify-between mt-4">
-                        <ul className='flex gap-10 font-medium text-sm uppercase w-full tracking-widest'>
+                        <ul className='flex gap-10 font-semibold text-sm uppercase w-full tracking-widest'>
                             <li>
                                 <a
-                                    href="#home"
+                                    href="/"
                                     className='text-white hover:text-yellow-500 transition-colors'
                                 >
                                     Home
@@ -69,7 +93,11 @@ function Header() {
                             </li>
                             <li>
                                 <a
-                                    href="#services"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        goToSection('services')
+                                    }}
                                     className='text-white hover:text-yellow-500 transition-colors'
                                 >
                                     Services
@@ -77,7 +105,11 @@ function Header() {
                             </li>
                             <li>
                                 <a
-                                    href="#about"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        goToSection('about')
+                                    }}
                                     className='text-white hover:text-yellow-500 transition-colors'
                                 >
                                     About
@@ -141,8 +173,12 @@ function Header() {
                                     </li>
                                     <li>
                                         <a
-                                            href="#services"
-                                            onClick={closeMobileMenu}
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                goToSection('services')
+                                                closeMobileMenu()
+                                            }}
                                             className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
@@ -153,8 +189,12 @@ function Header() {
                                     </li>
                                     <li>
                                         <a
-                                            href="#about"
-                                            onClick={closeMobileMenu}
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                goToSection('about')
+                                                closeMobileMenu()
+                                            }}
                                             className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
