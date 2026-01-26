@@ -3,6 +3,7 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import ReactDOM from "react-dom/client";
 import './index.css'
 import Layout from './Layout';
+import LoadingSpinner from './Components/LoadingSpinner';
 
 const Home = lazy(() => import('./Pages/Home'));
 const Contact = lazy(() => import('./Pages/Contact'));
@@ -12,12 +13,12 @@ const Router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />} >
       <Route path='' element={
-        <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Home />
         </Suspense>
       } />
       <Route path='/contact' element={
-        <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Contact />
         </Suspense>
       } />
