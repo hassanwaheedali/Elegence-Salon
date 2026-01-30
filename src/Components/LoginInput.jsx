@@ -1,14 +1,29 @@
 import { useState } from "react"
+import { useAuth } from "../Context/AuthContext"
+import { Link, useNavigate } from "react-router-dom"
+
 function LoginInput() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
-    const handleSubmit = (e) => {
+    const [message, setMessage] = useState("")
+    const { login, currentUser } = useAuth()
+    const navigate = useNavigate()
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // Handle login logic here
-        console.log("Email:", email)
-        console.log("Password:", password)
-        console.log("Remember Me:", rememberMe)
+        if (currentUser) {
+            setMessage("You are already logged in!")
+            return
+        }
+        const result = await login({ email, password, rememberMe });
+        if (result.success) {
+            setMessage("Login successful!")
+            setEmail("")
+            setPassword("")
+            navigate("/")
+        } else {
+            setMessage(result.error)
+        }
     }
     return (
         <div className="login-box flex flex-col rounded-lg shadow-lg text-white w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto">
@@ -31,8 +46,9 @@ function LoginInput() {
                     <div className="submit-button">
                         <input type="submit" value="Login" className="w-full border-4 sm:border-5 border-[#FF8A00] hover:border-white text-white font-black p-2 sm:p-3 px-4 sm:px-6 hover:bg-[#d28127] transition-colors cursor-pointer uppercase text-base sm:text-lg md:text-xl" />
                     </div>
+                    {message && <p className="mt-3 text-center text-[#FF8A00]">{message}</p>}
                     <div className="no-account mt-5 sm:mt-6 md:mt-7">
-                        <p className="text-center font-bold text-xs sm:text-sm md:text-base text-[#454545] tracking-tighter">Don't have an account? <a href="#!" className='text-[#FF8A00]'>Sign Up</a></p>
+                        <p className="text-center font-bold text-xs sm:text-sm md:text-base text-[#454545] tracking-tighter">Don't have an account? <Link to="/register" className='text-[#FF8A00]'>Sign In</Link></p>
                     </div>
                 </form>
             </div>

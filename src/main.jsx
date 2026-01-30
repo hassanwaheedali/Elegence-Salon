@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import './index.css'
 import Layout from './Layout';
 import LoadingSpinner from './Components/LoadingSpinner';
+import { AuthProvider } from './Context/AuthContext.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
 const Contact = lazy(() => import('./Pages/Contact'));
@@ -40,6 +41,8 @@ const Router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={Router} />
+    <AuthProvider>
+      <RouterProvider router={Router} />
+    </AuthProvider>
   </StrictMode>
 );

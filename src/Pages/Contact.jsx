@@ -201,7 +201,10 @@ function Contact() {
                                     title="Elegance Store Location"
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.456789012345!2d74.35874131520567!3d31.52036998141267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904c8b0f5e6b5%3A0x7d5a5e6b5e6b5e6b!2sGulberg%20III%2C%20Lahore%2C%20Punjab%2054000%2C%20Pakistan!5e0!3m2!1sen!2sus!4v1616161616161!5m2!1sen!2sus"
                                     className="w-full h-80 sm:h-95 md:h-105 lg:h-119.5"
-                                    style={{ border: 0 }}
+                                    style={{
+                                        border: 0,
+                                        filter: 'invert(1) hue-rotate(180deg) brightness(0.8) contrast(0.95)'  // Dark mode effect
+                                    }}
                                     allowFullScreen=""
                                     loading="lazy"
                                     referrerPolicy="no-referrer-when-downgrade"

@@ -13,8 +13,8 @@ import Header from '../Components/Header.jsx'
 function Home() {
     return (
         <>
-            <Header bgImage="bg-transparent"/>
-            <main className="relative min-h-screen overflow-hidden">
+            <Header bgImage="bg-transparent" />
+            <main className="relative min-h-screen overflow-hidden" id="main-hero">
                 {/* Background Image Layer */}
                 <div
                     className="absolute inset-0 z-0"
@@ -220,7 +220,7 @@ function Home() {
                     <PriceCard />
                 </div>
             </section>
-            <section className="appoinment-section bg-[#0d0d0d] text-white">
+            <section className="appoinment-section bg-[#0d0d0d] text-white" id='appointment'>
                 <div className='pb-8  mx-auto flex flex-col gap-2'>
                     <div className="heading w-full text-center text-4xl lg:text-5xl font-black text-[#fb9d33] uppercase">
                         <h1 className='text-white'>Make</h1>

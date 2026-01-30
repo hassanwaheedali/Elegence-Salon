@@ -75,36 +75,36 @@ function AppoinmentFormContact() {
     return (
         <form className="w-full space-y-4">
             <div>
-                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="name">Full Name *</label>
-                <input type="text" placeholder="Hassan Waheed Ali" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-bold border-2  rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
+                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="name">Full Name *</label>
+                <input type="text" placeholder="Hassan Waheed Ali" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-bold border-4  rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
             </div>
             <div>
-                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="email">Email Address *</label>
-                <input type="email" placeholder="hassanwaheedalis@gmail.com" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-bold border-2 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
+                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="email">Email Address *</label>
+                <input type="email" placeholder="hassanwaheedalis@gmail.com" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
             </div>
             <div>
-                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="phone">Phone Number *</label>
-                <input type="tel" placeholder="0336-3090793" id='phone' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-bold border-2 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
+                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="phone">Phone Number *</label>
+                <input type="tel" placeholder="0336-3090793" id='phone' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
             </div>
             <div className="date-time-section flex flex-col sm:flex-row gap-3 md:gap-5">
                 <div className="flex-1">
-                    <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="date">Date *</label>
-                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-bold border-2 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
+                    <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="date">Date *</label>
+                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
                 </div>
                 <div className="flex-1">
-                    <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="time">Time *</label>
-                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-bold border-2 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
+                    <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="time">Time *</label>
+                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
                 </div>
             </div>
             <div className="service-select w-full relative" ref={dropdownRef}>
-                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="service">Select Service *</label>
+                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="service">Select Service *</label>
                 {/* Custom Dropdown */}
                 <div className="relative mt-1.5">
                     {/* Dropdown Button */}
                     <button
                         type="button"
                         onClick={() => setIsOpen(!isOpen)}
-                        className="w-full font-bold border-2 border-[#454545] rounded-md p-2 px-3 md:px-4 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] text-left flex justify-between items-center hover:border-[#fb9d33] transition-colors"
+                        className="w-full font-bold border-4 border-[#454545] rounded-md p-2 px-3 md:px-4 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-[#0d0d0d] text-left flex justify-between items-center hover:border-[#fb9d33] transition-colors"
                     >
                         <span>{selected}</span>
                         <span>▼</span>
@@ -112,7 +112,7 @@ function AppoinmentFormContact() {
 
                     {/* Dropdown Menu */}
                     {isOpen && (
-                        <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 border-[#454545] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
+                        <div className="absolute top-full left-0 w-full bg-[#1b1b1b] rounded-md border-2 border-[#454545] z-50 max-h-60 md:max-h-70 overflow-y-auto">
                             {services.map((serviceCategory) => (
                                 <div key={serviceCategory.title}>
                                     {/* Category Header */}
@@ -144,8 +144,8 @@ function AppoinmentFormContact() {
                 <input type="hidden" id="service" value={selected === 'SERVICE' ? '' : selected} required />
             </div>
             <div className="message-area">
-                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777]" htmlFor="message">Message</label>
-                <textarea placeholder="Please Write Your Message" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-semibold border-2 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#b5b3b3] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5 h-24" rows={1} />
+                <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="message">Message</label>
+                <textarea placeholder="Please Write Your Message" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-semibold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#b5b3b3] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5 h-24" rows={1} />
             </div>
             <div>
                 <button type="submit" className="w-full bg-[#0d0d0d] hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold py-4 rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none mt-2 resize-none " onClick={handleSubmit}>Book An Appoinment</button>
