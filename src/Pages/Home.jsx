@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import barberImg from '../assets/barber.png'
 import Landing from '../assets/Landing.jpg'
 import About from '../assets/About.png'
@@ -11,6 +12,9 @@ import BrandCarousel from '../Components/BrandCarousel.jsx'
 import Header from '../Components/Header.jsx'
 
 function Home() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
         <>
             <Header bgImage="bg-transparent" />

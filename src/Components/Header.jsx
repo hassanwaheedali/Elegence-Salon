@@ -177,7 +177,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                     <span>My Profile</span>
                                                 </Link>
                                                 <Link
-                                                    to="/appointments"
+                                                    to="/account?tab=appointments"
                                                     className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/3 transition-colors"
                                                 >
                                                     <i className="fas fa-calendar-alt w-5"></i>

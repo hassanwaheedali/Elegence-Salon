@@ -24,7 +24,7 @@ function AppoinmentFormContact() {
             return
         }
         if (date < new Date().toISOString().split('T')[0]) {
-            alert('Please select a future date.')
+            alert('Please select a Correct date.')
             return
         }
         if (time < '11:00' || time > '20:00') {

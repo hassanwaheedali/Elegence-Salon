@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
-import {services} from '../data/services'
+import { useState, useRef, useEffect } from 'react'
+import { services } from '../data/services'
+import { useAppointment } from '../Context/AppoinmentContext.jsx'
 
 function Appoinment() {
     const [isOpen, setIsOpen] = useState(false)
@@ -13,7 +14,9 @@ function Appoinment() {
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
     const [message, setMessage] = useState('')
-    
+
+    const { bookAppointment } = useAppointment()
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const formData = {
@@ -29,7 +32,36 @@ function Appoinment() {
             alert('Please select a service before submitting the form.')
             return
         }
+        if (name === '' || email === '' || phoneNumber === '' || date === '' || time === '') {
+            alert('Please fill in all required fields.')
+            return
+        }
+        if (date < new Date().toISOString().split('T')[0]) {
+            alert('Please select a Correct date.')
+            return
+        }
+        if (time < '11:00' || time > '20:00') {
+            alert('Please select a time between 11:00 AM and 8:00 PM.')
+            return
+        }
+        const selectedDate = new Date(date)
+        if (selectedDate.getDay() === 0) {
+            alert('Appointments cannot be booked on Sundays. Please select another day.')
+            return
+        }
+        const phonePattern = /^(03\d{2}-\d{7}|\+923\d{9})$/
+        if (!phonePattern.test(phoneNumber)) {
+            alert('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
+            return
+        }
         console.log('Form Data Submitted:', formData)
+        const result = bookAppointment(formData)
+        if (result && result.success) {
+            alert('Thanks! for Booking Appointment With US WE WILL Confirm Your Slot.')
+            console.log('Appointment booked successfully!: ')
+        } else {
+            alert('Failed to book appointment. Please try again.')
+        }
         // Reset form fields
         setName('')
         setEmail('')
@@ -106,7 +138,7 @@ function Appoinment() {
                     <input type="hidden" id="service" value={selected === 'SERVICE' ? '' : selected} required />
                 </div>
                 <div className="message-section">
-                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" rows={1}/>
+                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" rows={1} />
                 </div>
             </div>
             <div className="submit-btn w-full mt-6">

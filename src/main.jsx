@@ -5,11 +5,13 @@ import './index.css'
 import Layout from './Layout';
 import LoadingSpinner from './Components/LoadingSpinner';
 import { AuthProvider } from './Context/AuthContext.jsx';
+import { AppointmentProvider } from './Context/AppoinmentContext.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
 const Contact = lazy(() => import('./Pages/Contact'));
 const Login = lazy(() => import('./Pages/Login'));
 const Register = lazy(() => import('./Pages/Register'));
+const Account = lazy(() => import('./Pages/User Panel/Account'));
 
 
 const Router = createBrowserRouter(
@@ -35,6 +37,11 @@ const Router = createBrowserRouter(
           <Register />
         </Suspense>
       } />
+      <Route path='/account' element={
+        <Suspense fallback={<LoadingSpinner />}>
+          <Account />
+        </Suspense>
+      } />
     </Route>
   )
 )
@@ -42,7 +49,9 @@ const Router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={Router} />
+      <AppointmentProvider>
+        <RouterProvider router={Router} />
+      </AppointmentProvider>
     </AuthProvider>
   </StrictMode>
 );

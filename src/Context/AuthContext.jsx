@@ -88,6 +88,30 @@ export function AuthProvider({ children }) {
         sessionStorage.removeItem('currentUser');
     }
 
+    const updatedUser = async (user) => {
+        try {
+            const updatedUsers = allUsers.map((users) => {
+                if (users.id === user.id) {
+                    return user;
+                }
+                return users;
+            })
+            setAllUsers(updatedUsers);
+            setCurrentUser(user);
+            localStorage.setItem('allUsers', JSON.stringify(updatedUsers));
+            const storedLocalCheck = localStorage.getItem('currentUser');
+            if (storedLocalCheck) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+            } else {
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+            }
+            return { success: true };
+        }
+        catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
     const value = {
         currentUser,
         loading,
@@ -95,6 +119,7 @@ export function AuthProvider({ children }) {
         register,
         login,
         logout,
+        updatedUser
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
