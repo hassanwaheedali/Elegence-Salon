@@ -37,7 +37,7 @@ function Home() {
                 <div className="absolute inset-0 bg-linear-to-br from-black/40 via-gray-900/30 to-black/40 z-2"></div>
 
                 {/* Main Hero Section */}
-                <div className="relative container max-w-7xl mx-auto md:pl-8 pt-32 pb-0 md:pb-22 z-10">
+                <div className="relative container mx-auto md:pl-8 pt-32 pb-0 md:pb-22 z-10">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 min-h-[calc(100vh-200px)]">
 
                         {/* Left Content Section */}
@@ -52,17 +52,17 @@ function Home() {
                             {/* Main Heading */}
                             <div className="heading-text text-center md:text-start space-y-2">
                                 {/* MEN'S */}
-                                <h1 className="text-white text-6xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none">
+                                <h1 className="text-white text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight leading-none">
                                     MEN'S
                                 </h1>
 
                                 {/* Favorite */}
-                                <h2 className="text-transparent bg-clip-text bg-linear-to-r from-yellow-600 via-[#fb9d33] to-yellow-600 text-7xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-none filter-[drop-shadow(0px_-1px_0px_#FFFFFF)]">
+                                <h2 className="text-transparent bg-clip-text bg-linear-to-r from-yellow-600 via-[#fb9d33] to-yellow-600 text-7xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tight leading-none filter-[drop-shadow(0px_-1px_0px_#FFFFFF)]">
                                     Favorite
                                 </h2>
 
                                 {/* Salon with cursive font */}
-                                <h3 className="text-white text-6xl md:text-6xl lg:text-7xl font-black uppercase leading-none tracking-tight">
+                                <h3 className="text-white text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-none tracking-tight">
                                     Salon
                                 </h3>
                             </div>

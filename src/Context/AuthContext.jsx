@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
 
     const register = async (userData) => {
         try {
-            const num = 0
+            let num = 0
             const newUser = {
                 id: num+1,
                 name: userData.fullname,
