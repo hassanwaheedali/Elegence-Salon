@@ -1,12 +1,23 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useAppointment } from '../../Context/AppointmentContext.jsx'
 import AppointmentCards from './AppointmentCards.jsx'
 
 function Booking() {
     const appointmentSectionRef = useRef(null)
     const { displayAppointmentsByUser } = useAppointment()
-    const result = displayAppointmentsByUser()
-    const appointments = result.success ? result.data : []
+    const [appointments, setAppointments] = useState([])
+
+    useEffect(() => {
+        const fetchAppointments = async () => {
+            const result = await displayAppointmentsByUser()
+            if (result.success) {
+                setAppointments(result.data)
+            } else {
+                setAppointments([])
+            }
+        }
+        fetchAppointments()
+    }, [displayAppointmentsByUser])
     return (
         <div ref={appointmentSectionRef} className="bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='appoinments'>
             <div className="head-background bg-[#1a1a1a] w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
