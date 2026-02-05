@@ -5,7 +5,7 @@ import './index.css'
 import Layout from './Layout';
 import LoadingSpinner from './Components/LoadingSpinner';
 import { AuthProvider } from './Context/AuthContext.jsx';
-import { AppointmentProvider } from './Context/AppoinmentContext.jsx';
+import { AppointmentProvider } from './Context/AppointmentContext.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));

@@ -1,15 +1,18 @@
 import { useState, useRef, useEffect } from 'react'
 import { services } from '../data/services'
-import { useAppointment } from '../Context/AppoinmentContext.jsx'
+import { useAppointment } from '../Context/AppointmentContext.jsx'
+import { useAuth } from '../Context/AuthContext.jsx'
 
 function Appoinment() {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState('SERVICE')
     const dropdownRef = useRef(null)
 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
+    const { currentUser } = useAuth()
+
+    const [name, setName] = useState(currentUser ? currentUser.name : '')
+    const [email, setEmail] = useState(currentUser ? currentUser.email : '')
+    const [phoneNumber, setPhoneNumber] = useState(currentUser ? currentUser.phone : '')
     const [service, setService] = useState('SERVICE')
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
@@ -17,7 +20,7 @@ function Appoinment() {
 
     const { bookAppointment } = useAppointment()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = {
             name,
@@ -54,18 +57,17 @@ function Appoinment() {
             alert('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
             return
         }
-        console.log('Form Data Submitted:', formData)
-        const result = bookAppointment(formData)
+
+        const result = await bookAppointment(formData)
         if (result && result.success) {
-            alert('Thanks! for Booking Appointment With US WE WILL Confirm Your Slot.')
+            alert('Thanks! for Booking Appointment With US We will confirm Your Slot.')
             console.log('Appointment booked successfully!: ')
         } else {
             alert('Failed to book appointment. Please try again.')
+            console.error('Error booking appointment:', result.error)
         }
+        
         // Reset form fields
-        setName('')
-        setEmail('')
-        setPhoneNumber('')
         setService('SERVICE')
         setDate('')
         setTime('')

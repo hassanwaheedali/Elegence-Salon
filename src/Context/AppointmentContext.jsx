@@ -24,16 +24,18 @@ export function AppointmentProvider({ children }) {
                 id: appointments.length > 0 ? Math.max(...appointments.map(a => a.id)) + 1 : 1,
                 name: appointmentData.name,
                 email: appointmentData.email,
-                phone: appointmentData.phone,
+                phone: appointmentData.phoneNumber,
+                service: appointmentData.service,
                 date: appointmentData.date,
                 time: appointmentData.time,
-                service: appointmentData.service,
                 message: appointmentData.message,
+                status: "Awaiting Confirmation",
                 userId: currentUser.id
             }
             const addAppointment = [...appointments, newAppointment]
             setAppointments(addAppointment)
             await localStorage.setItem("Appointments", JSON.stringify(addAppointment))
+            return {success: true}
         }
         catch (error) {
             return { success: false, error: error.message };
@@ -45,10 +47,11 @@ export function AppointmentProvider({ children }) {
         try {
             for (const appointment of appointments) {
                 if (appointment.userId === currentUser.id) {
-                    return { success: true, appointment: appointment }
+                    const userAppointments = appointments.filter(a => a.userId === currentUser.id);
+                    return { success: true, data: userAppointments };
                 }
             }
-            return { success: false, error: "Appointments not Found"}
+            return { success: false, error: "Appointments not Found" }
         }
         catch (error) {
             return { success: false, error: error.message };
