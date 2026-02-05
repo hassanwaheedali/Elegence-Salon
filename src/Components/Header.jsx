@@ -95,7 +95,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                         e.preventDefault()
                                         goToSection('main-hero')
                                     }}
-                                    className='text-white hover:text-yellow-500 transition-colors'
+                                    className='text-white hover:text-[#fb880a] transition-colors'
                                 >
                                     Home
                                 </Link>
@@ -107,7 +107,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                         e.preventDefault()
                                         goToSection('services')
                                     }}
-                                    className='text-white hover:text-yellow-500 transition-colors'
+                                    className='text-white hover:text-[#fb880a] transition-colors'
                                 >
                                     Services
                                 </a>
@@ -119,7 +119,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                         e.preventDefault()
                                         goToSection('about')
                                     }}
-                                    className='text-white hover:text-yellow-500 transition-colors'
+                                    className='text-white hover:text-[#fb880a] transition-colors'
                                 >
                                     About
                                 </a>
@@ -128,7 +128,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                 <NavLink
                                     to="/contact"
                                     className={({ isActive }) =>
-                                        isActive ? 'text-yellow-500 font-bold' : 'text-white hover:text-yellow-500 transition-colors'
+                                        isActive ? 'text-[#fb880a] font-bold' : 'text-white hover:text-[#fb880a] transition-colors'
                                     }
                                 >
                                     Contact
@@ -141,7 +141,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                 <div className="relative">
                                     {/* User Icon Button */}
                                     <button
-                                        className={`flex items-center gap-2 text-white ${isDropdownOpen ? 'text-yellow-500' : ''} hover:text-yellow-500 transition-colors group cursor-pointer`}
+                                        className={`flex items-center gap-2 text-white ${isDropdownOpen ? 'text-[#fb880a]' : ''} hover:text-[#fb880a] transition-colors group cursor-pointer`}
                                         onMouseEnter={() => setIsDropdownOpen(true)}
                                         onMouseLeave={() => setIsDropdownOpen(true)}
                                     >
@@ -162,7 +162,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                         >
                                             {/* User Info Section */}
                                             <div className="px-4 py-3 border-b border-gray-700">
-                                                <p className="text-yellow-500 font-semibold text-sm uppercase tracking-wide">My Account</p>
+                                                <p className="text-[#fb880a] font-semibold text-sm uppercase tracking-wide">My Account</p>
                                                 <p className="text-white text-lg font-medium mt-1">{currentUser?.name || 'User'}</p>
                                                 <p className="text-gray-400 text-sm">{currentUser?.email || 'user@example.com'}</p>
                                             </div>
@@ -171,14 +171,14 @@ function Header({ bgImage = "bg-transparent" }) {
                                             <div className="py-2">
                                                 <Link
                                                     to="/account"
-                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/3 transition-colors"
+                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
                                                 >
                                                     <i className="fas fa-user w-5"></i>
                                                     <span>My Profile</span>
                                                 </Link>
                                                 <Link
                                                     to="/account?tab=appointments"
-                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/3 transition-colors"
+                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
                                                 >
                                                     <i className="fas fa-calendar-alt w-5"></i>
                                                     <span>My Appointments</span>
@@ -189,7 +189,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                         e.preventDefault()
                                                         goToSection('appointment')
                                                     }}
-                                                    className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/30 transition-colors'
+                                                    className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors'
                                                 >
                                                     <i className="fas fa-plus-circle w-5"></i>
                                                     <span>Book Appointment</span>
@@ -208,7 +208,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                     )}
                                 </div>
                             ) : (
-                                <Link to="/login" className="flex items-center gap-2 text-white hover:text-yellow-500 transition-colors">
+                                <Link to="/login" className="flex items-center gap-2 text-white hover:text-[#fb880a] transition-colors">
                                     <svg className="nav-icon w-5 h-5" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M6.5 0C2.912 0 0 2.912 0 6.5C0 10.088 2.912 13 6.5 13C10.088 13 13 10.088 13 6.5C13 2.912 10.088 0 6.5 0ZM3.4775 10.725C4.329 10.114 5.369 9.75 6.5 9.75C7.631 9.75 8.671 10.114 9.5225 10.725C8.671 11.336 7.631 11.7 6.5 11.7C5.369 11.7 4.329 11.336 3.4775 10.725ZM10.491 9.828C9.3925 8.97 8.008 8.45 6.5 8.45C4.992 8.45 3.6075 8.97 2.509 9.828C1.755 8.9245 1.3 7.7675 1.3 6.5C1.3 3.627 3.627 1.3 6.5 1.3C9.373 1.3 11.7 3.627 11.7 6.5C11.7 7.7675 11.245 8.9245 10.491 9.828Z" fill="currentColor"></path>
                                         <path d="M6.49961 2.59998C5.24511 2.59998 4.22461 3.62048 4.22461 4.87498C4.22461 6.12948 5.24511 7.14998 6.49961 7.14998C7.75411 7.14998 8.77461 6.12948 8.77461 4.87498C8.77461 3.62048 7.75411 2.59998 6.49961 2.59998ZM6.49961 5.84998C5.96011 5.84998 5.52461 5.41448 5.52461 4.87498C5.52461 4.33548 5.96011 3.89998 6.49961 3.89998C7.03911 3.89998 7.47461 4.33548 7.47461 4.87498C7.47461 5.41448 7.03911 5.84998 6.49961 5.84998Z" fill="currentColor"></path>
@@ -235,7 +235,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                 <h2 className="text-3xl font-bold text-white uppercase tracking-wider mb-1">
                                     Elegance
                                 </h2>
-                                <p className="text-yellow-500 text-sm uppercase tracking-widest">Men's Salon</p>
+                                <p className="text-[#fb880a] text-sm uppercase tracking-widest">Men's Salon</p>
                             </div>
 
                             {/* Navigation Links with Premium Styling */}
@@ -245,7 +245,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                         <a
                                             href="#home"
                                             onClick={closeMobileMenu}
-                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
+                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-[#fb880a] hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
                                                 <i className="fas fa-home w-5"></i>
@@ -261,7 +261,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                 goToSection('services')
                                                 closeMobileMenu()
                                             }}
-                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
+                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-[#fb880a] hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
                                                 <i className="fas fa-cut w-5"></i>
@@ -277,7 +277,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                 goToSection('about')
                                                 closeMobileMenu()
                                             }}
-                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
+                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-[#fb880a] hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
                                                 <i className="fas fa-info-circle w-5"></i>
@@ -293,7 +293,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                 goToSection('appointment')
                                                 closeMobileMenu()
                                             }}
-                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-yellow-500 hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
+                                            className='block py-4 px-4 uppercase tracking-wide border-l-4 transition-all duration-300 text-gray-300 border-transparent hover:text-[#fb880a] hover:border-yellow-500 hover:bg-gray-900/30 hover:translate-x-2'
                                         >
                                             <span className="flex items-center gap-3">
                                                 <i className="fas fa-plus-circle w-5"></i>
@@ -312,7 +312,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                             {/* User Info Section */}
                                             <div className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-700">
                                                 <div className="flex-1">
-                                                    <p className="text-yellow-500 font-semibold text-sm uppercase tracking-wide">My Account</p>
+                                                    <p className="text-[#fb880a] font-semibold text-sm uppercase tracking-wide">My Account</p>
                                                     <p className="text-white text-lg font-medium">{currentUser?.name || 'User'}</p>
                                                     <p className="text-gray-400 text-sm">{currentUser?.email || 'user@example.com'}</p>
                                                 </div>
@@ -323,7 +323,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                 <Link
                                                     to="/account"
                                                     onClick={closeMobileMenu}
-                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
                                                 >
                                                     <i className="fas fa-user w-5"></i>
                                                     <span>My Profile</span>
@@ -331,7 +331,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                 <Link
                                                     to="/appointments"
                                                     onClick={closeMobileMenu}
-                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-yellow-500 hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
                                                 >
                                                     <i className="fas fa-calendar-alt w-5"></i>
                                                     <span>My Appointments</span>
@@ -364,10 +364,10 @@ function Header({ bgImage = "bg-transparent" }) {
                                                     </svg>
                                                 </div>
                                                 <div className="flex-1">
-                                                    <p className="text-white font-semibold text-sm uppercase tracking-wide group-hover:text-yellow-500 transition-colors">My Account</p>
+                                                    <p className="text-white font-semibold text-sm uppercase tracking-wide group-hover:text-[#fb880a] transition-colors">My Account</p>
                                                     <p className="text-gray-400 text-xs">Login / Register</p>
                                                 </div>
-                                                <i className="fas fa-chevron-right text-gray-500 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all"></i>
+                                                <i className="fas fa-chevron-right text-gray-500 group-hover:text-[#fb880a] group-hover:translate-x-1 transition-all"></i>
                                             </div>
                                         </Link>
                                     )}
@@ -376,7 +376,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                 {/* Contact Info */}
                                 <div className="mt-4 pt-4 border-t border-gray-800 text-center">
                                     <p className="text-gray-400 text-xs mb-2">BOOK APPOINTMENT</p>
-                                    <a href="tel:+1234567890" className="text-yellow-500 font-semibold hover:text-yellow-400 transition-colors">
+                                    <a href="tel:+1234567890" className="text-[#fb880a] font-semibold hover:text-yellow-400 transition-colors">
                                         +1 (234) 567-890
                                     </a>
                                 </div>

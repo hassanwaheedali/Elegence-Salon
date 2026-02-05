@@ -80,7 +80,7 @@ function Contact() {
                                 <div className="flex-1 text-left">
                                     <h3 className="font-bold text-base sm:text-lg text-white uppercase tracking-wider mb-0.5 group-hover:text-yellow-400 transition-colors duration-300">Phone</h3>
                                     <p className="text-sm sm:text-base text-gray-500 mb-1 group-hover:text-gray-400 transition-colors">Mon-Fri 10am-8pm</p>
-                                    <p className="font-semibold text-yellow-500 text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">+92 300 1234567</p>
+                                    <p className="font-semibold text-[#fb880a] text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">+92 300 1234567</p>
                                 </div>
 
                                 {/* Arrow indicator */}
@@ -109,7 +109,7 @@ function Contact() {
                                 <div className="flex-1 text-left">
                                     <h3 className="font-bold text-base sm:text-lg text-white uppercase tracking-wider mb-0.5 group-hover:text-yellow-400 transition-colors duration-300">Email</h3>
                                     <p className="text-sm sm:text-base text-gray-500 mb-1 group-hover:text-gray-400 transition-colors">24/7 Support</p>
-                                    <p className="font-semibold text-yellow-500 text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">info@elegance.com</p>
+                                    <p className="font-semibold text-[#fb880a] text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">info@elegance.com</p>
                                 </div>
 
                                 {/* Arrow indicator */}
@@ -138,7 +138,7 @@ function Contact() {
                                 <div className="flex-1 text-left">
                                     <h3 className="font-bold text-base sm:text-lg text-white uppercase tracking-wider mb-0.5 group-hover:text-yellow-400 transition-colors duration-300">Whatsapp</h3>
                                     <p className="text-sm sm:text-base text-gray-500 mb-1 group-hover:text-gray-400 transition-colors">Quick Response</p>
-                                    <p className="font-semibold text-yellow-500 text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">Chat Now</p>
+                                    <p className="font-semibold text-[#fb880a] text-base sm:text-lg group-hover:text-yellow-300 transition-colors duration-300">Chat Now</p>
                                 </div>
 
                                 {/* Arrow indicator */}

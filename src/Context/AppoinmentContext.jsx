@@ -18,7 +18,7 @@ export function AppointmentProvider({ children }) {
             const newAppointment = { ...appointment, id: appointments.length + 1 };
             setAppointments([...appointments, newAppointment]);
             localStorage.setItem("appointments", JSON.stringify([...appointments, newAppointment]));
-            return { success: true};
+            return { success: true };
         } catch (error) {
             console.error("Error booking appointment:", error);
         }

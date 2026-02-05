@@ -3,25 +3,33 @@ import Profile from '../../Components/UserPanel Components/Profile.jsx'
 import Feedback from '../../Components/UserPanel Components/Feedback.jsx'
 import Booking from '../../Components/UserPanel Components/Booking.jsx'
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import Landing from '../../Assets/contact-bg.png'
 
 function Account() {
-    const location = useLocation()
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     const [activeTab, setActiveTab] = useState('profile')
     const [scrollY, setScrollY] = useState(0)
 
-    // Scroll to top on mount and handle query parameter
+    // Set active tab from URL query parameters on mount and when params change
     useEffect(() => {
-        window.scrollTo(0, 0)
-        const params = new URLSearchParams(location.search)
-        const tab = params.get('tab')
-        if (tab === 'appointments') {
-            setActiveTab('appointments')
+        const tabParam = searchParams.get('tab')
+        if (tabParam === 'appointments' || tabParam === 'feedback' || tabParam === 'profile') {
+            setActiveTab(tabParam)
+        } else {
+            setActiveTab('profile')
         }
-    }, [location])
+    }, [searchParams])
+
+    // Handle tab change and update URL
+    const handleTabChange = (tab) => {
+        setActiveTab(tab)
+        navigate(`?tab=${tab}`, { replace: true })
+    }
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         const handleScroll = () => {
             setScrollY(window.scrollY)
         }
@@ -71,7 +79,7 @@ function Account() {
                     {/* Tab Navigation - Grid layout matching Contact cards */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
                         <button
-                            onClick={() => setActiveTab('profile')}
+                            onClick={() => handleTabChange('profile')}
                             className={`group relative overflow-hidden bg-linear-to-br from-[#1a1a1a] to-[#0f0f0f] p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${activeTab === 'profile' ? 'border-yellow-500/40' : 'border-yellow-500/10 hover:border-yellow-500/40'} focus:outline-none focus:ring-2 focus:ring-[#fb9d33] focus:ring-offset-2 focus:ring-offset-[#0F0F0F] cursor-pointer`}
                         >
                             {/* Animated background glow */}
@@ -99,7 +107,7 @@ function Account() {
                             </div>
                         </button>
                         <button
-                            onClick={() => setActiveTab('feedback')}
+                            onClick={() => handleTabChange('feedback')}
                             className={`group relative overflow-hidden bg-linear-to-br from-[#1a1a1a] to-[#0f0f0f] p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${activeTab === 'feedback' ? 'border-yellow-500/40' : 'border-yellow-500/10 hover:border-yellow-500/40'} focus:outline-none focus:ring-2 focus:ring-[#fb9d33] focus:ring-offset-2 focus:ring-offset-[#0F0F0F] cursor-pointer`}
                         >
                             {/* Animated background glow */}

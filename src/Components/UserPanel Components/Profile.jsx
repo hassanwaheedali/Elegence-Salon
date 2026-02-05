@@ -10,6 +10,26 @@ function Profile() {
         email: currentUser?.email || '',
         phone: currentUser?.phone || ''
     })
+    
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isFadingOut, setIsFadingOut] = useState(false)
+    const [message, setMessage] = useState('')
+    const [messageType, setMessageType] = useState('success') // 'success' or 'error'
+
+    // Helper function to show message with fade-out
+    const showMessage = (msg, type) => {
+        setMessage(msg)
+        setMessageType(type)
+        setIsSubmitted(true)
+        setIsFadingOut(false)
+        
+        // Start fade-out animation 2.5 seconds in, then hide completely at 3 seconds
+        setTimeout(() => setIsFadingOut(true), 2500)
+        setTimeout(() => {
+            setIsSubmitted(false)
+            setIsFadingOut(false)
+        }, 3000)
+    }
 
     // Handle profile input changes
     const handleProfileChange = (e) => {
@@ -23,18 +43,38 @@ function Profile() {
     // Handle profile submit
     const handleProfileSubmit = async (e) => {
         e.preventDefault()
-        const updatedUserData = {
-            ...currentUser,
-            name: profileData.name,
-            email: profileData.email,
-            phone: profileData.phone
-        }
-        const result = await updatedUser(updatedUserData)
 
-        if (result.success) {
-            alert('Profile updated successfully!')
-        } else {
-            alert('Error updating profile: ' + result.error)
+        if (!currentUser) return
+        if (profileData.name === currentUser.name && profileData.phone === currentUser.phone) {
+            showMessage('No changes made to profile', 'error')
+            return
+        }
+
+        const phonePattern = /^(03\d{2}-\d{7}|\+923\d{9})$/
+        if (!phonePattern.test(profileData.phone)) {
+            showMessage('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).', 'error')
+            return
+        }
+        if (profileData.phone.length < 11) {
+            showMessage('Phone number must be at least 11 digits', 'error')
+            return
+        }
+
+        try {
+            const updatedUserData = {
+                ...currentUser,
+                name: profileData.name,
+                phone: profileData.phone
+            }
+            const result = await updatedUser(updatedUserData)
+
+            if (result.success) {
+                showMessage('Profile updated successfully!', 'success')
+            } else {
+                showMessage('Error updating profile: ' + result.error, 'error')
+            }
+        } catch (error) {
+            showMessage('Error updating profile: ' + error.message, 'error')
         }
     }
 
@@ -68,9 +108,10 @@ function Profile() {
                             name="email"
                             value={profileData.email}
                             onChange={handleProfileChange}
-                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5"
+                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5 cursor-not-allowed"
                             placeholder="Enter your email"
                             id='email'
+                            readOnly
                         />
                     </div>
                 </div>
@@ -105,6 +146,47 @@ function Profile() {
                     </button>
                 </div>
             </form>
+            
+            {/* Success/Error Message */}
+            {isSubmitted && (
+                <div className={`mt-6 p-4 rounded-lg border transition-all duration-500 ease-out transform ${
+                    isFadingOut 
+                        ? 'opacity-0 -translate-y-2.5' 
+                        : 'animate-fade-in opacity-100 translate-y-0'
+                } ${
+                    messageType === 'success' 
+                        ? 'bg-green-900/20 border-green-500/30' 
+                        : 'bg-red-900/20 border-red-500/30'
+                }`}>
+                    <div className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
+                            messageType === 'success' ? 'bg-green-500' : 'bg-red-500'
+                        }`}>
+                            {messageType === 'success' ? (
+                                <svg className="w-4 h-4 text-white transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                            ) : (
+                                <svg className="w-4 h-4 text-white transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            )}
+                        </div>
+                        <div className="transition-all duration-300">
+                            <h3 className={`font-semibold transition-colors duration-300 ${
+                                messageType === 'success' ? 'text-green-400' : 'text-red-400'
+                            }`}>
+                                {messageType === 'success' ? 'Success!' : 'Error'}
+                            </h3>
+                            <p className={`text-sm transition-colors duration-300 ${
+                                messageType === 'success' ? 'text-green-300' : 'text-red-300'
+                            }`}>
+                                {message}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

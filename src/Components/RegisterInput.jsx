@@ -22,6 +22,11 @@ function RegisterInput() {
             setMessage('Phone number must be at least 11 digits')
             return
         }
+        const phonePattern = /^(03\d{2}-\d{7}|\+923\d{9})$/
+        if (!phonePattern.test(phone)) {
+            alert('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
+            return
+        }
         if (password.length < 6) {
             setMessage('Password must be at least 6 characters')
             return

@@ -6,6 +6,7 @@ import Layout from './Layout';
 import LoadingSpinner from './Components/LoadingSpinner';
 import { AuthProvider } from './Context/AuthContext.jsx';
 import { AppointmentProvider } from './Context/AppoinmentContext.jsx';
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
 const Contact = lazy(() => import('./Pages/Contact'));
@@ -39,7 +40,9 @@ const Router = createBrowserRouter(
       } />
       <Route path='/account' element={
         <Suspense fallback={<LoadingSpinner />}>
-          <Account />
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
         </Suspense>
       } />
     </Route>

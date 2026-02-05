@@ -1,12 +1,18 @@
 import { useState } from 'react'
+import { useAuth } from '../../Context/AuthContext.jsx'
 
 function Feedback() {
-    // Feedback form state
+    const { currentUser } = useAuth()
+
     const [feedbackData, setFeedbackData] = useState({
+        userId: currentUser?.id,
         rating: 5,
         experience: '',
         suggestions: ''
     })
+    
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isFadingOut, setIsFadingOut] = useState(false)
 
     // Handle feedback input changes
     const handleFeedbackChange = (e) => {
@@ -18,10 +24,25 @@ function Feedback() {
     }
 
     // Handle feedback submit
-    const handleFeedbackSubmit = (e) => {
+    const handleFeedbackSubmit = async (e) => {
         e.preventDefault()
+        await localStorage.setItem("FeedbackData", JSON.stringify(feedbackData))
         console.log('Feedback submitted:', feedbackData)
-        // Data will be handled later with localStorage
+        setIsSubmitted(true)
+        setIsFadingOut(false)
+        
+        // Start fade-out animation 2.5 seconds in, then hide completely at 3 seconds
+        setTimeout(() => setIsFadingOut(true), 2500)
+        setTimeout(() => {
+            setFeedbackData({
+                userId: currentUser?.id,
+                rating: 5,
+                experience: '',
+                suggestions: ''
+            })
+            setIsSubmitted(false)
+            setIsFadingOut(false)
+        }, 3000)
     }
 
     return (
@@ -93,6 +114,27 @@ function Feedback() {
                     </button>
                 </div>
             </form>
+            
+            {/* Success Message */}
+            {isSubmitted && (
+                <div className={`mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg transition-all duration-500 ease-out transform ${
+                    isFadingOut 
+                        ? 'opacity-0 -translate-y-2.5' 
+                        : 'animate-fade-in opacity-100 translate-y-0'
+                }`}>
+                    <div className="flex items-center gap-3">
+                        <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center transition-all duration-300">
+                            <svg className="w-4 h-4 text-white transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div className="transition-all duration-300">
+                            <h3 className="text-green-400 font-semibold">Thank you for your feedback!</h3>
+                            <p className="text-green-300 text-sm">We appreciate you taking the time to share your feedback with us.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

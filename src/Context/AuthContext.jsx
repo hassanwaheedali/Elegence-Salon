@@ -29,8 +29,9 @@ export function AuthProvider({ children }) {
 
     const register = async (userData) => {
         try {
+            const num = 0
             const newUser = {
-                id: Date.now(),
+                id: num+1,
                 name: userData.fullname,
                 phone: userData.phone,
                 email: userData.email.toLowerCase().trim(),
