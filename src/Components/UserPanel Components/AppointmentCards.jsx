@@ -1,10 +1,64 @@
+import { useAppointment } from '../../Context/AppointmentContext.jsx'
+import { useMessage } from '../../Context/MessageContext.jsx'
+import { useState, useEffect } from 'react'
+
 function AppointmentCards({name, date, time, service, status, appointmentId}) {
+    const { cancelAppointment, resscheduleAppointment } = useAppointment()
+    const { showMessage } = useMessage()
+
+    const [isRescheduling, setIsRescheduling] = useState(false)
+    const [newDate, setNewDate] = useState(date)
+    const [newTime, setNewTime] = useState(time)
+    const [isVisible, setIsVisible] = useState(false)
+
+    // animation duration in ms (keep in sync with Tailwind duration-300)
+    const ANIM_DURATION = 300
+
+    useEffect(() => {
+        let t
+        // when closing, wait for animation to finish then unmount
+        if (!isRescheduling && isVisible) {
+            t = setTimeout(() => setIsVisible(false), ANIM_DURATION)
+        }
+        return () => {
+            if (t) clearTimeout(t)
+        }
+    }, [isRescheduling, isVisible])
+    const handleCancel = async () => {
+        const result = await cancelAppointment(appointmentId)
+        if (result.success) {
+            showMessage('error', 'Appointment cancelled successfully')
+            // Small delay to ensure message is visible before UI updates
+            await new Promise(resolve => setTimeout(resolve, 100))
+        } else {
+            showMessage('error', `Failed to cancel appointment: ${result.error}`)
+        }
+    }
+
+    const handleschedule = async () => {
+        if (!newDate || !newTime) {
+            showMessage('error', 'Please select both date and time for rescheduling')
+            return
+        }
+        const result = await resscheduleAppointment(appointmentId, newDate, newTime)
+        if (result.success) {
+            showMessage('success', 'Appointment rescheduled successfully')
+            setIsRescheduling(false)
+            // Small delay to ensure message is visible before UI updates
+            await new Promise(resolve => setTimeout(resolve, 100))
+        } else {
+            showMessage('error', `Failed to reschedule appointment: ${result.error}`)
+        }
+    }
+
     return (
-        <div className="bg-[#0F0F0F] border border-[#333333] rounded-lg p-6 hover:border-[#FF8A00]/50 transition-all duration-300">
+        <>
+
+            <div className="bg-[#0F0F0F] border border-[#333333] rounded-lg p-6 hover:border-[#FF8A00]/50 transition-all duration-300">
             <div className="flex justify-between items-start mb-4">
                 <div>
                     <h3 className="text-white font-semibold text-lg mb-1">{name}</h3>
-                    <p className="text-[#8A8A8A] text-sm">{appointmentId}</p>
+                    {/* <p className="text-[#8A8A8A] text-sm">{appointmentId}</p> */}
                 </div>
                 <span className="px-3 py-1 bg-[#FF8A00]/20 text-[#FF8A00] text-xs font-semibold rounded-full">{status}</span>
             </div>
@@ -29,14 +83,47 @@ function AppointmentCards({name, date, time, service, status, appointmentId}) {
                 </div>
             </div>
             <div className="mt-6 flex gap-2">
-                <button className="flex-1 px-3 py-2 bg-[#FF8A00] text-white text-sm font-semibold rounded hover:bg-[#E67C00] transition-all duration-300">
+                <button
+                  className="flex-1 px-3 py-2 bg-[#FF8A00] text-white text-sm font-semibold rounded hover:bg-[#E67C00] transition-all duration-300 cursor-pointer"
+                  onClick={() => {
+                      if (isRescheduling) return
+                      // mount in hidden state then trigger the reveal next frame
+                      setIsVisible(true)
+                      requestAnimationFrame(() => {
+                          setIsRescheduling(true)
+                      })
+                  }}
+                >
                     Reschedule
                 </button>
-                <button className="flex-1 px-3 py-2 bg-[#0F0F0F] text-white text-sm font-semibold rounded border border-[#333333] hover:border-red-500/50 hover:text-red-500 transition-all duration-300">
+                <button className="flex-1 px-3 py-2 bg-[#0F0F0F] text-white text-sm font-semibold cursor-pointer rounded border border-[#333333] hover:border-red-500/50 hover:text-red-500 transition-all duration-300" onClick={handleCancel}>
                     Cancel
                 </button>
             </div>
+
+            {isVisible && (
+                <div
+                  className={`mt-4 p-4 bg-[#1a1a1a] rounded transition-all duration-300 ease-out transform ${isRescheduling ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto shadow-md' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}`}
+                  aria-hidden={!isRescheduling}
+                  style={{ transitionProperty: 'opacity, transform' }}
+                >
+                    <h4 className="text-white font-semibold mb-3">Reschedule Appointment</h4>
+                    <div className="flex flex-col gap-3">
+                        <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} className="px-3 py-2 rounded bg-[#0F0F0F] text-white border border-[#333333] focus:border-[#FF8A00]/50 transition-all duration-300" />
+                        <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} className="px-3 py-2 rounded bg-[#0F0F0F] text-white border border-[#333333] focus:border-[#FF8A00]/50 transition-all duration-300" />
+                        <div className="flex gap-2">
+                            <button className="flex-1 px-3 py-2 bg-[#FF8A00] text-white text-sm font-semibold rounded hover:bg-[#E67C00] transition-all duration-300" onClick={handleschedule}>
+                                Save
+                            </button>
+                            <button className="flex-1 px-3 py-2 bg-[#0F0F0F] text-white text-sm font-semibold cursor-pointer rounded border border-[#333333] hover:border-red-500/50 hover:text-red-500 transition-all duration-300" onClick={() => setIsRescheduling(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
+        </>
     )
 }
 

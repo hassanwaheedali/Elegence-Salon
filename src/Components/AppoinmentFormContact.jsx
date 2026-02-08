@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { services } from '../data/services'
+import { useMessage } from '../Context/MessageContext.jsx'
 
 function AppoinmentFormContact() {
     const [isOpen, setIsOpen] = useState(false)
@@ -13,32 +14,34 @@ function AppoinmentFormContact() {
     const [time, setTime] = useState('')
     const [message, setMessage] = useState('')
 
+    const { showMessage } = useMessage()
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if (service === 'SERVICE') {
-            alert('Please select a service before submitting the form.')
+            showMessage('error', 'Please select a service before submitting the form.')
             return
         }
         if (name === '' || email === '' || phoneNumber === '' || date === '' || time === '') {
-            alert('Please fill in all required fields.')
+            showMessage('error', 'Please fill in all required fields.')
             return
         }
         if (date < new Date().toISOString().split('T')[0]) {
-            alert('Please select a Correct date.')
+            showMessage('error', 'Please select a Correct date.')
             return
         }
         if (time < '11:00' || time > '20:00') {
-            alert('Please select a time between 11:00 AM and 8:00 PM.')
+            showMessage('error', 'Please select a time between 11:00 AM and 8:00 PM.')
             return
         }
         const selectedDate = new Date(date)
         if (selectedDate.getDay() === 0) {
-            alert('Appointments cannot be booked on Sundays. Please select another day.')
+            showMessage('error', 'Appointments cannot be booked on Sundays. Please select another day.')
             return
         }
         const phonePattern = /^(03\d{2}-\d{7}|\+923\d{9})$/
         if (!phonePattern.test(phoneNumber)) {
-            alert('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
+            showMessage('error', 'Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
             return
         }
 

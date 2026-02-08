@@ -6,6 +6,7 @@ import Layout from './Layout';
 import LoadingSpinner from './Components/LoadingSpinner';
 import { AuthProvider } from './Context/AuthContext.jsx';
 import { AppointmentProvider } from './Context/AppointmentContext.jsx';
+import { MessageProvider } from './Context/MessageContext.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
@@ -53,7 +54,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <AppointmentProvider>
-        <RouterProvider router={Router} />
+        <MessageProvider>
+          <RouterProvider router={Router} />
+        </MessageProvider>
       </AppointmentProvider>
     </AuthProvider>
   </StrictMode>

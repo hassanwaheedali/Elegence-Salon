@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../Context/AuthContext.jsx'
+import { useMessage } from '../Context/MessageContext.jsx'
 import { Link } from 'react-router-dom'
 
 function RegisterInput() {
@@ -11,6 +12,7 @@ function RegisterInput() {
     const [message, setMessage] = useState('')
 
     const { register } = useAuth()
+    const { showMessage } = useMessage()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,7 +26,7 @@ function RegisterInput() {
         }
         const phonePattern = /^(03\d{2}-\d{7}|\+923\d{9})$/
         if (!phonePattern.test(phone)) {
-            alert('Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
+            showMessage('error', 'Please enter a valid Pakistani phone number (e.g., 0336-3090793 or +9233363090793).')
             return
         }
         if (password.length < 6) {

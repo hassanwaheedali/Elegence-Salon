@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
         try {
             let num = 0
             const newUser = {
-                id: num+1,
+                id: num + 1,
                 name: userData.fullname,
                 phone: userData.phone,
                 email: userData.email.toLowerCase().trim(),

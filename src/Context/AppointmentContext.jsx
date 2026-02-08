@@ -58,10 +58,39 @@ export function AppointmentProvider({ children }) {
         }
     }
 
+    const cancelAppointment = async (appointmentId) => {
+        try {
+            const updatedAppointments = appointments.filter(a => a.id !== appointmentId);
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    const resscheduleAppointment = async (appointmentId, newDate, newTime) => {
+        try {
+            const updatedAppointments = appointments.map(a => {
+                if (a.id === appointmentId) {
+                    return { ...a, date: newDate, time: newTime, status: "Awaiting Confirmation" }
+                }
+                return a
+            })
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
     const value = {
         appointments,
         bookAppointment,
-        displayAppointmentsByUser
+        displayAppointmentsByUser,
+        cancelAppointment,
+        resscheduleAppointment
     }
 
     return <AppointmentContext.Provider value={value}>{children}</AppointmentContext.Provider>;
