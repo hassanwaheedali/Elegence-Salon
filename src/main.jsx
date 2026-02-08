@@ -52,12 +52,12 @@ const Router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <AppointmentProvider>
-        <MessageProvider>
+    <MessageProvider>
+      <AuthProvider>
+        <AppointmentProvider>
           <RouterProvider router={Router} />
-        </MessageProvider>
-      </AppointmentProvider>
-    </AuthProvider>
+        </AppointmentProvider>
+      </AuthProvider>
+    </MessageProvider>
   </StrictMode>
 );

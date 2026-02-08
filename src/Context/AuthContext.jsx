@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import {useMessage} from "./MessageContext";
 
 const AuthContext = createContext();
 
@@ -7,6 +8,8 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const { showMessage } = useMessage();
 
     useEffect(() => {
         const storedCurrentUser = localStorage.getItem('currentUser');
@@ -72,6 +75,9 @@ export function AuthProvider({ children }) {
                         sessionStorage.setItem('currentUser', JSON.stringify(u));
                         localStorage.removeItem('currentUser');
                     }
+                    if (typeof showMessage === 'function') {
+                        showMessage('success', 'Logged in successfully');
+                    }
                     return { success: true };
                 }
             }
@@ -87,6 +93,10 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(false);
         localStorage.removeItem('currentUser');
         sessionStorage.removeItem('currentUser');
+        // show success message on logout
+        if (typeof showMessage === 'function') {
+            showMessage('success', 'Logged out successfully');
+        }
     }
 
     const updatedUser = async (user) => {
