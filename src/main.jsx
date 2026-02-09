@@ -41,8 +41,15 @@ const Router = createBrowserRouter(
       } />
       <Route path='/account' element={
         <Suspense fallback={<LoadingSpinner />}>
-          <ProtectedRoute>
+          <ProtectedRoute requiredRole="client">
             <Account />
+          </ProtectedRoute>
+        </Suspense>
+      } />
+      <Route path='/admin' element={
+        <Suspense fallback={<LoadingSpinner />}>
+          <ProtectedRoute requiredRole="admin">
+            {/* <AdminDashboard /> */}
           </ProtectedRoute>
         </Suspense>
       } />

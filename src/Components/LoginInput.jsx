@@ -20,7 +20,8 @@ function LoginInput() {
             setMessage("Login successful!")
             setEmail("")
             setPassword("")
-            navigate("/")
+            if (currentUser && currentUser.role === "admin") navigate("/admin")
+            else if (currentUser && currentUser.role === "client") navigate("/")
         } else {
             setMessage(result.error)
         }

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {useMessage} from "./MessageContext";
+import { useMessage } from "./MessageContext";
 
 const AuthContext = createContext();
 
@@ -27,22 +27,35 @@ export function AuthProvider({ children }) {
                 setIsAuthenticated(true);
             }
         }
+        adminTestUser = {
+            id: 0,
+            name: 'Admin User',
+            phone: '0000000000',
+            email: 'admin',
+            password: 'admin',
+            role: 'admin',
+        }
+        if (!storedAllUsers) {
+            setAllUsers([adminTestUser]);
+            localStorage.setItem('allUsers', JSON.stringify([adminTestUser]));
+        }
         setLoading(false);
     }, []);
 
     const register = async (userData) => {
         try {
-            let num = 0
+            const newId = allUsers && allUsers.length > 0 ? Math.max(...allUsers.map(u => u.id || 0)) + 1 : 1;
             const newUser = {
-                id: num + 1,
+                id: newId,
                 name: userData.fullname,
                 phone: userData.phone,
                 email: userData.email.toLowerCase().trim(),
                 password: userData.password,
+                role: userData.role || 'client',
             };
 
             for (const u of allUsers) {
-                if (u.email === newUser.email) {
+                if (u.email && u.email.toLowerCase() === newUser.email) {
                     throw new Error('User already exists with this email');
                 }
                 if (u.phone === newUser.phone) {

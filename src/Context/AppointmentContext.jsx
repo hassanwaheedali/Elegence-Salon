@@ -42,16 +42,11 @@ export function AppointmentProvider({ children }) {
         }
     }
 
-    // this functions is for displaying appointments by user if the user is logged in otherwise this function will return user not found or success false
     const displayAppointmentsByUser = async () => {
         try {
-            for (const appointment of appointments) {
-                if (appointment.userId === currentUser.id) {
-                    const userAppointments = appointments.filter(a => a.userId === currentUser.id);
-                    return { success: true, data: userAppointments };
-                }
-            }
-            return { success: false, error: "Appointments not Found" }
+            if (!currentUser) return { success: false, error: 'User not authenticated' };
+            const userAppointments = appointments.filter(a => a.userId === currentUser.id);
+            return userAppointments.length ? { success: true, data: userAppointments } : { success: false, error: 'Appointments not Found' };
         }
         catch (error) {
             return { success: false, error: error.message };
@@ -69,7 +64,7 @@ export function AppointmentProvider({ children }) {
         }
     }
 
-    const resscheduleAppointment = async (appointmentId, newDate, newTime) => {
+    const rescheduleAppointment = async (appointmentId, newDate, newTime) => {
         try {
             const updatedAppointments = appointments.map(a => {
                 if (a.id === appointmentId) {
@@ -90,7 +85,7 @@ export function AppointmentProvider({ children }) {
         bookAppointment,
         displayAppointmentsByUser,
         cancelAppointment,
-        resscheduleAppointment
+        rescheduleAppointment
     }
 
     return <AppointmentContext.Provider value={value}>{children}</AppointmentContext.Provider>;
