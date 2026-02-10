@@ -16,6 +16,7 @@ const Login = lazy(() => import('./Pages/Login'));
 const Register = lazy(() => import('./Pages/Register'));
 const Account = lazy(() => import('./Pages/User Panel/Account'));
 const Dashboard = lazy(() => import('./Pages/Admin/Dashboard'));
+const Appointments = lazy(() => import('./Pages/Admin/Appointments'));
 
 
 const Router = createBrowserRouter(
@@ -58,6 +59,13 @@ const Router = createBrowserRouter(
           <Suspense fallback={<LoadingSpinner />}>
             <ProtectedRoute requiredRole="admin">
               <Dashboard />
+            </ProtectedRoute>
+          </Suspense>
+        } />
+        <Route path='appointments' element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProtectedRoute requiredRole="admin">
+              <Appointments />
             </ProtectedRoute>
           </Suspense>
         } />
