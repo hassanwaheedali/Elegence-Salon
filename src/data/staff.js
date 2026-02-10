@@ -86,48 +86,6 @@ export const staff = [
     }
 ];
 
-// Simpler version for beginners - easier to understand step by step
-export const getAvailableStaffSimple = (date, time, service) => {
-    // Convert date to day name (monday, tuesday, etc.)
-    const dateObj = new Date(date);
-    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    const dayOfWeek = days[dateObj.getDay()];
-
-    // Start with empty list of available staff
-    const availableStaff = [];
-
-    // Check each staff member one by one
-    for (const member of staff) {
-        // Skip if not active
-        if (member.status !== "active") {
-            continue; // Skip to next staff member
-        }
-
-        // Skip if they don't work this day
-        if (!member.schedule[dayOfWeek]) {
-            continue;
-        }
-
-        // Skip if they don't have the right specialty
-        if (!member.specialties.includes(service)) {
-            continue;
-        }
-
-        // Check if they're available at the requested time
-        const schedule = member.schedule[dayOfWeek];
-        const requestedTime = time;
-        const startTime = schedule.start;
-        const endTime = schedule.end;
-
-        // If time is within their working hours, they're available!
-        if (requestedTime >= startTime && requestedTime <= endTime) {
-            availableStaff.push(member);
-        }
-    }
-
-    return availableStaff;
-};
-
 export const getStaffBySpecialty = (specialty) => {
     return staff.filter(member =>
         member.specialties.includes(specialty) && member.status === "active"

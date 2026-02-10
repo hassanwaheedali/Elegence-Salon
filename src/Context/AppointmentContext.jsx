@@ -105,7 +105,7 @@ export function AppointmentProvider({ children }) {
             const currentStylistAvailable = availableStylists.some(s => s.id === appointment.stylistId);
 
             // If no stylists are available at all, prevent rescheduling
-            if (availableStylists.length === 0) {
+            if (!availableStylists || availableStylists.length === 0) {
                 return {
                     success: false,
                     error: 'No stylists available for the selected service, date, and time. Please choose a different time slot.'

@@ -1,5 +1,5 @@
 import { StrictMode, lazy, Suspense } from 'react'
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, Navigate } from 'react-router-dom'
 import ReactDOM from "react-dom/client";
 import './index.css'
 import Layout from './Layout';
@@ -55,14 +55,21 @@ const Router = createBrowserRouter(
 
       {/* Admin pages without footer */}
       <Route path='/admin' element={<AdminLayout />} >
-        <Route path='dashboard' element={
+        <Route index element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProtectedRoute requiredRole="admin">
+              <Navigate to="/admin/dashboard" replace />
+            </ProtectedRoute>
+          </Suspense>
+        } />
+        <Route path='/admin/dashboard' element={
           <Suspense fallback={<LoadingSpinner />}>
             <ProtectedRoute requiredRole="admin">
               <Dashboard />
             </ProtectedRoute>
           </Suspense>
         } />
-        <Route path='appointments' element={
+        <Route path='/admin/appointments' element={
           <Suspense fallback={<LoadingSpinner />}>
             <ProtectedRoute requiredRole="admin">
               <Appointments />

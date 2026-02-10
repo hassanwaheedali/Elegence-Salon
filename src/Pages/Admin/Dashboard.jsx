@@ -8,7 +8,6 @@ import {
     Calendar,
     Scissors
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 import { useAppointment } from '../../Context/AppointmentContext'
 import StatsCard from '../../Components/AdminPanel Components/StatsCard'
 import StatusBadge from '../../Components/AdminPanel Components/StatusBadge'
@@ -17,10 +16,7 @@ import StaffRow from '../../Components/AdminPanel Components/StaffRow'
 import { getActiveStaff, staff } from '../../data/staff'
 
 function Dashboard() {
-    // const [sidebarOpen, setSidebarOpen] = useState(false) // Moved to Layout
-    // const { logout, currentUser } = useAuth() // Handled in Layout
     const { appointments } = useAppointment()
-    const navigate = useNavigate()
 
     const [todayStaff, setTodayStaff] = useState([])
 
@@ -40,7 +36,6 @@ function Dashboard() {
         }))
 
         setTodayStaff(workingStaff)
-        setTodayStaff(workingStaff)
     }, [])
 
     // Calculate Total Revenue
@@ -55,7 +50,6 @@ function Dashboard() {
 
     return (
         <div className="max-w-7xl mx-auto space-y-8">
-
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatsCard
@@ -180,12 +174,12 @@ function Dashboard() {
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2 py-1 rounded-md tracking-wider uppercase">Today</span> */}
                         </h2>
                         <button className="px-4 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
-                            View Schedule
+                            View ALL
                         </button>
                     </div>
                     <div className="p-6 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                         {todayStaff.length > 0 ? (
-                            todayStaff.map(staffMember => (
+                            todayStaff.slice(0, 4).map(staffMember => (
                                 <StaffRow
                                     key={staffMember.id}
                                     name={staffMember.name}
