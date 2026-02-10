@@ -1,8 +1,10 @@
+import { Calendar, Clock, Scissors, User, X, Check, AlertCircle } from 'lucide-react'
 import { useAppointment } from '../../Context/AppointmentContext.jsx'
 import { useMessage } from '../../Context/MessageContext.jsx'
 import { useState, useEffect } from 'react'
 
-function AppointmentCards({ name, date, time, service, status, appointmentId }) {
+
+function AppointmentCards({ name, date, time, service, price, status, appointmentId, stylistName }) {
     const { cancelAppointment, rescheduleAppointment } = useAppointment()
     const { showMessage } = useMessage()
 
@@ -11,12 +13,10 @@ function AppointmentCards({ name, date, time, service, status, appointmentId }) 
     const [newTime, setNewTime] = useState(time)
     const [isVisible, setIsVisible] = useState(false)
 
-    // animation duration in ms (keep in sync with Tailwind duration-300)
     const ANIM_DURATION = 300
 
     useEffect(() => {
         let t
-        // when closing, wait for animation to finish then unmount
         if (!isRescheduling && isVisible) {
             t = setTimeout(() => setIsVisible(false), ANIM_DURATION)
         }
@@ -24,11 +24,13 @@ function AppointmentCards({ name, date, time, service, status, appointmentId }) 
             if (t) clearTimeout(t)
         }
     }, [isRescheduling, isVisible])
+
     const handleCancel = async () => {
+        if (!window.confirm("Are you sure you want to cancel this appointment?")) return
+
         const result = await cancelAppointment(appointmentId)
         if (result.success) {
-            showMessage('error', 'Appointment cancelled successfully')
-            // Small delay to ensure message is visible before UI updates
+            showMessage('success', 'Appointment cancelled successfully')
             await new Promise(resolve => setTimeout(resolve, 100))
         } else {
             showMessage('error', `Failed to cancel appointment: ${result.error}`)
@@ -44,86 +46,144 @@ function AppointmentCards({ name, date, time, service, status, appointmentId }) 
         if (result.success) {
             showMessage('success', 'Appointment rescheduled successfully')
             setIsRescheduling(false)
-            // Small delay to ensure message is visible before UI updates
             await new Promise(resolve => setTimeout(resolve, 100))
         } else {
             showMessage('error', `Failed to reschedule appointment: ${result.error}`)
         }
     }
 
+    const getStatusStyle = (status) => {
+        switch (status?.toLowerCase()) {
+            case 'confirmed': return 'bg-emerald-950/30 text-emerald-400 border-emerald-900/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]'
+            case 'pending': return 'bg-amber-950/30 text-amber-400 border-amber-900/50 shadow-[0_0_10px_rgba(251,191,36,0.1)]'
+            case 'cancelled': return 'bg-red-950/30 text-red-400 border-red-900/50 shadow-[0_0_10px_rgba(248,113,113,0.1)]'
+            default: return 'bg-zinc-900 text-zinc-400 border-zinc-800'
+        }
+    }
+
     return (
-        <>
+        <div className="group relative bg-[#121212] border border-[#222] rounded-2xl p-6 hover:border-[#FF8A00]/40 transition-all duration-300 shadow-xl shadow-black/50 hover:shadow-[#FF8A00]/10 overflow-hidden">
 
-            <div className="bg-[#0F0F0F] border border-[#333333] rounded-lg p-6 hover:border-[#FF8A00]/50 transition-all duration-300">
-                <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 className="text-white font-semibold text-lg mb-1">{name}</h3>
-                        {/* <p className="text-[#8A8A8A] text-sm">{appointmentId}</p> */}
-                    </div>
-                    <span className="px-3 py-1 bg-[#FF8A00]/20 text-[#FF8A00] text-xs font-semibold rounded-full">{status}</span>
+            {/* Header */}
+            <div className="flex justify-between items-start mb-6">
+                <div>
+                    <h3 className="text-white font-bold text-lg tracking-wide mb-1">{name}</h3>
+                    {/* <p className="text-[#777] text-xs uppercase tracking-widest font-semibold flex items-center gap-1">
+                        ID: <span className="font-mono text-[#555]">{appointmentId?.slice(-6) || '...'}</span>
+                    </p> */}
                 </div>
-                <div className="space-y-3 text-sm">
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#FF8A00]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M1 5.05a1 1 0 011-1h2a1 1 0 011 1v1h2V5a1 1 0 011-1h2a1 1 0 011 1v1h2V5a1 1 0 011-1h1a1 1 0 110 2v1h.5a2 2 0 012 2v2h1.5a1 1 0 110 2h-1.5v2h1.5a1 1 0 110 2h-1.5v.5a2 2 0 01-2 2h-2.5a1 1 0 110-2H12v-2H9v2h1.5a1 1 0 110 2h-10a1 1 0 110-2H3v-2H1.5a1 1 0 110-2H3v-2H1a1 1 0 01-1-1v-1H0V7h1V6H1V5.05z"></path>
-                        </svg>
-                        <span className="text-[#8A8A8A]">{date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#FF8A00]" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v3.102a1 1 0 00.6.894l2.4 1.2a1 1 0 10-.8 1.788l-2.4-1.2A1 1 0 009 9.602V6z" clipRule="evenodd"></path>
-                        </svg>
-                        <span className="text-[#8A8A8A]">{time}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#FF8A00]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.3A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"></path>
-                        </svg>
-                        <span className="text-[#8A8A8A]">{service}</span>
-                    </div>
-                </div>
-                <div className="mt-6 flex gap-2">
-                    <button
-                        className="flex-1 px-3 py-2 bg-[#FF8A00] text-white text-sm font-semibold rounded hover:bg-[#E67C00] transition-all duration-300 cursor-pointer"
-                        onClick={() => {
-                            if (isRescheduling) return
-                            // mount in hidden state then trigger the reveal next frame
-                            setIsVisible(true)
-                            requestAnimationFrame(() => {
-                                setIsRescheduling(true)
-                            })
-                        }}
-                    >
-                        Reschedule
-                    </button>
-                    <button className="flex-1 px-3 py-2 bg-[#0F0F0F] text-white text-sm font-semibold cursor-pointer rounded border border-[#333333] hover:border-red-500/50 hover:text-red-500 transition-all duration-300" onClick={handleCancel}>
-                        Cancel
-                    </button>
-                </div>
-
-                {isVisible && (
-                    <div
-                        className={`mt-4 p-4 bg-[#1a1a1a] rounded transition-all duration-300 ease-out transform ${isRescheduling ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto shadow-md' : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'}`}
-                        aria-hidden={!isRescheduling}
-                        style={{ transitionProperty: 'opacity, transform' }}
-                    >
-                        <h4 className="text-white font-semibold mb-3">Reschedule Appointment</h4>
-                        <div className="flex flex-col gap-3">
-                            <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} className="px-3 py-2 rounded bg-[#0F0F0F] text-white border border-[#333333] focus:border-[#FF8A00]/50 transition-all duration-300" />
-                            <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} className="px-3 py-2 rounded bg-[#0F0F0F] text-white border border-[#333333] focus:border-[#FF8A00]/50 transition-all duration-300" />
-                            <div className="flex gap-2">
-                                <button className="flex-1 px-3 py-2 bg-[#FF8A00] text-white text-sm font-semibold rounded hover:bg-[#E67C00] transition-all duration-300" onClick={handleschedule}>
-                                    Save
-                                </button>
-                                <button className="flex-1 px-3 py-2 bg-[#0F0F0F] text-white text-sm font-semibold cursor-pointer rounded border border-[#333333] hover:border-red-500/50 hover:text-red-500 transition-all duration-300" onClick={() => setIsRescheduling(false)}>
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg border ${getStatusStyle(status)}`}>
+                    {status}
+                </span>
             </div>
-        </>
+
+            {/* Details Grid */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                        <Calendar size={14} />
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Date</p>
+                        <p className="text-sm font-semibold text-gray-200">{date}</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                        <Clock size={14} />
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Time</p>
+                        <p className="text-sm font-semibold text-gray-200">{time}</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                        <User size={14} />
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Stylist</p>
+                        <p className="text-sm font-semibold text-gray-200 truncate max-w-[80px]">{stylistName || 'Any'}</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                        <Scissors size={14} />
+                    </div>
+                    <div>
+                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Service</p>
+                        <p className="text-sm font-semibold text-gray-200 truncate max-w-[80px]">{price} {service}</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className={`grid grid-cols-2 gap-3 transition-opacity duration-300 ${isRescheduling ? 'opacity-0 pointer-events-none absolute' : 'opacity-100'}`}>
+                <button
+                    onClick={() => {
+                        setIsVisible(true)
+                        requestAnimationFrame(() => setIsRescheduling(true))
+                    }}
+                    disabled={status === 'Cancelled'}
+                    className="flex justify-center items-center py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 text-white hover:bg-[#FF8A00] hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                >
+                    Reschedule
+                </button>
+                <button
+                    onClick={handleCancel}
+                    disabled={status === 'Cancelled'}
+                    className="flex justify-center items-center py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider border border-white/10 text-[#777] hover:border-rose-500/50 hover:text-rose-500 hover:bg-rose-500/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                >
+                    Cancel
+                </button>
+            </div>
+
+            {/* Reschedule Form Overlay */}
+            <div
+                className={`absolute inset-0 bg-[#121212] p-6 transition-transform duration-300 ease-in-out ${isRescheduling ? 'translate-y-0' : 'translate-y-full'}`}
+            >
+                <div className="flex justify-between items-center mb-6">
+                    <h4 className="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                        <Calendar size={14} className="text-[#FF8A00]" />
+                        New Time
+                    </h4>
+                    <button
+                        onClick={() => setIsRescheduling(false)}
+                        className="p-1 hover:bg-white/10 rounded-full transition-colors text-[#777] hover:text-white"
+                    >
+                        <X size={16} />
+                    </button>
+                </div>
+
+                <div className="space-y-4">
+                    <div>
+                        <label className="block text-[10px] font-bold text-[#777] uppercase tracking-wider mb-2">Select Date</label>
+                        <input
+                            type="date"
+                            value={newDate}
+                            onChange={(e) => setNewDate(e.target.value)}
+                            className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#FF8A00] focus:outline-none transition-colors"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-[10px] font-bold text-[#777] uppercase tracking-wider mb-2">Select Time</label>
+                        <input
+                            type="time"
+                            value={newTime}
+                            onChange={(e) => setNewTime(e.target.value)}
+                            className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#FF8A00] focus:outline-none transition-colors"
+                        />
+                    </div>
+                    <button
+                        onClick={handleschedule}
+                        className="w-full py-3 bg-[#FF8A00] text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-[#e67c00] transition-colors shadow-lg shadow-orange-500/20 mt-2 flex justify-center items-center gap-2 cursor-pointer"
+                    >
+                        <Check size={14} />
+                        Confirm Change
+                    </button>
+                </div>
+            </div>
+        </div>
     )
 }
 

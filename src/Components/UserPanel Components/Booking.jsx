@@ -49,8 +49,10 @@ function Booking() {
                                 date={appointment.date}
                                 time={appointment.time}
                                 service={appointment.service}
+                                price={appointment.price}
                                 status={appointment.status}
                                 appointmentId={appointment.id}
+                                stylistName={appointment.stylistName}
                             />
                         ))}
                     </div>

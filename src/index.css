@@ -60,3 +60,22 @@ html {
 .brand-scroll-wrapper:hover .brand-scroll-track {
   animation-play-state: paused;
 }
+
+/* Custom Scrollbar Design */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF8A00;
+}

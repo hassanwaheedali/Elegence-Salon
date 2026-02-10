@@ -15,6 +15,7 @@ function Appoinment() {
     const [email, setEmail] = useState(currentUser ? currentUser.email : '')
     const [phoneNumber, setPhoneNumber] = useState(currentUser ? currentUser.phone : '')
     const [service, setService] = useState('SERVICE')
+    const [servicePrice, setServicePrice] = useState('')
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
     const [message, setMessage] = useState('')
@@ -31,7 +32,8 @@ function Appoinment() {
             service,
             date,
             time,
-            message
+            message,
+            servicePrice
         }
         if (service === 'SERVICE') {
             showMessage('error', 'Please select a service before submitting the form.')
@@ -62,7 +64,7 @@ function Appoinment() {
 
         const result = await bookAppointment(formData)
         if (result && result.success) {
-            showMessage('success', 'Thanks! for Booking Appointment With US We will confirm Your Slot.')
+            showMessage('success', `Thanks! for Booking Appointment. Your Appointment has been confirmed with stylist ${result.stylist}.`)
             console.log('Appointment booked successfully!: ')
         } else {
             showMessage('error', 'Failed to book appointment. Please try again.')
@@ -125,6 +127,7 @@ function Appoinment() {
                                                 onClick={() => {
                                                     setSelected(`${service.name} - ${service.price}`)
                                                     setService(`${service.name}`)
+                                                    setServicePrice(service.price)
                                                     setIsOpen(false)
                                                 }}
                                                 className="w-full text-left px-3 md:px-4 py-2 md:py-3 text-[#bfbdbd] hover:bg-yellow-500 hover:text-white transition-colors font-black tracking-tight text-xs md:text-sm block"

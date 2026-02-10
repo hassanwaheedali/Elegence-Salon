@@ -27,11 +27,11 @@ export function AuthProvider({ children }) {
                 setIsAuthenticated(true);
             }
         }
-        adminTestUser = {
+        const adminTestUser = {
             id: 0,
             name: 'Admin User',
-            phone: '0000000000',
-            email: 'admin',
+            phone: '',
+            email: 'admin@admin.com',
             password: 'admin',
             role: 'admin',
         }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "../Context/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -9,6 +9,18 @@ function LoginInput() {
     const [message, setMessage] = useState("")
     const { login, currentUser } = useAuth()
     const navigate = useNavigate()
+
+    // Effect to handle navigation after login
+    useEffect(() => {
+        if (currentUser) {
+            if (currentUser.role === "admin") {
+                navigate("/admin/dashboard");
+            } else {
+                navigate("/");
+            }
+        }
+    }, [currentUser, message, navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (currentUser) {
@@ -20,8 +32,7 @@ function LoginInput() {
             setMessage("Login successful!")
             setEmail("")
             setPassword("")
-            if (currentUser && currentUser.role === "admin") navigate("/admin")
-            else if (currentUser && currentUser.role === "client") navigate("/")
+            // Navigation will be handled by the useEffect hook
         } else {
             setMessage(result.error)
         }

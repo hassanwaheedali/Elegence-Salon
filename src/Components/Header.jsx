@@ -169,31 +169,45 @@ function Header({ bgImage = "bg-transparent" }) {
 
                                             {/* Navigation Section */}
                                             <div className="py-2">
-                                                <Link
-                                                    to="/account"
-                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
-                                                >
-                                                    <i className="fas fa-user w-5"></i>
-                                                    <span>My Profile</span>
-                                                </Link>
-                                                <Link
-                                                    to="/account?tab=appointments"
-                                                    className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
-                                                >
-                                                    <i className="fas fa-calendar-alt w-5"></i>
-                                                    <span>My Appointments</span>
-                                                </Link>
-                                                <a
-                                                    href="#services"
-                                                    onClick={(e) => {
-                                                        e.preventDefault()
-                                                        goToSection('appointment')
-                                                    }}
-                                                    className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors'
-                                                >
-                                                    <i className="fas fa-plus-circle w-5"></i>
-                                                    <span>Book Appointment</span>
-                                                </a>
+                                                {currentUser?.role === 'admin' ? (
+                                                    // Admin Links
+                                                    <Link
+                                                        to="/admin/dashboard"
+                                                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                    >
+                                                        <i className="fas fa-tachometer-alt w-5"></i>
+                                                        <span>Admin Dashboard</span>
+                                                    </Link>
+                                                ) : (
+                                                    // User Links
+                                                    <>
+                                                        <Link
+                                                            to="/account"
+                                                            className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                        >
+                                                            <i className="fas fa-user w-5"></i>
+                                                            <span>My Profile</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/account?tab=appointments"
+                                                            className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                        >
+                                                            <i className="fas fa-calendar-alt w-5"></i>
+                                                            <span>My Appointments</span>
+                                                        </Link>
+                                                        <a
+                                                            href="#services"
+                                                            onClick={(e) => {
+                                                                e.preventDefault()
+                                                                goToSection('appointment')
+                                                            }}
+                                                            className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors'
+                                                        >
+                                                            <i className="fas fa-plus-circle w-5"></i>
+                                                            <span>Book Appointment</span>
+                                                        </a>
+                                                    </>
+                                                )}
                                                 <div className="border-t border-gray-700 mt-2 pt-2">
                                                     <button
                                                         onClick={logout}
@@ -320,22 +334,35 @@ function Header({ bgImage = "bg-transparent" }) {
 
                                             {/* Navigation Links */}
                                             <div className="space-y-2">
-                                                <Link
-                                                    to="/account"
-                                                    onClick={closeMobileMenu}
-                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
-                                                >
-                                                    <i className="fas fa-user w-5"></i>
-                                                    <span>My Profile</span>
-                                                </Link>
-                                                <Link
-                                                    to="/appointments"
-                                                    onClick={closeMobileMenu}
-                                                    className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
-                                                >
-                                                    <i className="fas fa-calendar-alt w-5"></i>
-                                                    <span>My Appointments</span>
-                                                </Link>
+                                                {currentUser?.role === 'admin' ? (
+                                                    <Link
+                                                        to="/admin/dashboard"
+                                                        onClick={closeMobileMenu}
+                                                        className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                    >
+                                                        <i className="fas fa-tachometer-alt w-5"></i>
+                                                        <span>Admin Dashboard</span>
+                                                    </Link>
+                                                ) : (
+                                                    <>
+                                                        <Link
+                                                            to="/account"
+                                                            onClick={closeMobileMenu}
+                                                            className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                        >
+                                                            <i className="fas fa-user w-5"></i>
+                                                            <span>My Profile</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/account?tab=appointments"
+                                                            onClick={closeMobileMenu}
+                                                            className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                        >
+                                                            <i className="fas fa-calendar-alt w-5"></i>
+                                                            <span>My Appointments</span>
+                                                        </Link>
+                                                    </>
+                                                )}
                                                 <div className="border-t border-gray-700 pt-2 mt-2">
                                                     <button
                                                         onClick={() => {
