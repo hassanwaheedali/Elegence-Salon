@@ -2,9 +2,36 @@ import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useAppointment } from '../../Context/AppointmentContext'
 
+// Convert MM/DD/YYYY to YYYY-MM-DD for date input
+const convertToInputFormat = (dateStr) => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return ''
+
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+}
+
+// Convert YYYY-MM-DD to MM/DD/YYYY for storage
+const convertToStorageFormat = (dateStr) => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return ''
+
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
+}
+
 const EditAppointmentModal = ({ appointment, onClose }) => {
     const { updateAppointment } = useAppointment()
-    const [formData, setFormData] = useState({ ...appointment })
+    const [formData, setFormData] = useState({
+        ...appointment,
+        date: convertToInputFormat(appointment.date)
+    })
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -29,7 +56,12 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
         e.preventDefault()
         setLoading(true)
         try {
-            const response = await updateAppointment(appointment.id, formData)
+            // Convert date back to MM/DD/YYYY format for storage
+            const dataToSave = {
+                ...formData,
+                date: convertToStorageFormat(formData.date)
+            }
+            const response = await updateAppointment(appointment.id, dataToSave)
             if (response.success) {
                 onClose()
             } else {

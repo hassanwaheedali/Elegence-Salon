@@ -77,5 +77,25 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF8A00;
+  background: #ff8a00;
+}
+
+/* Custom scrollbar for filter panel and tables */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0d0d0d;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff8a00;
 }

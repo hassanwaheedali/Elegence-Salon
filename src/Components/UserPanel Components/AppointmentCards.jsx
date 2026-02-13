@@ -3,13 +3,36 @@ import { useAppointment } from '../../Context/AppointmentContext.jsx'
 import { useMessage } from '../../Context/MessageContext.jsx'
 import { useState, useEffect } from 'react'
 
+// Convert MM/DD/YYYY to YYYY-MM-DD for date input
+const convertToInputFormat = (dateStr) => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return ''
+
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+}
+
+// Convert YYYY-MM-DD to MM/DD/YYYY for storage
+const convertToStorageFormat = (dateStr) => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return ''
+
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
+}
 
 function AppointmentCards({ name, date, time, service, price, status, appointmentId, stylistName }) {
     const { cancelAppointment, rescheduleAppointment } = useAppointment()
     const { showMessage } = useMessage()
 
     const [isRescheduling, setIsRescheduling] = useState(false)
-    const [newDate, setNewDate] = useState(date)
+    const [newDate, setNewDate] = useState(convertToInputFormat(date))
     const [newTime, setNewTime] = useState(time)
     const [isVisible, setIsVisible] = useState(false)
 
@@ -42,7 +65,9 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
             showMessage('error', 'Please select both date and time for rescheduling')
             return
         }
-        const result = await rescheduleAppointment(appointmentId, newDate, newTime)
+        // Convert date back to MM/DD/YYYY format for storage
+        const formattedDate = convertToStorageFormat(newDate)
+        const result = await rescheduleAppointment(appointmentId, formattedDate, newTime)
         if (result.success) {
             showMessage('success', 'Appointment rescheduled successfully')
             setIsRescheduling(false)
