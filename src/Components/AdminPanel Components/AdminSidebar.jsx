@@ -32,7 +32,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen, handleLogout, currentUser, 
                             </h1>
                         )}
                         {collapsed && (
-                            <span className="text-xl font-black text-[#FF8A00]">E</span>
+                            <span className="text-xl font-black text-[#FF8A00] bg-[#FF8A00]/10 rounded-full px-4 py-2">E</span>
                         )}
 
                         {/* Desktop Collapse Toggle */}
@@ -69,7 +69,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen, handleLogout, currentUser, 
                     </nav>
 
                     {/* User Profile Snippet */}
-                    <div className={`p-4 border-t border-white/5 bg-white/5 backdrop-blur-sm ${collapsed ? 'flex justify-center' : ''}`}>
+                    <div className={`p-4 border-t border-white/5 bg-white/1 backdrop-blur-sm ${collapsed ? 'flex justify-center' : ''}`}>
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-full bg-linear-to-br from-[#FF8A00] to-[#fdba74] flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-orange-500/20 shrink-0">
                                 {currentUser?.name?.charAt(0) || 'A'}

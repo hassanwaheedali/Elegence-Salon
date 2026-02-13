@@ -1,8 +1,16 @@
 import { useEffect } from 'react'
+import {
+    Award,
+    Users,
+    Star,
+    Scissors,
+    Sparkles,
+    CheckCircle2
+} from 'lucide-react'
 import barberImg from '../assets/barber.png'
 import Landing from '../assets/Landing.jpg'
 import About from '../assets/About.png'
-import ServicesIcons from '../Components/ServicesIcons.jsx'
+import ServiceCard from '../Components/ServiceCard.jsx'
 import PriceCard from '../Components/PriceCard.jsx'
 import AppointmentForm from '../Components/AppoinmentForm.jsx'
 import CustomerReview from '../Components/CustomerReview.jsx'
@@ -12,6 +20,45 @@ import BrandCarousel from '../Components/BrandCarousel.jsx'
 import Header from '../Components/Header.jsx'
 
 function Home() {
+    const servicesData = [
+        {
+            icon: <Scissors size={24} />,
+            title: "Classic Haircut",
+            description: "Our stylist can recommend what will work excellent for your hair type and face shape.",
+            price: "$30.00"
+        },
+        {
+            icon: <Sparkles size={24} />,
+            title: "Shaves",
+            description: "Special stylists for men who just want their shave done with precision and comfort.",
+            price: "$20.00"
+        },
+        {
+            icon: <CheckCircle2 size={24} />,
+            title: "Facials & Wash",
+            description: "The right hair and skincare treatment with high quality products.",
+            price: "$30.00"
+        },
+        {
+            icon: <Star size={24} />,
+            title: "Beard Trim",
+            description: "Expert beard sculpting and conditioning to keep your facial hair looking sharp.",
+            price: "$15.00"
+        },
+        {
+            icon: <Users size={24} />,
+            title: "Hair Styling",
+            description: "Top-rated salon with talented stylists for the best in customer service.",
+            price: "$60.00"
+        },
+        {
+            icon: <Award size={24} />,
+            title: "Hair Color",
+            description: "Want to spice up your look with a new color? Allow us to customize!",
+            price: "$60.00"
+        }
+    ]
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -29,9 +76,6 @@ function Home() {
                         backgroundRepeat: 'no-repeat'
                     }}
                 ></div>
-
-                {/* Dark Overlay - IMPORTANT FOR VISIBILITY */}
-                {/* <div className="absolute inset-0 bg-black/60 z-[1]"></div> */}
 
                 {/* Gradient Overlay for depth */}
                 <div className="absolute inset-0 bg-linear-to-br from-black/40 via-gray-900/30 to-black/40 z-2"></div>
@@ -200,19 +244,30 @@ function Home() {
                     </div>
                 </div>
             </section>
-            <section className="service-section bg-[#0d0d0d] text-white" id='services'>
-                <div className='py-12 md:py-14 px-0 md:px-20 lg:px-20 xl:px-30 mx-auto flex flex-col-reverse lg:flex-row gap-8 lg:gap-12'>
-                    <ServicesIcons />
-                    <div className="services-text w-full lg:w-1/2 flex flex-col lg:items-start text-center lg:text-left mb-4 sm:mb-4 md:mb-14 lg:mb-0">
-                        <h2 className="text-5xl font-black md:mt-4 tracking-widest flex flex-col gap-1 md:gap-2 text-[#fb9d33]">DISCOVER <span className=' text-white'>SERVICES</span></h2>
-                        <div className="dash mt-6 md:mt-8 lg:mt-12 mb-8 md:mb-0 flex justify-center lg:justify-start">
-                            <svg className="w-full max-w-50 md:max-w-60 h-auto" viewBox="0 0 283 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M-7.27074e-05 0.0485257L-7.22507e-05 10.4971L40.4192 10.4971L40.4192 0.048524L-7.27074e-05 0.0485257Z" fill="#E9EAE9"></path>
-                                <path d="M80.8387 0.0762875L80.8387 10.5317L121.279 10.5317L121.279 0.0762857L80.8387 0.0762875Z" fill="#E9EAE9"></path>
-                                <path d="M202.14 10.4556L202.14 0.000113815L161.699 0.000115582L161.699 10.4556L202.14 10.4556Z" fill="#E9EAE9"></path>
-                                <path d="M242.559 0.0346097L242.559 10.4832L283 10.4832L283 0.034608L242.559 0.0346097Z" fill="#E9EAE9"></path>
-                            </svg>
+            <section className="service-section bg-[#0d0d0d] text-white py-24 relative" id='services'>
+                {/* Background decorative elements */}
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-linear-to-l from-[#FF8A00]/5 to-transparent pointer-events-none"></div>
+
+                <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                        <div>
+                            <span className="text-[#FF8A00] font-bold tracking-[0.2em] text-sm uppercase mb-2 block">Our Menu</span>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none">
+                                Discover <span className='text-transparent bg-clip-text bg-linear-to-r from-[#FF8A00] to-yellow-500'>Services</span>
+                            </h2>
                         </div>
+                        <p className="text-gray-400 max-w-md text-right hidden md:block pb-2">
+                            Precision cuts, classic shaves, and premium grooming services tailored for the modern gentleman.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {servicesData.map((service, index) => (
+                            <ServiceCard
+                                key={index}
+                                {...service}
+                            />
+                        ))}
                     </div>
                 </div>
             </section>

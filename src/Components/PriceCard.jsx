@@ -1,5 +1,5 @@
 import cardImg from '../assets/Card.png'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { services } from '../data/services'
 
@@ -24,15 +24,15 @@ function PriceCard() {
 
     const priceCards = services
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => {
         setDirection(1)
         setCurrentIndex((prev) => (prev + 1) % priceCards.length)
-    }
+    }, [priceCards.length])
 
-    const prevSlide = () => {
+    const prevSlide = useCallback(() => {
         setDirection(-1)
         setCurrentIndex((prev) => (prev - 1 + priceCards.length) % priceCards.length)
-    }
+    }, [priceCards.length])
 
     // Keyboard navigation
     useEffect(() => {
@@ -49,7 +49,7 @@ function PriceCard() {
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
-    }, [currentIndex])
+    }, [currentIndex, nextSlide, prevSlide])
 
     return (
         <div className="price-list w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 mb-4">

@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useMessage } from './Context/MessageContext.jsx'
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { useAuth } from './Context/AuthContext'
 import AdminSidebar from './Components/AdminPanel Components/AdminSidebar'
 import { Menu, Bell } from 'lucide-react'
@@ -9,11 +9,10 @@ import { Menu, Bell } from 'lucide-react'
 const Message = ({ type, text, visible, isClosing, onClose }) => {
     const [isAnimating, setIsAnimating] = useState(false)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (visible && !isClosing) {
-            setTimeout(() => setIsAnimating(true), 10)
-        } else {
-            setIsAnimating(false)
+            const timer = setTimeout(() => setIsAnimating(true), 10)
+            return () => clearTimeout(timer)
         }
     }, [visible, isClosing])
 

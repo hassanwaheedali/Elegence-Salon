@@ -1,6 +1,6 @@
 import { useState, createContext, useContext, useEffect } from "react"
 import { useAuth } from "../Context/AuthContext"
-import { getAvailableStaff } from "../data/staff"
+import { getAvailableStaff, staff } from "../data/staff"
 
 const AppointmentContext = createContext()
 
@@ -27,7 +27,6 @@ export function AppointmentProvider({ children }) {
                 appointmentData.time,
                 appointmentData.service
             );
-
             // Assign the first available stylist (you can implement more sophisticated logic later)
             const assignedStylist = availableStylists.length > 0 ? availableStylists[0] : null;
 
@@ -48,7 +47,7 @@ export function AppointmentProvider({ children }) {
                 time: appointmentData.time,
                 message: appointmentData.message,
                 price: appointmentData.servicePrice,
-                status: "Confirmed",
+                status: "Awaiting Confirmation",
                 userId: currentUser.id,
                 stylistId: assignedStylist.id,
                 stylistName: assignedStylist.name,
@@ -82,6 +81,7 @@ export function AppointmentProvider({ children }) {
         }
     }
 
+    // for cancel appointment both for user and admin
     const cancelAppointment = async (appointmentId) => {
         try {
             const updatedAppointments = appointments.filter(a => a.id !== appointmentId);
@@ -93,6 +93,7 @@ export function AppointmentProvider({ children }) {
         }
     }
 
+    // for reschedule appointment both for user and admin
     const rescheduleAppointment = async (appointmentId, newDate, newTime) => {
         try {
             const appointment = appointments.find(a => a.id === appointmentId);
@@ -144,15 +145,103 @@ export function AppointmentProvider({ children }) {
         }
     }
 
+    // specific stylist panel functions
+    const changeStatus = async (appointmentId, newStatus) => {
+        try {
+            const updatedAppointments = appointments.map(a =>
+                a.id === appointmentId ? { ...a, status: newStatus } : a
+            );
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+
+    const changeStylist = async (appointmentId, appointmentDate, appointmentTime, appointmentService, newStylistId) => {
+        try {
+            const newStylist = staff.find(s => s.id === newStylistId);
+            if (!newStylist) {
+                return { success: false, error: 'Stylist not found' };
+            }
+            const appointment = appointments.find(a => a.id === appointmentId);
+            if (!appointment) {
+                return { success: false, error: 'Appointment not found' };
+            }
+            const checkStylistAvailable = getAvailableStaff(appointmentDate, appointmentTime, appointmentService).some(s => s.id === newStylistId);
+            if (!checkStylistAvailable) {
+                return {
+                    success: false,
+                    error: 'Selected stylist is not available for the chosen date, time, and service. Please select a different stylist or time slot.'
+                };
+            }
+            const updatedAppointment = {
+                ...appointment,
+                stylistId: newStylist.id,
+                stylistName: newStylist.name,
+                stylistEmail: newStylist.email,
+                stylistPhone: newStylist.phone,
+                commission: newStylist.commission
+            };
+            const updatedAppointments = appointments.map(a =>
+                a.id === appointmentId ? updatedAppointment : a
+            );
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    // edit appointment details for admin
+    const updateAppointment = async (appointmentId, updatedData) => {
+        try {
+            const appointment = appointments.find(a => a.id === appointmentId);
+            if (!appointment) {
+                return { success: false, error: 'Appointment not found' };
+            }
+            const updatedAppointment = { ...appointment, ...updatedData };
+            const updatedAppointments = appointments.map(a =>
+                a.id === appointmentId ? updatedAppointment : a
+            );
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    const deleteAppointment = async (appointmentId) => {
+        try {
+            const updatedAppointments = appointments.filter(a => a.id !== appointmentId);
+            if (updatedAppointments.length === appointments.length) {
+                return { success: false, error: 'Appointment not found' };
+            }
+            setAppointments(updatedAppointments);
+            await localStorage.setItem("Appointments", JSON.stringify(updatedAppointments));
+            return { success: true }
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
     const value = {
         appointments,
         bookAppointment,
         displayAppointmentsByUser,
         cancelAppointment,
-        rescheduleAppointment
+        rescheduleAppointment,
+        changeStatus,
+        changeStylist,
+        updateAppointment,
+        deleteAppointment
     }
 
-    return <AppointmentContext.Provider value={value}>{children}</AppointmentContext.Provider>;
+    return <AppointmentContext.Provider value={value} > {children}</AppointmentContext.Provider >;
 }
 
 export function useAppointment() {

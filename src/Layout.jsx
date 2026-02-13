@@ -1,18 +1,17 @@
 import Footer from './Components/Footer.jsx'
 import { Outlet } from 'react-router-dom'
 import { useMessage } from './Context/MessageContext.jsx'
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 // Message Component
 const Message = ({ type, text, visible, isClosing, onClose }) => {
     const [isAnimating, setIsAnimating] = useState(false)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (visible && !isClosing) {
             // Start animation after component mounts
-            setTimeout(() => setIsAnimating(true), 10)
-        } else {
-            setIsAnimating(false)
+            const timer = setTimeout(() => setIsAnimating(true), 10)
+            return () => clearTimeout(timer)
         }
     }, [visible, isClosing])
 

@@ -103,7 +103,7 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
                     </div>
                     <div>
                         <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Stylist</p>
-                        <p className="text-sm font-semibold text-gray-200 truncate max-w-[80px]">{stylistName || 'Any'}</p>
+                        <p className="text-sm font-semibold text-gray-200 truncate max-w-20">{stylistName || 'Any'}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
@@ -112,7 +112,7 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
                     </div>
                     <div>
                         <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Service</p>
-                        <p className="text-sm font-semibold text-gray-200 truncate max-w-[80px]">{price} {service}</p>
+                        <p className="text-sm font-semibold text-gray-200 truncate max-w-20">{price} {service}</p>
                     </div>
                 </div>
             </div>

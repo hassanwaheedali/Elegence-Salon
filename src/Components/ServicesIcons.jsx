@@ -1,4 +1,5 @@
 function ServicesIcons() {
+    // this file is for reference only not using
     return (
         <div className="icon-design w-full lg:w-4/2 xl:w-3/2 space-y-8 md:space-y-12 lg:space-y-16 flex flex-col items-center md:items-start justify-center md:justify-start mb-6 md:mb-0 xl:pl-18">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 space-y-6 sm:space-y-4 gap-6 sm:gap-8 md:gap-8 lg:gap-10 pr-2 sm:pr-0">
