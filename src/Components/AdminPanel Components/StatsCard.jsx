@@ -6,8 +6,8 @@ const StatsCard = ({ title, value, change, positive, icon, color, bg }) => {
             <div className="relative z-10">
                 <div className="flex items-start justify-between mb-4">
                     <div>
-                        <h3 className="text-[#777] text-xs font-extrabold uppercase tracking-widest mb-1.5">{title}</h3>
-                        <h3 className="text-2xl sm:text-3xl font-black text-white">{value}</h3>
+                        <h3 className="text-[#777] text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-1.5">{title}</h3>
+                        <h3 className="text-xl sm:text-3xl font-black text-white">{value}</h3>
                     </div>
                     <div className={`p-3 rounded-xl ${bg} ${color} ring-1 ring-white/5 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         {icon}

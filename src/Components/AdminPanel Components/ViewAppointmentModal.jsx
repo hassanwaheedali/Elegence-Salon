@@ -43,7 +43,7 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
             <div className="bg-[#121212] border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
                 <div className="flex justify-between items-center p-6 border-b border-[#333]">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                        <CheckCircle2 className="text-[#FF8A00]" size={20} />
+                        <CheckCircle2 className="text-[#FF8A00] mt-0.5" size={20} />
                         Appointment Details
                     </h2>
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors cursor-pointer">

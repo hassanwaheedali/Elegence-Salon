@@ -1,5 +1,6 @@
 
 import { useRef, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
     Eye,
     Edit,
@@ -12,21 +13,49 @@ import { useAppointment } from '../../Context/AppointmentContext'
 
 const AppointmentMenu = ({ appointment, onEdit, onView }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 })
     const menuRef = useRef(null)
+    const buttonRef = useRef(null)
     const { updateAppointment, deleteAppointment, cancelAppointment } = useAppointment()
+
+    const toggleMenu = () => {
+        if (!isOpen) {
+            const rect = buttonRef.current.getBoundingClientRect()
+            setMenuPosition({
+                top: rect.bottom + 8, // 8px spacing, relative to viewport (fixed)
+                left: rect.right - 192 // 192px is w-48, align right edge
+            })
+        }
+        setIsOpen(!isOpen)
+    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+            // Check if click is inside the menu (which is in a portal now, so we need a ref on the portal content)
+            // OR if click is on the button
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target)
+            ) {
                 setIsOpen(false)
             }
         }
 
+        // Close on scroll to prevent detached menu
+        const handleScroll = () => {
+            if (isOpen) setIsOpen(false)
+        }
+
         document.addEventListener('mousedown', handleClickOutside)
+        window.addEventListener('scroll', handleScroll, true) // standard scroll
+
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
+            window.removeEventListener('scroll', handleScroll, true)
         }
-    }, [])
+    }, [isOpen])
 
     const handleQuickStatusChange = async () => {
         if (confirm('Are you sure you want to verify this appointment?')) {
@@ -50,16 +79,26 @@ const AppointmentMenu = ({ appointment, onEdit, onView }) => {
     }
 
     return (
-        <div className="relative" ref={menuRef}>
+        <div className="">
             <button
+                ref={buttonRef}
                 className={`text-[#555] hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg cursor-pointer ${isOpen ? 'text-white bg-white/10' : ''}`}
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={toggleMenu}
             >
                 <MoreVertical size={16} />
             </button>
 
-            {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-[#121212] border border-[#333] rounded-lg shadow-xl py-1 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
+            {isOpen && createPortal(
+                <div
+                    ref={menuRef}
+                    style={{
+                        top: `${menuPosition.top}px`,
+                        left: `${menuPosition.left}px`,
+                        position: 'fixed',
+                        zIndex: 9999
+                    }}
+                    className="w-48 bg-[#121212] border border-[#333] rounded-lg shadow-xl py-1 animate-in fade-in zoom-in-95 duration-100 origin-top-right"
+                >
                     {/* Quick Status Change */}
                     {appointment.status !== 'Confirmed' && appointment.status !== 'Cancelled' && (
                         <button
@@ -113,7 +152,8 @@ const AppointmentMenu = ({ appointment, onEdit, onView }) => {
                         <Trash2 size={14} />
                         Delete
                     </button>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     )

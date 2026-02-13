@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
     Search,
     Bell,
@@ -13,14 +14,26 @@ import StatsCard from '../../Components/AdminPanel Components/StatsCard'
 import StatusBadge from '../../Components/AdminPanel Components/StatusBadge'
 import InventoryItem from '../../Components/AdminPanel Components/InventoryItem'
 import StaffRow from '../../Components/AdminPanel Components/StaffRow'
+import AppointmentMenu from '../../Components/AdminPanel Components/AppointmentMenu'
+import EditAppointmentModal from '../../Components/AdminPanel Components/EditAppointmentModal'
+import ViewAppointmentModal from '../../Components/AdminPanel Components/ViewAppointmentModal'
 import { getActiveStaff, staff } from '../../data/staff'
 
 function Dashboard() {
     const { appointments } = useAppointment()
 
     const [todayStaff, setTodayStaff] = useState([])
-
     const [totalRevenue, setTotalRevenue] = useState(0)
+    const [editingAppointment, setEditingAppointment] = useState(null)
+    const [viewingAppointment, setViewingAppointment] = useState(null)
+
+    const handleEdit = (appointment) => {
+        setEditingAppointment(appointment)
+    }
+
+    const handleView = (appointment) => {
+        setViewingAppointment(appointment)
+    }
 
     // Get staff working today
     useEffect(() => {
@@ -49,9 +62,9 @@ function Dashboard() {
     }, [appointments])
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <StatsCard
                     title="Total Revenue"
                     value={`$${totalRevenue.toFixed(2)}`}
@@ -98,10 +111,13 @@ function Dashboard() {
                         <span className="flex items-center justify-center text-[10px] font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2.5 py-1 rounded-md tracking-wider uppercase shadow-[0_0_10px_rgba(251,157,51,0.1)]">Live</span>
                     </h2>
                     <button className="px-6 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
-                        View All
+                        <Link to="/admin/appointments" className="flex items-center gap-1">
+                            View All
+                        </Link>
                     </button>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden lg:block overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-white/2 text-[#555] uppercase text-[11px] font-bold tracking-wider">
                             <tr>
@@ -133,25 +149,70 @@ function Dashboard() {
                                     <td className="px-6 py-4">
                                         <StatusBadge status={appointment.status} />
                                     </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button className="text-[#555] hover:text-white transition-colors cursor-pointer p-2 hover:bg-white/10 rounded-lg">
-                                            <Settings size={16} />
-                                        </button>
+                                    <td className="px-6 py-4 text-right relative">
+                                        <AppointmentMenu
+                                            appointment={appointment}
+                                            onEdit={handleEdit}
+                                            onView={handleView}
+                                        />
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
+                {/* Mobile/Tablet Card View */}
+                <div className="lg:hidden p-4 space-y-4">
+                    {appointments.slice(0, 4).map((appointment, idx) => (
+                        <div key={appointment.id || idx} className="bg-[#1a1a1a] p-4 rounded-xl border border-white/5 space-y-4">
+                            <div className="flex justify-between items-start">
+                                <div className="flex items-center gap-3">
+                                    <img src={`https://placehold.co/150x150/222/FFF?text=${appointment.name.charAt(0)}`} alt={appointment.name} className="w-10 h-10 rounded-full border border-white/10" />
+                                    <div>
+                                        <h4 className="font-bold text-white text-sm">{appointment.name}</h4>
+                                        <div className="text-xs text-[#777] flex items-center gap-1 mt-0.5">
+                                            {appointment.service}
+                                        </div>
+                                    </div>
+                                </div>
+                                <StatusBadge status={appointment.status} />
+                            </div>
+
+                            <div className="flex justify-between items-center border-t border-white/5 pt-3">
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                                        <Calendar size={12} />
+                                        <span>{appointment.date}</span>
+                                        <span className="text-[#333]">|</span>
+                                        <span>{appointment.time}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 text-xs text-[#FF8A00]">
+                                        <Scissors size={12} />
+                                        <span>{appointment.stylistName || 'Unassigned'}</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 relative">
+                                    <span className="text-white font-bold text-sm">{appointment.price}</span>
+                                    <AppointmentMenu
+                                        appointment={appointment}
+                                        onEdit={handleEdit}
+                                        onView={handleView}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Inventory & Staff Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Inventory Card */}
                 <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
-                    <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center">
+                    <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center gap-4">
                         <h2 className="text-2xl font-extrabold text-[#fb9d33] flex items-center gap-2">
-                            <span className="text-white">Inventory</span>Status
+                            <span className="text-white">Inventory</span> Status
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2 py-1 rounded-md tracking-wider uppercase">Real-time</span> */}
                         </h2>
                         <button className="px-4 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
@@ -198,6 +259,19 @@ function Dashboard() {
                 </div>
             </div>
 
+            {/* Modals */}
+            {editingAppointment && (
+                <EditAppointmentModal
+                    appointment={editingAppointment}
+                    onClose={() => setEditingAppointment(null)}
+                />
+            )}
+            {viewingAppointment && (
+                <ViewAppointmentModal
+                    appointment={viewingAppointment}
+                    onClose={() => setViewingAppointment(null)}
+                />
+            )}
         </div>
     )
 }
