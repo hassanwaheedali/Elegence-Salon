@@ -1,6 +1,6 @@
 import { useState, createContext, useContext, useEffect } from "react"
 import { useAuth } from "../Context/AuthContext"
-import { getAvailableStaff, staff } from "../data/staff"
+import { useStaff } from "../Context/StaffContext"
 
 const AppointmentContext = createContext()
 
@@ -8,6 +8,7 @@ export function AppointmentProvider({ children }) {
     const [appointments, setAppointments] = useState([])
 
     const { currentUser } = useAuth()
+    const { getAvailableStaff, staff } = useStaff()
 
     useEffect(() => {
         const fetchAppointments = async () => {

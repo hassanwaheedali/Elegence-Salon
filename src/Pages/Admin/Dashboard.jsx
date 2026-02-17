@@ -17,10 +17,11 @@ import StaffRow from '../../Components/AdminPanel Components/StaffRow'
 import AppointmentMenu from '../../Components/AdminPanel Components/AppointmentMenu'
 import EditAppointmentModal from '../../Components/AdminPanel Components/EditAppointmentModal'
 import ViewAppointmentModal from '../../Components/AdminPanel Components/ViewAppointmentModal'
-import { getActiveStaff, staff } from '../../data/staff'
+import { useStaff } from '../../Context/StaffContext'
 
 function Dashboard() {
     const { appointments } = useAppointment()
+    const { staff, getActiveStaff } = useStaff()
 
     const [todayStaff, setTodayStaff] = useState([])
     const [totalRevenue, setTotalRevenue] = useState(0)
@@ -49,7 +50,7 @@ function Dashboard() {
         }))
 
         setTodayStaff(workingStaff)
-    }, [])
+    }, [staff])
 
     // Calculate Total Revenue
     useEffect(() => {

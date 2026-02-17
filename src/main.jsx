@@ -8,6 +8,7 @@ import LoadingSpinner from './Components/LoadingSpinner';
 import { AuthProvider } from './Context/AuthContext.jsx';
 import { AppointmentProvider } from './Context/AppointmentContext.jsx';
 import { MessageProvider } from './Context/MessageContext.jsx';
+import { StaffProvider } from './Context/StaffContext.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
@@ -17,6 +18,7 @@ const Register = lazy(() => import('./Pages/Register'));
 const Account = lazy(() => import('./Pages/User Panel/Account'));
 const Dashboard = lazy(() => import('./Pages/Admin/Dashboard'));
 const Appointments = lazy(() => import('./Pages/Admin/Appointments'));
+const Staffs = lazy(() => import('./Pages/Admin/Staffs'));
 
 
 const Router = createBrowserRouter(
@@ -76,6 +78,13 @@ const Router = createBrowserRouter(
             </ProtectedRoute>
           </Suspense>
         } />
+        <Route path='/admin/staffs' element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProtectedRoute requiredRole="admin">
+              <Staffs />
+            </ProtectedRoute>
+          </Suspense>
+        } />
       </Route>
     </>
   )
@@ -85,9 +94,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <MessageProvider>
       <AuthProvider>
-        <AppointmentProvider>
-          <RouterProvider router={Router} />
-        </AppointmentProvider>
+        <StaffProvider>
+          <AppointmentProvider>
+            <RouterProvider router={Router} />
+          </AppointmentProvider>
+        </StaffProvider>
       </AuthProvider>
     </MessageProvider>
   </StrictMode>

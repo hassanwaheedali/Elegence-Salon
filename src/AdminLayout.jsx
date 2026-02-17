@@ -76,7 +76,7 @@ function AdminLayout() {
             {/* Main Content Wrapper */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Top Header */}
-                <header className="h-20 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 lg:px-8 z-30 sticky top-0">
+                <header className="h-20 bg-[#0d0d0d]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 lg:px-8 z-30 top-0">
                     <div className="flex items-center gap-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
