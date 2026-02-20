@@ -1,4 +1,3 @@
-import cardImg from '../assets/Card.png'
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { services } from '../data/services'
@@ -98,9 +97,9 @@ function PriceCard() {
 
                                         <div
                                             className="group relative flex-1 min-h-125 overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 hover:scale-[1.02] px-4 md:px-0"
-                                            style={{ backgroundImage: `url(${cardImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                                            style={{ backgroundImage: `url(${card.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                                         >
-                                            <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/70 to-black/30"></div>
+                                            <div className="absolute inset-0 bg-linear-to-t from-black via-black/80 to-black/70 transition-opacity duration-500 group-hover:opacity-90"></div>
 
                                             <div className="relative z-10 h-full flex flex-col p-6 md:p-8 lg:p-10">
                                                 <div className="flex-1 flex flex-col gap-4 md:gap-5 justify-center">

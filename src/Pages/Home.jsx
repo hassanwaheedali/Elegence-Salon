@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import {
-    Award,
-    Users,
-    Star,
     Scissors,
-    Sparkles,
-    CheckCircle2
+    Feather, // For Shaves (Smooth)
+    Droplets, // For Facials (Water/Products)
+    Sparkles, // For Beard Trim (Clean/Sharp)
+    Crown, // For Hair Styling (Premium)
+    Palette // For Hair Color
 } from 'lucide-react'
 import barberImg from '../assets/barber.png'
 import Landing from '../assets/Landing.jpg'
@@ -22,40 +22,46 @@ import Header from '../Components/Header.jsx'
 function Home() {
     const servicesData = [
         {
-            icon: <Scissors size={24} />,
+            icon: <Scissors size={24} strokeWidth={1.5} />,
             title: "Classic Haircut",
             description: "Our stylist can recommend what will work excellent for your hair type and face shape.",
-            price: "$30.00"
+            price: "$30.00",
+            image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop"
         },
         {
-            icon: <Sparkles size={24} />,
+            icon: <Feather size={24} strokeWidth={1.5} />,
             title: "Shaves",
             description: "Special stylists for men who just want their shave done with precision and comfort.",
-            price: "$20.00"
+            price: "$20.00",
+            image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
         },
         {
-            icon: <CheckCircle2 size={24} />,
+            icon: <Droplets size={24} strokeWidth={1.5} />,
             title: "Facials & Wash",
             description: "The right hair and skincare treatment with high quality products.",
-            price: "$30.00"
+            price: "$30.00",
+            image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop"
         },
         {
-            icon: <Star size={24} />,
+            icon: <Sparkles size={24} strokeWidth={1.5} />,
             title: "Beard Trim",
             description: "Expert beard sculpting and conditioning to keep your facial hair looking sharp.",
-            price: "$15.00"
+            price: "$15.00",
+            image: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2070&auto=format&fit=crop"
         },
         {
-            icon: <Users size={24} />,
+            icon: <Crown size={24} strokeWidth={1.5} />,
             title: "Hair Styling",
             description: "Top-rated salon with talented stylists for the best in customer service.",
-            price: "$60.00"
+            price: "$60.00",
+            image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=2074&auto=format&fit=crop"
         },
         {
-            icon: <Award size={24} />,
+            icon: <Palette size={24} strokeWidth={1.5} />,
             title: "Hair Color",
             description: "Want to spice up your look with a new color? Allow us to customize!",
-            price: "$60.00"
+            price: "$60.00",
+            image: "https://images.unsplash.com/photo-1662125502527-bb106378d560?q=80&w=687&auto=format&fit=crop"
         }
     ]
 
@@ -81,7 +87,7 @@ function Home() {
                 <div className="absolute inset-0 bg-linear-to-br from-black/40 via-gray-900/30 to-black/40 z-2"></div>
 
                 {/* Main Hero Section */}
-                <div className="relative container mx-auto md:pl-8 pt-32 pb-0 md:pb-22 z-10">
+                <div className="relative container mx-auto md:pl-4 pt-32 pb-16 md:pb-22 z-10">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 min-h-[calc(100vh-200px)]">
 
                         {/* Left Content Section */}
@@ -96,23 +102,23 @@ function Home() {
                             {/* Main Heading */}
                             <div className="heading-text text-center md:text-start space-y-2">
                                 {/* MEN'S */}
-                                <h1 className="text-white text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight leading-none">
+                                <h1 className="text-white text-7xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight leading-none">
                                     MEN'S
                                 </h1>
 
                                 {/* Favorite */}
-                                <h2 className="text-transparent bg-clip-text bg-linear-to-r from-yellow-600 via-[#fb9d33] to-yellow-600 text-7xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tight leading-none filter-[drop-shadow(0px_-1px_0px_#FFFFFF)]">
+                                <h2 className="text-transparent bg-clip-text bg-linear-to-r from-yellow-600 via-[#fb9d33] to-yellow-600 text-8xl md:text-7xl lg:text-8xl xl:text-[110px] font-black uppercase tracking-tight leading-none filter-[drop-shadow(0px_-1px_0px_#FFFFFF)]">
                                     Favorite
                                 </h2>
 
                                 {/* Salon with cursive font */}
-                                <h3 className="text-white text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-none tracking-tight">
+                                <h3 className="text-white text-7xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-none tracking-tight">
                                     Salon
                                 </h3>
                             </div>
 
                             {/* Description */}
-                            <p className="text-gray-300 text-sm text-center md:text-start md:text-lg max-w-xl leading-relaxed tracking-wide px-24 md:px-0 md:mx-0 w-lg">
+                            <p className="text-gray-300 text-sm text-center md:text-start md:text-lg max-w-xl leading-relaxed tracking-wide px-12 md:px-0 md:mx-0 w-lg">
                                 Experience the art of traditional grooming with modern techniques. Where style meets sophistication.
                             </p>
 
@@ -200,7 +206,7 @@ function Home() {
                 </div>
             </main>
             <section className='about bg-[#0d0d0d] text-white' id='about'>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-20 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
                     {/* left image - responsive sizing */}
                     <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end">
                         <img src={About} alt="About Us" className="w-full max-w-sm md:max-w-xl h-auto object-contain" />
@@ -245,13 +251,10 @@ function Home() {
                 </div>
             </section>
             <section className="service-section bg-[#0d0d0d] text-white py-24 relative" id='services'>
-                {/* Background decorative elements */}
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-linear-to-l from-[#FF8A00]/5 to-transparent pointer-events-none"></div>
-
-                <div className='max-w-7xl mx-auto px-6 lg:px-8'>
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div className='mx-auto px-6 lg:px-16'>
+                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-16 gap-6">
                         <div>
-                            <span className="text-[#FF8A00] font-bold tracking-[0.2em] text-sm uppercase mb-2 block">Our Menu</span>
+                            <span className="text-[#FF8A00] font-bold tracking-[0.2em] text-sm uppercase mb-2 block text-center md:text-start">Our Menu</span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none">
                                 Discover <span className='text-transparent bg-clip-text bg-linear-to-r from-[#FF8A00] to-yellow-500'>Services</span>
                             </h2>
@@ -272,7 +275,7 @@ function Home() {
                 </div>
             </section>
             <section className="price-section bg-[#0d0d0d] text-white">
-                <div className='py-8 mx-auto flex flex-col gap-8 lg:gap-12'>
+                <div className='pb-8 mx-auto flex flex-col gap-8 lg:gap-12'>
                     <div className="heading w-full mt-8 mb-2 md:mb-8 text-center text-5xl font-black text-[#fb9d33]">
                         <h1>PRICE LIST</h1>
                     </div>

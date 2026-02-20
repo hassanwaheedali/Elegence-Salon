@@ -87,7 +87,7 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
     }
 
     return (
-        <div className="group relative bg-[#121212] border border-[#222] rounded-2xl p-6 hover:border-[#FF8A00]/40 transition-all duration-300 shadow-xl shadow-black/50 hover:shadow-[#FF8A00]/10 overflow-hidden">
+        <div className={`group relative bg-[#121212] border border-[#222] rounded-2xl p-6 transition-all duration-300 shadow-md shadow-black/20 overflow-hidden ${isRescheduling ? 'min-h-105 md:min-h-78' : ''}`}>
 
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
@@ -165,9 +165,9 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
 
             {/* Reschedule Form Overlay */}
             <div
-                className={`absolute inset-0 bg-[#121212] p-6 transition-transform duration-300 ease-in-out ${isRescheduling ? 'translate-y-0' : 'translate-y-full'}`}
+                className={`absolute inset-0 bg-[#121212] p-6 transition-transform duration-300 ease-in-out space-y-6 ${isRescheduling ? 'translate-y-0' : 'translate-y-full'} overflow-y-auto`}
             >
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center">
                     <h4 className="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
                         <Calendar size={14} className="text-[#FF8A00]" />
                         New Time

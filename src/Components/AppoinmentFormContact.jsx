@@ -1,23 +1,31 @@
 import { useState, useRef, useEffect } from 'react'
 import { services } from '../data/services'
 import { useMessage } from '../Context/MessageContext.jsx'
+import { useAppointment } from '../Context/AppointmentContext.jsx'
+import { useAuth } from '../Context/AuthContext.jsx'
 
 function AppoinmentFormContact() {
+    const { currentUser } = useAuth()
+
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState('SERVICE')
     const dropdownRef = useRef(null)
-    const [service, setService] = useState('')
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
+
+    const [service, setService] = useState('SERVICE')
+    const [name, setName] = useState(currentUser ? currentUser.name : '')
+    const [email, setEmail] = useState(currentUser ? currentUser.email : '')
+    const [phoneNumber, setPhoneNumber] = useState(currentUser ? currentUser.phone : '')
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
     const [message, setMessage] = useState('')
 
     const { showMessage } = useMessage()
+    const { bookAppointment } = useAppointment()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // validations (same as main appointment form)
         if (service === 'SERVICE') {
             showMessage('error', 'Please select a service before submitting the form.')
             return
@@ -55,11 +63,21 @@ function AppoinmentFormContact() {
             message
         }
 
-        console.log('Form Data Submitted:', formData)
+        // attempt to persist booking (supports guest bookings)
+        const result = await bookAppointment(formData)
+        if (result && result.success) {
+            showMessage('success', `Thanks! for Booking Appointment. Your Appointment has been confirmed with stylist ${result.stylist}.`)
+            console.log('Appointment booked successfully!: ')
+        } else {
+            showMessage('error', 'Failed to book appointment. Please try again.')
+            console.error('Error booking appointment:', result?.error)
+        }
+
         // Reset form fields
         setName('')
         setEmail('')
         setPhoneNumber('')
+        setSelected('SERVICE')
         setService('SERVICE')
         setDate('')
         setTime('')
@@ -76,7 +94,7 @@ function AppoinmentFormContact() {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
     return (
-        <form className="w-full space-y-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
             <div>
                 <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-[#777777] ml-0.5" htmlFor="name">Full Name *</label>
                 <input type="text" placeholder="Hassan Waheed Ali" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-bold border-4  rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5" required />
@@ -151,7 +169,7 @@ function AppoinmentFormContact() {
                 <textarea placeholder="Please Write Your Message" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-semibold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#b5b3b3] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5 h-24" rows={1} />
             </div>
             <div>
-                <button type="submit" className="w-full bg-[#0d0d0d] hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold py-4 rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none mt-2 resize-none " onClick={handleSubmit}>Book An Appoinment</button>
+                <button type="submit" className="w-full bg-[#0d0d0d] hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold py-4 rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none mt-2 resize-none ">Book An Appoinment</button>
             </div>
         </form>
     )

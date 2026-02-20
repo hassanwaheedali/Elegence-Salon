@@ -37,9 +37,9 @@ function Contact() {
                 ></div>
 
                 {/* Main Content */}
-                <div className="relative container mx-auto px-4 pt-24 pb-16 sm:pt-28 sm:pb-18 md:pt-32 md:pb-20 lg:pt-38 lg:pb-22 z-10 flex justify-center items-center h-full text-center">
+                <div className="relative container mx-auto px-4 pt-24 pb-16 sm:pt-38 sm:pb-18 md:pt-32 md:pb-12 lg:pt-38 lg:pb-22 z-10 flex justify-center items-center h-full text-center">
                     <h1
-                        className="font-black text-5xl sm:text-6xl md:text-7xl lg:text-[7vw] shadow-md tracking-widest uppercase leading-tight"
+                        className="font-black text-5xl sm:text-[10vw] lg:text-[7vw] shadow-md tracking-widest uppercase leading-tight"
                         style={{
                             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.68) 50%, rgba(0, 0, 0, 0.28) 100%)',
                             WebkitBackgroundClip: 'text',
@@ -53,7 +53,7 @@ function Contact() {
             <section className="bg-[#0F0F0F]">
                 <div className="container mx-auto pt-16 pb-18 px-4 flex justify-center items-center flex-col">
                     <div className="section-text text-center space-y-2">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight"><span className="text-[#FF8A00]">READY FOR</span> NEW LOOK</h2>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight"><span className="text-[#FF8A00]">READY FOR</span> NEW LOOK</h2>
                         <p className="text-base sm:text-lg text-[#8A8A8A]">Schedule your appointment or send us a message</p>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ function Contact() {
                         </div>
                         <AppoinmentFormContact />
                     </div>
-                    <div className="store-section mt-8 lg:mt-0 px-6 md:px-0 md:pr-6 pb-12 md:pb-0">
+                    <div className="store-section mt-8 lg:mt-0 px-6 md:px-8 pb-12 md:pb-0">
                         <div className="visit-store-section">
                             <div className="head-background bg-[#1a1a1a] w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-8 sm:py-10 mb-5 transition-all duration-500 rounded-t-lg">
                                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33]"><span className="text-white">Visit Our</span> Store</h2>

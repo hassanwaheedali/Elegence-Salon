@@ -49,7 +49,7 @@ export function AppointmentProvider({ children }) {
                 message: appointmentData.message,
                 price: appointmentData.servicePrice,
                 status: "Awaiting Confirmation",
-                userId: currentUser.id,
+                userId: currentUser ? currentUser.id : null,
                 stylistId: assignedStylist.id,
                 stylistName: assignedStylist.name,
                 stylistEmail: assignedStylist.email,
