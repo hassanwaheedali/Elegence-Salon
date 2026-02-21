@@ -7,9 +7,9 @@ import {
     Crown, // For Hair Styling (Premium)
     Palette // For Hair Color
 } from 'lucide-react'
-import barberImg from '../assets/barber.png'
-import Landing from '../assets/Landing.jpg'
-import About from '../assets/About.png'
+import barberImg from '../assets/barber.webp'
+import Landing from '../assets/Landing.webp'
+import About from '../assets/About.webp'
 import ServiceCard from '../Components/ServiceCard.jsx'
 import PriceCard from '../Components/PriceCard.jsx'
 import AppointmentForm from '../Components/AppoinmentForm.jsx'

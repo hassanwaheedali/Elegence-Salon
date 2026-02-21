@@ -47,6 +47,15 @@ html {
   }
 }
 
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
 .brand-scroll-wrapper {
   display: inline-block;
   width: 100%;

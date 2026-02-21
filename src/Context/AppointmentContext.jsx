@@ -197,14 +197,39 @@ export function AppointmentProvider({ children }) {
         }
     }
 
-    // edit appointment details for admin
+    // edit appointment details for admin (includes stylist availability check)
     const updateAppointment = async (appointmentId, updatedData) => {
         try {
             const appointment = appointments.find(a => a.id === appointmentId);
             if (!appointment) {
                 return { success: false, error: 'Appointment not found' };
             }
+
             const updatedAppointment = { ...appointment, ...updatedData };
+
+            // If there is an assigned stylist (either existing or provided in update),
+            // ensure that stylist is available for the new date/time/service.
+            const stylistIdToCheck = updatedAppointment.stylistId || appointment.stylistId;
+            if (stylistIdToCheck) {
+                const availableStylists = getAvailableStaff(
+                    updatedAppointment.date || appointment.date,
+                    updatedAppointment.time || appointment.time,
+                    updatedAppointment.service || appointment.service
+                );
+
+                const stylistEmailToCheck = updatedAppointment.stylistEmail || appointment.stylistEmail;
+
+                const stylistStillAvailable = availableStylists.some(
+                    s => s.id === stylistIdToCheck || (stylistEmailToCheck && s.email.toLowerCase() === stylistEmailToCheck.toLowerCase())
+                );
+                if (!stylistStillAvailable) {
+                    return {
+                        success: false,
+                        error: 'Assigned stylist is not available for the selected date/time/service. Please choose another time or reassign stylist.'
+                    };
+                }
+            }
+
             const updatedAppointments = appointments.map(a =>
                 a.id === appointmentId ? updatedAppointment : a
             );
@@ -230,10 +255,19 @@ export function AppointmentProvider({ children }) {
         }
     }
 
+    const getAppointmentsForStaff = (staffId) => {
+        const currentStaff = staff.find(s => s.id === Number(staffId));
+        return appointments.filter(a =>
+            a.stylistId === Number(staffId) ||
+            (currentStaff && a.stylistEmail && a.stylistEmail.toLowerCase() === currentStaff.email.toLowerCase())
+        );
+    };
+
     const value = {
         appointments,
         bookAppointment,
         displayAppointmentsByUser,
+        getAppointmentsForStaff,
         cancelAppointment,
         rescheduleAppointment,
         changeStatus,

@@ -1,5 +1,5 @@
 import Header from "../Components/Header"
-import Landing from '../assets/contact-bg.png'
+import Landing from '../assets/contact-bg.webp'
 import AppoinmentFormContact from "../Components/AppoinmentFormContact"
 import { useState, useEffect } from "react"
 

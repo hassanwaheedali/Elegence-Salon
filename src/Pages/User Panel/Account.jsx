@@ -4,7 +4,7 @@ import Feedback from '../../Components/UserPanel Components/Feedback.jsx'
 import Booking from '../../Components/UserPanel Components/Booking.jsx'
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import Landing from '../../Assets/contact-bg.png'
+import Landing from '../../Assets/contact-bg.webp'
 
 function Account() {
     const navigate = useNavigate()

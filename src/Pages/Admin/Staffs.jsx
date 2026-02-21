@@ -15,11 +15,12 @@ import {
 import { useStaff } from '../../Context/StaffContext'
 import { useMessage } from '../../Context/MessageContext'
 
-import StaffMenu from '../../Components/AdminPanel Components/StaffMenu'
-import StaffAppointmentsModal from '../../Components/AdminPanel Components/StaffAppointmentsModal'
+import StaffMenu from '../../Components/StaffPanel Components/StaffMenu'
+import StaffAppointmentsModal from '../../Components/StaffPanel Components/StaffAppointmentsModal'
 import StaffDetailsModal from '../../Components/AdminPanel Components/StaffDetailsModal'
 import AddStaffModal from '../../Components/AdminPanel Components/AddStaffModal'
 import EditStaffModal from '../../Components/AdminPanel Components/EditStaffModal'
+import ConfirmModal from '../../Components/ConfirmModal'
 
 const Staffs = () => {
     const { staff, removeStaff } = useStaff()
@@ -32,6 +33,9 @@ const Staffs = () => {
     const [viewingDetailsFor, setViewingDetailsFor] = useState(null)
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
     const [editingStaff, setEditingStaff] = useState(null)
+
+    // Confirmation state (replaces window.confirm)
+    const [confirmAction, setConfirmAction] = useState(null)
 
     // Filter Logic
     const filteredStaff = staff.filter(member => {
@@ -47,8 +51,8 @@ const Staffs = () => {
     // Get unique roles for filter
     const roles = ['All', ...new Set(staff.map(item => item.role))]
 
-    // Helper for Status Badge
-    // Helper for Status Badge
+
+    // Helper for Status Badge    // Helper for Status Badge
     const StatusBadge = ({ status = 'inactive' }) => {
         const isActive = status === 'active'
         const displayStatus = status ? (status.charAt(0).toUpperCase() + status.slice(1)) : 'Inactive'
@@ -71,10 +75,15 @@ const Staffs = () => {
         setEditingStaff(staff);
     }
     const handleDelete = (staff) => {
-        if (window.confirm(`Are you sure you want to remove ${staff.name} from the team?`)) {
-            removeStaff(staff.id)
-            showMessage('success', `${staff.name} has been removed from the team.`)
-        }
+        setConfirmAction({
+            message: `Are you sure you want to remove ${staff.name} from the team?`,
+            onConfirm: () => {
+                removeStaff(staff.id)
+                showMessage('success', `${staff.name} has been removed from the team.`)
+                setConfirmAction(null)
+            },
+            onCancel: () => setConfirmAction(null)
+        })
     }
 
     return (
@@ -312,6 +321,15 @@ const Staffs = () => {
                         showMessage('success', `${updatedMember.name}'s profile has been updated.`)
                         setEditingStaff(null)
                     }}
+                />
+            )}
+
+            {/* global confirmation modal */}
+            {confirmAction && (
+                <ConfirmModal
+                    message={confirmAction.message}
+                    onConfirm={confirmAction.onConfirm}
+                    onCancel={confirmAction.onCancel}
                 />
             )}
         </div>

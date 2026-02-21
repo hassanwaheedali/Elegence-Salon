@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useAppointment } from '../../Context/AppointmentContext'
+import { useMessage } from '../../Context/MessageContext'
+import { services } from '../../data/services'
 
 // Convert MM/DD/YYYY to YYYY-MM-DD for date input
 const convertToInputFormat = (dateStr) => {
@@ -14,22 +16,19 @@ const convertToInputFormat = (dateStr) => {
     return `${year}-${month}-${day}`
 }
 
-// Convert YYYY-MM-DD to MM/DD/YYYY for storage
+// Keep storage format consistent (use ISO YYYY-MM-DD).
+// Booking form already provides YYYY-MM-DD; persist same format so views stay consistent.
 const convertToStorageFormat = (dateStr) => {
     if (!dateStr) return ''
-    const date = new Date(dateStr)
-    if (isNaN(date.getTime())) return ''
-
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    const year = date.getFullYear()
-    return `${month}/${day}/${year}`
+    // dateStr from <input type="date"> is already YYYY-MM-DD — keep it as-is
+    return dateStr
 }
 
 const EditAppointmentModal = ({ appointment, onClose }) => {
     const { updateAppointment } = useAppointment()
     const [formData, setFormData] = useState({
         ...appointment,
+        // normalize appointment.date for input (accept MM/DD/YYYY or YYYY-MM-DD)
         date: convertToInputFormat(appointment.date)
     })
     const [loading, setLoading] = useState(false)
@@ -48,24 +47,76 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
         };
     }, [onClose]);
 
+    const { showMessage } = useMessage()
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        const { name, value } = e.target
+
+        // When service changes, also update the stored price if available
+        if (name === 'service') {
+            let foundPrice = ''
+            for (const cat of services) {
+                const found = cat.items.find(i => i.name === value)
+                if (found) {
+                    foundPrice = found.price
+                    break
+                }
+            }
+            setFormData(prev => ({ ...prev, service: value, price: foundPrice }))
+            return
+        }
+
+        setFormData({ ...formData, [name]: value })
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
         try {
-            // Convert date back to MM/DD/YYYY format for storage
+            // Basic validations (same rules as booking form)
+            const todayStr = new Date().toISOString().split('T')[0] // YYYY-MM-DD
+            const selectedDate = formData.date // already YYYY-MM-DD
+
+            if (!selectedDate) {
+                showMessage('error', 'Please choose a valid date')
+                setLoading(false)
+                return
+            }
+
+            if (selectedDate < todayStr) {
+                showMessage('error', 'Please select a valid future date')
+                setLoading(false)
+                return
+            }
+
+            const dayOfWeek = new Date(selectedDate).getDay()
+            if (dayOfWeek === 0) {
+                showMessage('error', 'Appointments cannot be booked on Sundays. Please select another day.')
+                setLoading(false)
+                return
+            }
+
+            if (!formData.time || formData.time < '11:00' || formData.time > '20:00') {
+                showMessage('error', 'Please select a time between 11:00 and 20:00.')
+                setLoading(false)
+                return
+            }
+
+            // stylist availability is validated inside AppointmentContext.updateAppointment
+            // so we don't duplicate that check here — the context will return an error if unavailable.
+
+            // Prepare data (store date as YYYY-MM-DD for consistency)
             const dataToSave = {
                 ...formData,
                 date: convertToStorageFormat(formData.date)
             }
+
             const response = await updateAppointment(appointment.id, dataToSave)
             if (response.success) {
+                showMessage('success', 'Appointment updated successfully')
                 onClose()
             } else {
-                alert(response.error)
+                showMessage('error', response.error || 'Failed to update appointment')
             }
         } catch (error) {
             console.error(error)
@@ -127,11 +178,13 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                             onChange={handleChange}
                             className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
                         >
-                            <option value="Classic Haircut">Classic Haircut</option>
-                            <option value="Shave">Shave</option>
-                            <option value="Beard Trim">Beard Trim</option>
-                            <option value="Hair Coloring">Hair Coloring</option>
-                            <option value="Facial">Facial</option>
+                            {services.map((cat) => (
+                                <optgroup key={cat.title} label={cat.title} className="text-sm">
+                                    {cat.items.map((it) => (
+                                        <option key={it.name} value={it.name}>{it.name} - {it.price}</option>
+                                    ))}
+                                </optgroup>
+                            ))}
                         </select>
                     </div>
                     <div>

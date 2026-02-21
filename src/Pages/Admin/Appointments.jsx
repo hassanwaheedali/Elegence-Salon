@@ -510,7 +510,12 @@ function Appointments() {
                                                             {appointment.name.charAt(0)}
                                                         </div>
                                                         <div>
-                                                            <div className="font-bold text-white text-sm">{appointment.name}</div>
+                                                            <div className="flex items-center gap-2">
+                                                                <div className="font-bold text-white text-sm">{appointment.name}</div>
+                                                                {appointment.userId == null && (
+                                                                    <div className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</div>
+                                                                )}
+                                                            </div>
                                                             <div className="text-[#777] text-xs flex items-center gap-1 mt-0.5">
                                                                 {appointment.phone || "No Phone"}
                                                             </div>

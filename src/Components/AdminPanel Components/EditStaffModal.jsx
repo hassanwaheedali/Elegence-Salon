@@ -40,6 +40,7 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
         const saturday = schedule.saturday || { start: "10:00", end: "16:00" };
         const sunday = schedule.sunday || null;
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFormData({
             name: staffToEdit.name || '',
             email: staffToEdit.email || '',

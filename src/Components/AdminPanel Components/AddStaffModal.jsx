@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock } from 'lucide-react';
+import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock, Lock } from 'lucide-react';
 import { useStaff } from '../../Context/StaffContext';
 
 const AddStaffModal = ({ onClose, onStaffAdded }) => {
@@ -10,6 +10,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
         email: '',
         phone: '',
         role: '',
+        password: '',
         specialties: '',
         // Default values for fields required but not in form
         experience: '',
@@ -48,8 +49,8 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
         setError('');
 
         // Basic validation
-        if (!formData.name || !formData.email || !formData.phone || !formData.role || !formData.specialties) {
-            setError('Please fill in all required fields');
+        if (!formData.name || !formData.email || !formData.phone || !formData.role || !formData.specialties || !formData.password) {
+            setError('Please fill in all required fields (password required for staff accounts)');
             return;
         }
 
@@ -77,6 +78,8 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
             email: formData.email,
             phone: formData.phone,
             role: formData.role,
+            accountRole: 'staff',
+            password: formData.password,
             experience: formData.experience || 'New',
             rating: formData.rating,
             commission: formData.commission,
@@ -195,6 +198,26 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         placeholder="+1 234 567 8900"
+                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-600"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Password (for staff login) */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="space-y-1.5">
+                                <label className="text-gray-400 text-xs font-bold uppercase ml-1">Account Password</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <Lock size={16} />
+                                    </div>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        placeholder="Set a password for staff login"
                                         className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-600"
                                     />
                                 </div>

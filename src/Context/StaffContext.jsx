@@ -9,6 +9,8 @@ const defaultStaff = [
         email: "john@elegancesalon.com",
         phone: "+1234567890",
         role: "Senior Stylist",
+        accountRole: "staff",
+        password: "staff123",
         specialties: ["Haircut", "Hair Color", "Beard Trim"],
         rating: 4.8,
         experience: "5 years",
@@ -30,6 +32,8 @@ const defaultStaff = [
         email: "jane@elegancesalon.com",
         phone: "+1234567891",
         role: "Color Specialist",
+        accountRole: "staff",
+        password: "staff123",
         specialties: ["Hair Color", "Highlights", "Balayage"],
         rating: 4.9,
         experience: "7 years",
@@ -51,6 +55,8 @@ const defaultStaff = [
         email: "mike@elegancesalon.com",
         phone: "+1234567892",
         role: "Junior Barber",
+        accountRole: "staff",
+        password: "staff123",
         specialties: ["Haircut", "Beard Trim", "Shaving"],
         rating: 4.6,
         experience: "2 years",
@@ -72,6 +78,8 @@ const defaultStaff = [
         email: "sarah@elegancesalon.com",
         phone: "+1234567893",
         role: "Makeup Artist",
+        accountRole: "staff",
+        password: "staff123",
         specialties: ["Facial", "Makeup", "Eyebrow Shaping"],
         rating: 4.7,
         experience: "4 years",
@@ -96,12 +104,8 @@ export function StaffProvider({ children }) {
 
     useEffect(() => {
         const fetchStaff = async () => {
-            const storedStaff = await localStorage.getItem(STORAGE_KEY);
-            if (storedStaff) {
-                setStaff(JSON.parse(storedStaff));
-                return;
-            }
-
+            const storedRaw = await localStorage.getItem(STORAGE_KEY);
+            // ensure default staff include auth fields
             setStaff(defaultStaff);
             await localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultStaff));
         };
@@ -113,10 +117,12 @@ export function StaffProvider({ children }) {
         if (!newMember) {
             return { error: "Invalid staff data provided." };
         }
-        if (!newMember.name || !newMember.email || !newMember.phone || !newMember.role || !newMember.specialties) {
-            return { error: "Please fill in all required fields." };
+        // require password/auth data for staff accounts (so staff can login)
+        if (!newMember.name || !newMember.email || !newMember.phone || !newMember.role || !newMember.specialties || !newMember.password) {
+            return { error: "Please fill in all required fields (password required for staff accounts)." };
         }
 
+        // ensure no collision with existing staff
         const existingStaff = staff.find(member =>
             member.email.toLowerCase() === newMember.email.toLowerCase() ||
             member.phone === newMember.phone
@@ -126,16 +132,26 @@ export function StaffProvider({ children }) {
             return { error: "Staff member with this email or phone already exists." };
         }
 
+        // also ensure no collision with persisted clients
+        const persistedClients = JSON.parse(localStorage.getItem('allUsers') || '[]');
+        if (persistedClients.some(u => u.email && u.email.toLowerCase() === newMember.email.toLowerCase())) {
+            return { error: 'A client account already exists with this email. Use a different email.' };
+        }
+
         const newId = staff.length > 0 ? Math.max(...staff.map(s => s.id)) + 1 : 1;
         const staffToAdd = {
             ...newMember,
             id: newId,
+            accountRole: newMember.accountRole || 'staff',
             status: "active"
         };
 
         const updatedStaff = [...staff, staffToAdd];
         setStaff(updatedStaff);
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
+
+        // notify other contexts (AuthContext) to refresh runtime users
+        try { window.dispatchEvent(new CustomEvent('staff-added', { detail: staffToAdd })); } catch (e) { /* noop */ }
 
         return { success: "Staff member added successfully.", member: staffToAdd };
     };
@@ -144,6 +160,7 @@ export function StaffProvider({ children }) {
         const updatedStaff = staff.filter(member => member.id !== staffId);
         setStaff(updatedStaff);
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
+        try { window.dispatchEvent(new CustomEvent('staff-removed', { detail: staffId })); } catch (e) { /* noop */ }
         return { success: "Staff member removed successfully." };
     };
 
@@ -153,12 +170,29 @@ export function StaffProvider({ children }) {
             return { error: "Staff member not found." };
         }
 
-        const updatedStaff = staff.map(member =>
-            member.id === staffId ? { ...member, ...updatedData } : member
-        );
+        // validate uniqueness against other staff
+        const conflict = staff.find(m => (m.email.toLowerCase() === (updatedData.email || findStaff.email).toLowerCase() || m.phone === (updatedData.phone || findStaff.phone)) && m.id !== staffId);
+        if (conflict) {
+            return { error: 'Another staff member already uses that email or phone.' };
+        }
+
+        // validate uniqueness against persisted clients
+        const persistedClients = JSON.parse(localStorage.getItem('allUsers') || '[]');
+        if (updatedData.email && persistedClients.some(u => u.email && u.email.toLowerCase() === updatedData.email.toLowerCase())) {
+            return { error: 'A client account already exists with this email. Use a different email.' };
+        }
+
+        // merge changes (preserve existing auth fields if not provided)
+        const updatedMember = { ...findStaff, ...updatedData };
+        const updatedStaff = staff.map(member => member.id === staffId ? updatedMember : member);
+
         setStaff(updatedStaff);
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
-        return { success: "Staff member updated successfully." };
+
+        // notify AuthContext and other listeners
+        try { window.dispatchEvent(new CustomEvent('staff-updated', { detail: updatedMember })); } catch (e) { /* noop */ }
+
+        return { success: "Staff member updated successfully.", member: updatedMember };
     };
 
     const getStaffBySpecialty = (specialty) => {
@@ -196,6 +230,10 @@ export function StaffProvider({ children }) {
 
     const getActiveStaff = () => staff.filter(member => member.status === "active");
 
+    const getStaffById = (id) => {
+        return staff.find(member => member.id === Number(id));
+    };
+
     const value = {
         staff,
         addNewStaff,
@@ -203,7 +241,8 @@ export function StaffProvider({ children }) {
         getStaffBySpecialty,
         getAvailableStaff,
         getActiveStaff,
-        updateStaff
+        updateStaff,
+        getStaffById
     };
 
     return <StaffContext.Provider value={value} > {children}</StaffContext.Provider >;

@@ -13,7 +13,7 @@ import { useAppointment } from '../../Context/AppointmentContext'
 import StatsCard from '../../Components/AdminPanel Components/StatsCard'
 import StatusBadge from '../../Components/AdminPanel Components/StatusBadge'
 import InventoryItem from '../../Components/AdminPanel Components/InventoryItem'
-import StaffRow from '../../Components/AdminPanel Components/StaffRow'
+import StaffRow from '../../Components/StaffPanel Components/StaffRow'
 import AppointmentMenu from '../../Components/AdminPanel Components/AppointmentMenu'
 import EditAppointmentModal from '../../Components/AdminPanel Components/EditAppointmentModal'
 import ViewAppointmentModal from '../../Components/AdminPanel Components/ViewAppointmentModal'
@@ -136,7 +136,12 @@ function Dashboard() {
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <img src={`https://placehold.co/150x150/222/FFF?text=${appointment.name.charAt(0)}`} alt={appointment.name} className="w-9 h-9 rounded-full border border-white/10" />
-                                            <span className="font-semibold text-white text-sm">{appointment.name}</span>
+                                            <span className="font-semibold text-white text-sm">
+                                                {appointment.name}
+                                                {appointment.userId == null && (
+                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</span>
+                                                )}
+                                            </span>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-[#a1a1aa]">{appointment.service} - {appointment.price || ""}</td>
@@ -171,7 +176,12 @@ function Dashboard() {
                                 <div className="flex items-center gap-3">
                                     <img src={`https://placehold.co/150x150/222/FFF?text=${appointment.name.charAt(0)}`} alt={appointment.name} className="w-10 h-10 rounded-full border border-white/10" />
                                     <div>
-                                        <h4 className="font-bold text-white text-sm">{appointment.name}</h4>
+                                        <h4 className="font-bold text-white text-sm flex items-center gap-2">
+                                            <span>{appointment.name}</span>
+                                            {appointment.userId == null && (
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</span>
+                                            )}
+                                        </h4>
                                         <div className="text-xs text-[#777] flex items-center gap-1 mt-0.5">
                                             {appointment.service}
                                         </div>

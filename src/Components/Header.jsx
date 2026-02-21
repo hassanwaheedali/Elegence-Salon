@@ -34,6 +34,11 @@ function Header({ bgImage = "bg-transparent" }) {
 
     const headerBg = scrollY > 50 ? 'bg-[#0F0F0F]' : bgImage
 
+    // role helpers derived from accountRole to distinguish clients/staff/admin
+    const isAdmin = currentUser?.accountRole === 'admin';
+    const isStaff = currentUser?.accountRole === 'staff';
+    const isClient = isAuthenticated && !isAdmin && !isStaff;
+
     // Simple function to navigate to section
     const goToSection = (sectionId) => {
         navigate('/')
@@ -169,7 +174,7 @@ function Header({ bgImage = "bg-transparent" }) {
 
                                             {/* Navigation Section */}
                                             <div className="py-2">
-                                                {currentUser?.role === 'admin' ? (
+                                                {isAdmin && (
                                                     // Admin Links
                                                     <Link
                                                         to="/admin/dashboard"
@@ -178,8 +183,35 @@ function Header({ bgImage = "bg-transparent" }) {
                                                         <i className="fas fa-tachometer-alt w-5"></i>
                                                         <span>Admin Dashboard</span>
                                                     </Link>
-                                                ) : (
-                                                    // User Links
+                                                )}
+                                                {isStaff && (
+                                                    // Staff Links
+                                                    <>
+                                                        <Link
+                                                            to="/staff/dashboard"
+                                                            className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                        >
+                                                            <i className="fas fa-tachometer-alt w-5"></i>
+                                                            <span>Staff Dashboard</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/staff/appointments"
+                                                            className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                        >
+                                                            <i className="fas fa-calendar-alt w-5"></i>
+                                                            <span>My Appointments</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/staff/profile"
+                                                            className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/3 transition-colors"
+                                                        >
+                                                            <i className="fas fa-user w-5"></i>
+                                                            <span>My Profile</span>
+                                                        </Link>
+                                                    </>
+                                                )}
+                                                {isClient && (
+                                                    // Client/User Links
                                                     <>
                                                         <Link
                                                             to="/account"
@@ -334,7 +366,7 @@ function Header({ bgImage = "bg-transparent" }) {
 
                                             {/* Navigation Links */}
                                             <div className="space-y-2">
-                                                {currentUser?.role === 'admin' ? (
+                                                {isAdmin && (
                                                     <Link
                                                         to="/admin/dashboard"
                                                         onClick={closeMobileMenu}
@@ -343,7 +375,36 @@ function Header({ bgImage = "bg-transparent" }) {
                                                         <i className="fas fa-tachometer-alt w-5"></i>
                                                         <span>Admin Dashboard</span>
                                                     </Link>
-                                                ) : (
+                                                )}
+                                                {isStaff && (
+                                                    <>
+                                                        <Link
+                                                            to="/staff/dashboard"
+                                                            onClick={closeMobileMenu}
+                                                            className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                        >
+                                                            <i className="fas fa-tachometer-alt w-5"></i>
+                                                            <span>Staff Dashboard</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/staff/appointments"
+                                                            onClick={closeMobileMenu}
+                                                            className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                        >
+                                                            <i className="fas fa-calendar-alt w-5"></i>
+                                                            <span>My Appointments</span>
+                                                        </Link>
+                                                        <Link
+                                                            to="/staff/profile"
+                                                            onClick={closeMobileMenu}
+                                                            className="flex items-center gap-3 px-3 py-3 text-gray-300 hover:text-[#fb880a] hover:bg-gray-900/30 transition-colors rounded-lg"
+                                                        >
+                                                            <i className="fas fa-user w-5"></i>
+                                                            <span>My Profile</span>
+                                                        </Link>
+                                                    </>
+                                                )}
+                                                {isClient && (
                                                     <>
                                                         <Link
                                                             to="/account"

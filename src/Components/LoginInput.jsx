@@ -15,6 +15,8 @@ function LoginInput() {
         if (currentUser) {
             if (currentUser.role === "admin") {
                 navigate("/admin/dashboard");
+            } else if (currentUser.accountRole === 'staff') {
+                navigate('/staff/dashboard');
             } else {
                 navigate("/");
             }

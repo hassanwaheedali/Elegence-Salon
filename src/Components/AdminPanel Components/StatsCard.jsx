@@ -2,7 +2,15 @@ import { TrendingUp, TrendingDown } from 'lucide-react'
 
 const StatsCard = ({ title, value, change, positive, icon, color, bg }) => {
     return (
-        <div className="group relative overflow-hidden bg-linear-to-br from-[#1a1a1a] to-[#0f0f0f] p-6 rounded-2xl border border-white/5 hover:border-[#fb9d33]/40 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-[#fb9d33]/10">
+        <div
+            className="group relative overflow-hidden bg-linear-to-br from-[#1a1a1a] to-[#0f0f0f] p-6 rounded-2xl border border-white/5 transition-all duration-500 shadow-lg hover:shadow-2xl"
+        >
+            <div
+                className="pointer-events-none absolute -inset-y-8 -left-3/4 w-[140%] skew-x-12 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-[shine-sweep_1500ms_ease-out]"
+                style={{
+                    backgroundImage: 'linear-gradient(125deg, rgba(0,0,0,0) 0%, rgba(15,15,15,0.6) 45%, rgba(55,55,55,0.25) 55%, rgba(0,0,0,0) 70%)'
+                }}
+            />
             <div className="relative z-10">
                 <div className="flex items-start justify-between mb-4">
                     <div>

@@ -1,5 +1,5 @@
 import Header from '../Components/Header.jsx'
-import accountBarber from '../assets/accountbarber.png'
+import accountBarber from '../assets/accountbarber.webp'
 import RegisterInput from '../Components/RegisterInput.jsx'
 
 function Register() {

@@ -68,20 +68,21 @@ function AppoinmentFormContact() {
         if (result && result.success) {
             showMessage('success', `Thanks! for Booking Appointment. Your Appointment has been confirmed with stylist ${result.stylist}.`)
             console.log('Appointment booked successfully!: ')
+            setName('')
+            setEmail('')
+            setPhoneNumber('')
+            setSelected('SERVICE')
+            setService('SERVICE')
+            setDate('')
+            setTime('')
+            setMessage('')
         } else {
-            showMessage('error', 'Failed to book appointment. Please try again.')
+            showMessage('error', result?.error || 'An error occurred while booking your appointment. Please try again later.')
             console.error('Error booking appointment:', result?.error)
         }
 
         // Reset form fields
-        setName('')
-        setEmail('')
-        setPhoneNumber('')
-        setSelected('SERVICE')
-        setService('SERVICE')
-        setDate('')
-        setTime('')
-        setMessage('')
+
     }
 
     useEffect(() => {

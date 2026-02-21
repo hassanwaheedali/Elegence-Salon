@@ -15,8 +15,8 @@ function ProtectedRoute({ children, requiredRole }) {
 
     if (requiredRole) {
         const allowed = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
-        const role = currentUser?.role;
-        if (!role || !allowed.includes(role)) {
+        const userRole = currentUser?.accountRole || currentUser?.role; // support staff (accountRole) + existing role
+        if (!userRole || !allowed.includes(userRole)) {
             return <Navigate to="/login" replace />;
         }
     }

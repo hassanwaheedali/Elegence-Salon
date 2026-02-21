@@ -4,7 +4,7 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
     return (
         <div
             onClick={onClick}
-            className="group relative h-[450px] w-full overflow-hidden rounded-2xl bg-[#1a1a1a] shadow-lg transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
+            className="group relative h-112.5 w-full overflow-hidden rounded-2xl bg-[#1a1a1a] shadow-lg transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
         >
             {/* Background Image with Zoom Effect */}
             <div

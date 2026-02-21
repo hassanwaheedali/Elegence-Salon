@@ -2,6 +2,7 @@ import { Calendar, Clock, Scissors, User, X, Check, AlertCircle } from 'lucide-r
 import { useAppointment } from '../../Context/AppointmentContext.jsx'
 import { useMessage } from '../../Context/MessageContext.jsx'
 import { useState, useEffect } from 'react'
+import ConfirmModal from '../ConfirmModal'
 
 // Convert MM/DD/YYYY to YYYY-MM-DD for date input
 const convertToInputFormat = (dateStr) => {
@@ -48,16 +49,23 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
         }
     }, [isRescheduling, isVisible])
 
-    const handleCancel = async () => {
-        if (!window.confirm("Are you sure you want to cancel this appointment?")) return
+    const [confirmAction, setConfirmAction] = useState(null)
 
-        const result = await cancelAppointment(appointmentId)
-        if (result.success) {
-            showMessage('success', 'Appointment cancelled successfully')
-            await new Promise(resolve => setTimeout(resolve, 100))
-        } else {
-            showMessage('error', `Failed to cancel appointment: ${result.error}`)
-        }
+    const handleCancel = async () => {
+        setConfirmAction({
+            message: 'Are you sure you want to cancel this appointment?',
+            onConfirm: async () => {
+                const result = await cancelAppointment(appointmentId)
+                if (result.success) {
+                    showMessage('success', 'Appointment cancelled successfully')
+                    await new Promise(resolve => setTimeout(resolve, 100))
+                } else {
+                    showMessage('error', `Failed to cancel appointment: ${result.error}`)
+                }
+                setConfirmAction(null)
+            },
+            onCancel: () => setConfirmAction(null)
+        })
     }
 
     const handleschedule = async () => {
@@ -102,12 +110,18 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
                 </span>
             </div>
 
+            {confirmAction && (
+                <ConfirmModal
+                    message={confirmAction.message}
+                    onConfirm={confirmAction.onConfirm}
+                    onCancel={confirmAction.onCancel}
+                />
+            )}
+
             {/* Details Grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
-                        <Calendar size={14} />
-                    </div>
+                    <Calendar size={14} />
                     <div>
                         <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Date</p>
                         <p className="text-sm font-semibold text-gray-200">{date}</p>
