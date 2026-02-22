@@ -33,6 +33,7 @@ const StaffAppointmentMenu = ({ appointment, onEdit, onView }) => {
     }
 
     useEffect(() => {
+        /* eslint-disable react-hooks/set-state-in-effect */
         if (isOpen && menuRef.current && buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect()
             const menuRect = menuRef.current.getBoundingClientRect()
@@ -53,6 +54,7 @@ const StaffAppointmentMenu = ({ appointment, onEdit, onView }) => {
             setMenuOrigin(origin)
             setMenuPosition({ top, left })
         }
+        /* eslint-enable react-hooks/set-state-in-effect */
 
         const handleClickOutside = (event) => {
             if (
@@ -88,7 +90,9 @@ const StaffAppointmentMenu = ({ appointment, onEdit, onView }) => {
                     showMessage('error', result.error || 'Failed to update status')
                 }
                 setConfirmAction(null)
-            }
+            },
+            // ensure Cancel button works without runtime error
+            onCancel: () => setConfirmAction(null)
         })
         setIsOpen(false)
     }

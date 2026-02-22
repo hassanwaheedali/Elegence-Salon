@@ -47,9 +47,20 @@ function Appointments() {
     const [stylistFilter, setStylistFilter] = useState('all')
     const [selectedPreset, setSelectedPreset] = useState(null)
 
+    const getServiceText = (appointment) =>
+        appointment.services?.map(s => s.name).join(', ') || appointment.service || ''
+
+    const getStylistText = (appointment) =>
+        appointment.stylists?.map(s => s.name).join(', ') || appointment.stylistName || ''
+
+    const getTotalPrice = (appointment) => {
+        if (Number.isFinite(Number(appointment.totalPrice))) return Number(appointment.totalPrice)
+        return appointment.services?.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0) || 0
+    }
+
     // Derived state - memoized for performance
     const uniqueStylists = useMemo(() =>
-        [...new Set(appointments.map(a => a.stylistName).filter(Boolean))],
+        [...new Set(appointments.flatMap(a => a.stylists?.map(s => s.name) || []).filter(Boolean))],
         [appointments]
     )
 
@@ -145,9 +156,9 @@ function Appointments() {
             const matchedSearch = !searchTerm ||
                 appointment.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 appointment.phone?.includes(searchTerm) ||
-                appointment.service?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                getServiceText(appointment).toLowerCase().includes(searchTerm.toLowerCase()) ||
                 appointment.id?.toString().includes(searchTerm) ||
-                appointment.stylistName?.toLowerCase().includes(searchTerm.toLowerCase())
+                getStylistText(appointment).toLowerCase().includes(searchTerm.toLowerCase())
 
             // Status filter
             const matchedStatus = statusFilter === 'All' || appointment.status === statusFilter
@@ -177,7 +188,7 @@ function Appointments() {
             }
 
             // Stylist filter
-            const matchedStylist = stylistFilter === 'all' || appointment.stylistName === stylistFilter
+            const matchedStylist = stylistFilter === 'all' || appointment.stylists?.some(s => s.name === stylistFilter)
 
             return matchedSearch && matchedStatus && matchedDate && matchedTime && matchedStylist
         })
@@ -187,6 +198,16 @@ function Appointments() {
             result.sort((a, b) => {
                 let aVal = a[sortConfig.field]
                 let bVal = b[sortConfig.field]
+
+                if (sortConfig.field === 'service') {
+                    aVal = getServiceText(a)
+                    bVal = getServiceText(b)
+                }
+
+                if (sortConfig.field === 'stylistName') {
+                    aVal = getStylistText(a)
+                    bVal = getStylistText(b)
+                }
 
                 // Handle date sorting - convert MM/DD/YYYY to Date
                 if (sortConfig.field === 'date') {
@@ -523,13 +544,13 @@ function Appointments() {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <div className="text-gray-300 text-sm font-medium">{appointment.service}</div>
-                                                    <div className="text-[#FF8A00] text-xs font-bold mt-1">{appointment.price}</div>
+                                                    <div className="text-gray-300 text-sm font-medium">{getServiceText(appointment) || '—'}</div>
+                                                    <div className="text-[#FF8A00] text-xs font-bold mt-1">${getTotalPrice(appointment)}</div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {appointment.stylistName ? (
+                                                    {getStylistText(appointment) ? (
                                                         <span className="text-gray-400 text-sm flex items-center gap-1">
-                                                            <User size={12} /> {appointment.stylistName}
+                                                            <User size={12} /> {getStylistText(appointment)}
                                                         </span>
                                                     ) : (
                                                         <span className="text-[#555] text-xs italic">Unassigned</span>

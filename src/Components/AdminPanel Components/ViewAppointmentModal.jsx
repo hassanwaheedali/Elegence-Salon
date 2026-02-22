@@ -14,9 +14,8 @@ import {
 import StatusBadge from './StatusBadge'
 
 const ViewAppointmentModal = ({ appointment, onClose }) => {
-    if (!appointment) return null;
-
     useEffect(() => {
+        if (!appointment) return undefined
         const handleClickOutside = (event) => {
             if (event.target.classList.contains('fixed')) {
                 onClose();
@@ -35,8 +34,18 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
             window.removeEventListener('keydown', handleEsc);
             window.removeEventListener('click', handleClickOutside);
         };
-    }, [onClose]);
+    }, [appointment, onClose]);
 
+    if (!appointment) return null;
+
+
+    const serviceSummary = appointment.services?.length
+        ? appointment.services.map(s => `${s.name} (${s.price})`).join(', ')
+        : '—'
+    const stylistSummary = appointment.stylists?.length
+        ? appointment.stylists.map(s => s.name).join(', ')
+        : 'Unassigned'
+    const totalPrice = Number.isFinite(Number(appointment.totalPrice)) ? Number(appointment.totalPrice) : 0
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -51,14 +60,16 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                     </button>
                 </div>
 
-                <div className="p-6 space-y-6">
+                <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh] custom-scrollbar">
                     {/* Header Info */}
                     <div className="flex items-start justify-between">
                         <div>
-                            <h3 className="text-2xl font-black text-white">{appointment.service}</h3>
-                            <p className="text-[#FF8A00] font-bold text-lg">{appointment.price}</p>
+                            <h3 className="text-xl font-black text-white">{serviceSummary}</h3>
+                            <p className="text-[#FF8A00] font-bold text-lg">${totalPrice}</p>
                         </div>
-                        <StatusBadge status={appointment.status} />
+                        <div className='mt-0.5'>
+                            <StatusBadge status={appointment.status} />
+                        </div>
                     </div>
 
                     {/* Grid Details */}
@@ -83,9 +94,9 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                         </div>
                         <div className="space-y-1">
                             <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-1.5">
-                                <Scissors size={12} /> Stylist
+                                <Scissors size={12} /> Stylists
                             </label>
-                            <p className="text-white font-medium">{appointment.stylistName || 'Unassigned'}</p>
+                            <p className="text-white font-medium">{stylistSummary}</p>
                         </div>
                     </div>
 

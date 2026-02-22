@@ -49,16 +49,27 @@ function Dashboard() {
             online: true
         }))
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTodayStaff(workingStaff)
     }, [staff])
 
+    const getTotalPrice = (appointment) => {
+        if (Number.isFinite(Number(appointment.totalPrice))) {
+            return Number(appointment.totalPrice)
+        }
+        return appointment.services?.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0) || 0
+    }
+
+    const getServiceSummary = (appointment) =>
+        appointment.services?.map(s => s.name).join(', ') || appointment.service || '—'
+
+    const getStylistSummary = (appointment) =>
+        appointment.stylists?.map(s => s.name).join(', ') || appointment.stylistName || 'Unassigned'
+
     // Calculate Total Revenue
     useEffect(() => {
-        const total = appointments.reduce((acc, curr) => {
-            // Remove '$' and convert to number, default to 0 if invalid
-            const price = parseFloat(curr.price?.replace('$', '') || 0)
-            return acc + price
-        }, 0)
+        const total = appointments.reduce((acc, curr) => acc + getTotalPrice(curr), 0)
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTotalRevenue(total)
     }, [appointments])
 
@@ -144,8 +155,8 @@ function Dashboard() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-[#a1a1aa]">{appointment.service} - {appointment.price || ""}</td>
-                                    <td className="px-6 py-4 text-sm text-[#777]">{appointment.stylistName || 'Not assigned'}</td>
+                                    <td className="px-6 py-4 text-sm text-[#a1a1aa]">{getServiceSummary(appointment)}</td>
+                                    <td className="px-6 py-4 text-sm text-[#777]">{getStylistSummary(appointment)}</td>
                                     <td className="px-6 py-4 text-sm">
                                         <div className="flex flex-col">
                                             <span className="text-white font-medium text-xs">{appointment.date}</span>
@@ -183,7 +194,7 @@ function Dashboard() {
                                             )}
                                         </h4>
                                         <div className="text-xs text-[#777] flex items-center gap-1 mt-0.5">
-                                            {appointment.service}
+                                            {getServiceSummary(appointment)}
                                         </div>
                                     </div>
                                 </div>
@@ -200,11 +211,11 @@ function Dashboard() {
                                     </div>
                                     <div className="flex items-center gap-1.5 text-xs text-[#FF8A00]">
                                         <Scissors size={12} />
-                                        <span>{appointment.stylistName || 'Unassigned'}</span>
+                                        <span>{getStylistSummary(appointment)}</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 relative">
-                                    <span className="text-white font-bold text-sm">{appointment.price}</span>
+                                    <span className="text-white font-bold text-sm">${getTotalPrice(appointment)}</span>
                                     <AppointmentMenu
                                         appointment={appointment}
                                         onEdit={handleEdit}

@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
-import { services } from '../data/services'
+import { services } from '../data/services.js'
 import { useAppointment } from '../Context/AppointmentContext.jsx'
 import { useAuth } from '../Context/AuthContext.jsx'
 import { useMessage } from '../Context/MessageContext.jsx'
 
-function Appoinment() {
+function Appointment() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selected, setSelected] = useState('SERVICE')
     const dropdownRef = useRef(null)
 
     const { currentUser } = useAuth()
@@ -14,8 +13,17 @@ function Appoinment() {
     const [name, setName] = useState(currentUser ? currentUser.name : '')
     const [email, setEmail] = useState(currentUser ? currentUser.email : '')
     const [phoneNumber, setPhoneNumber] = useState(currentUser ? currentUser.phone : '')
-    const [service, setService] = useState('SERVICE')
-    const [servicePrice, setServicePrice] = useState('')
+    const [selectedService, setSelectedService] = useState([])
+
+    const totalPrice = selectedService.reduce((sum, s) => sum + parseFloat(s.price.replace('$', '')), 0)
+
+    const toggleService = (service) => {
+        setSelectedService(prev => {
+            const exists = prev.find(s => s.name === service.name)
+            if (exists) return prev.filter(s => s.name !== service.name)
+            return [...prev, { name: service.name, price: service.price }]
+        })
+    }
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
     const [message, setMessage] = useState('')
@@ -29,14 +37,14 @@ function Appoinment() {
             name,
             email,
             phoneNumber,
-            service,
+            selectedService,
             date,
             time,
             message,
-            servicePrice
+            totalPrice
         }
-        if (service === 'SERVICE') {
-            showMessage('error', 'Please select a service before submitting the form.')
+        if (selectedService.length === 0) {
+            showMessage('error', 'Please select at least one service before submitting the form.')
             return
         }
         if (name === '' || email === '' || phoneNumber === '' || date === '' || time === '') {
@@ -64,17 +72,19 @@ function Appoinment() {
 
         const result = await bookAppointment(formData)
         if (result && result.success) {
-            showMessage('success', `Thanks! for Booking Appointment. Your Appointment has been confirmed with stylist ${result.stylist}.`)
-            console.log('Appointment booked successfully!: ')
+            const assignmentSummary = result.assignments
+                .map(a => `${a.service} → ${a.stylist}`)
+                .join(', ')
+            showMessage('success', `Booking confirmed! ${assignmentSummary}`)
+            console.log('Appointment booked successfully!: ', result)
+            setSelectedService([])
+            setDate('')
+            setTime('')
         } else {
-            showMessage('error', 'Failed to book appointment. Please try again.')
-            console.error('Error booking appointment:', result.error)
+            showMessage('error', result?.error || 'An error occurred while booking your appointment. Please try again later.')
+            console.error('Error booking appointment:', result?.error)
         }
-        
-        // Reset form fields
-        setService('SERVICE')
-        setDate('')
-        setTime('')
+
     }
 
     // Close dropdown when clicking outside
@@ -98,21 +108,26 @@ function Appoinment() {
                     <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
                 </div>
                 <div className="service-select w-full relative" ref={dropdownRef}>
-                    {/* Custom Dropdown */}
+                    {/* Custom Multi-Select Dropdown */}
                     <div className="relative">
                         {/* Dropdown Button */}
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] text-left flex justify-between items-center hover:border-[#fb9d33] transition-colors"
+                            className={`w-full font-black border-2 md:border-5 p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base tracking-tight bg-[#0d0d0d] text-left flex justify-between items-center transition-colors ${isOpen ? 'border-[#fb9d33] text-[#fb9d33]' : 'border-[#454545] text-[#777777] hover:border-[#fb9d33]'
+                                }`}
                         >
-                            <span>{selected}</span>
-                            <span>▼</span>
+                            <span>
+                                {selectedService.length === 0
+                                    ? 'SELECT SERVICES'
+                                    : `${selectedService.length} SERVICE${selectedService.length > 1 ? 'S' : ''} SELECTED`}
+                            </span>
+                            <span className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
                         </button>
 
                         {/* Dropdown Menu */}
                         {isOpen && (
-                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-[#454545] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
+                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-[#fb9d33] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
                                 {services.map((serviceCategory) => (
                                     <div key={serviceCategory.title}>
                                         {/* Category Header */}
@@ -121,34 +136,65 @@ function Appoinment() {
                                         </div>
 
                                         {/* Service Options */}
-                                        {serviceCategory.items.map((service) => (
-                                            <button
-                                                key={service.name}
-                                                onClick={() => {
-                                                    setSelected(`${service.name} - ${service.price}`)
-                                                    setService(`${service.name}`)
-                                                    setServicePrice(service.price)
-                                                    setIsOpen(false)
-                                                }}
-                                                className="w-full text-left px-3 md:px-4 py-2 md:py-3 text-[#bfbdbd] hover:bg-yellow-500 hover:text-white transition-colors font-black tracking-tight text-xs md:text-sm block"
-                                            >
-                                                {service.name} - {service.price}
-                                            </button>
-                                        ))}
+                                        {serviceCategory.items.map((service) => {
+                                            const isSelected = selectedService.some(s => s.name === service.name)
+                                            return (
+                                                <button
+                                                    key={service.name}
+                                                    type="button"
+                                                    onClick={() => toggleService(service)}
+                                                    className={`w-full text-left px-3 md:px-4 py-2 md:py-3 transition-colors font-black tracking-tight text-xs md:text-sm flex items-center justify-between gap-2 ${isSelected
+                                                        ? 'bg-[#fb9d33]/10 text-[#fb9d33]'
+                                                        : 'text-[#bfbdbd] hover:bg-[#fb9d33]/5 hover:text-white'
+                                                        }`}
+                                                >
+                                                    <span>{service.name} — {service.price}</span>
+                                                    <span className={`shrink-0 w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] transition-colors ${isSelected ? 'border-[#fb9d33] bg-[#fb9d33] text-black' : 'border-[#555]'
+                                                        }`}>
+                                                        {isSelected && '✓'}
+                                                    </span>
+                                                </button>
+                                            )
+                                        })}
                                     </div>
                                 ))}
                             </div>
                         )}
                     </div>
 
-                    {/* Hidden input for form submission */}
-                    <input type="hidden" id="service" value={selected === 'SERVICE' ? '' : selected} required />
+                    {/* Selected Services Chips */}
+                    {selectedService.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                            {selectedService.map(s => (
+                                <span
+                                    key={s.name}
+                                    className="inline-flex items-center gap-1.5 bg-[#fb9d33]/15 border border-[#fb9d33]/40 text-[#fb9d33] text-xs font-black px-2 py-1 rounded-sm tracking-tight mt-1.5"
+                                >
+                                    {s.name} — {s.price}
+                                    <button
+                                        type="button"
+                                        onClick={() => toggleService(s)}
+                                        className="text-[#fb9d33] hover:text-white transition-colors leading-none"
+                                    >
+                                        ✕
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Total Price */}
+                    {selectedService.length > 0 && (
+                        <div className="mt-2.5 text-left text-xs font-black text-[#777777] tracking-wide">
+                            TOTAL: <span className="text-[#fb9d33]">${totalPrice}</span>
+                        </div>
+                    )}
                 </div>
                 <div className="message-section">
                     <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" rows={1} />
                 </div>
             </div>
-            <div className="submit-btn w-full mt-6">
+            <div className="submit-btn w-full mt-4">
                 <button type="submit" className="w-full border-5 border-[#fb9d33] hover:border-white  text-white font-black p-3 px-6 hover:bg-[#d28127] transition-colors cursor-pointer">
                     BOOK APPOINTMENT
                 </button>
@@ -157,4 +203,4 @@ function Appoinment() {
     )
 }
 
-export default Appoinment
+export default Appointment

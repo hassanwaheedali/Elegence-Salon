@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
 import { useAppointment } from '../../Context/AppointmentContext'
 import { useMessage } from '../../Context/MessageContext'
-import { services } from '../../data/services'
+import { useStaff } from '../../Context/StaffContext'
+import { services as serviceCatalog } from '../../data/services'
 
 // Convert MM/DD/YYYY to YYYY-MM-DD for date input
 const convertToInputFormat = (dateStr) => {
@@ -26,10 +27,15 @@ const convertToStorageFormat = (dateStr) => {
 
 const EditAppointmentModal = ({ appointment, onClose }) => {
     const { updateAppointment } = useAppointment()
+    const { getAvailableStaff } = useStaff()
+    const dropdownRef = useRef(null)
+    const [isOpen, setIsOpen] = useState(false)
     const [formData, setFormData] = useState({
         ...appointment,
         // normalize appointment.date for input (accept MM/DD/YYYY or YYYY-MM-DD)
-        date: convertToInputFormat(appointment.date)
+        date: convertToInputFormat(appointment.date),
+        services: appointment.services || [],
+        stylists: appointment.stylists || []
     })
     const [loading, setLoading] = useState(false)
 
@@ -47,26 +53,58 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
         };
     }, [onClose]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
     const { showMessage } = useMessage()
 
     const handleChange = (e) => {
         const { name, value } = e.target
-
-        // When service changes, also update the stored price if available
-        if (name === 'service') {
-            let foundPrice = ''
-            for (const cat of services) {
-                const found = cat.items.find(i => i.name === value)
-                if (found) {
-                    foundPrice = found.price
-                    break
-                }
-            }
-            setFormData(prev => ({ ...prev, service: value, price: foundPrice }))
-            return
-        }
-
         setFormData({ ...formData, [name]: value })
+    }
+
+    const totalPrice = formData.services.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0)
+
+    const toggleService = (service) => {
+        setFormData(prev => {
+            const currentServices = prev.services || []
+            const currentStylists = prev.stylists || []
+            const existsIndex = currentServices.findIndex(s => s.name === service.name)
+
+            if (existsIndex >= 0) {
+                const nextServices = currentServices.filter((_, i) => i !== existsIndex)
+                const nextStylists = currentStylists.filter((_, i) => i !== existsIndex)
+                return { ...prev, services: nextServices, stylists: nextStylists }
+            }
+
+            const alreadyAssignedIds = currentStylists.map(s => s.id)
+            const available = getAvailableStaff(prev.date, prev.time, service.name)
+            const chosen = available.find(s => !alreadyAssignedIds.includes(s.id))
+
+            if (!chosen) {
+                showMessage('error', `No stylist available for "${service.name}" at the selected time.`)
+                return prev
+            }
+
+            return {
+                ...prev,
+                services: [...currentServices, { name: service.name, price: service.price }],
+                stylists: [...currentStylists, {
+                    id: chosen.id,
+                    name: chosen.name,
+                    email: chosen.email,
+                    phone: chosen.phone,
+                    commission: chosen.commission
+                }]
+            }
+        })
     }
 
     const handleSubmit = async (e) => {
@@ -106,9 +144,46 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
             // so we don't duplicate that check here — the context will return an error if unavailable.
 
             // Prepare data (store date as YYYY-MM-DD for consistency)
+            const assignedIds = []
+            const newStylists = []
+
+            for (let i = 0; i < formData.services.length; i++) {
+                const svc = formData.services[i]
+                const currentStylist = formData.stylists[i]
+                const available = getAvailableStaff(formData.date, formData.time, svc.name)
+
+                if (!available.length) {
+                    showMessage('error', `No stylists available for "${svc.name}" at the selected time.`)
+                    setLoading(false)
+                    return
+                }
+
+                const keepCurrent = currentStylist && available.some(s => s.id === currentStylist.id) && !assignedIds.includes(currentStylist.id)
+                const chosen = keepCurrent
+                    ? available.find(s => s.id === currentStylist.id)
+                    : available.find(s => !assignedIds.includes(s.id))
+
+                if (!chosen) {
+                    showMessage('error', `No stylist available for "${svc.name}" at the selected time.`)
+                    setLoading(false)
+                    return
+                }
+
+                assignedIds.push(chosen.id)
+                newStylists.push({
+                    id: chosen.id,
+                    name: chosen.name,
+                    email: chosen.email,
+                    phone: chosen.phone,
+                    commission: chosen.commission
+                })
+            }
+
             const dataToSave = {
                 ...formData,
-                date: convertToStorageFormat(formData.date)
+                date: convertToStorageFormat(formData.date),
+                totalPrice,
+                stylists: newStylists
             }
 
             const response = await updateAppointment(appointment.id, dataToSave)
@@ -170,22 +245,76 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Service</label>
-                        <select
-                            name="service"
-                            value={formData.service}
-                            onChange={handleChange}
-                            className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
+                    <div ref={dropdownRef} className="relative">
+                        <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Services</label>
+                        <button
+                            type="button"
+                            onClick={() => setIsOpen(!isOpen)}
+                            className={`w-full bg-[#1a1a1a] border rounded-lg p-2.5 text-sm text-left flex items-center justify-between transition-colors ${isOpen ? 'border-[#FF8A00] text-[#FF8A00]' : 'border-[#333] text-white hover:border-[#FF8A00]'
+                                }`}
                         >
-                            {services.map((cat) => (
-                                <optgroup key={cat.title} label={cat.title} className="text-sm">
-                                    {cat.items.map((it) => (
-                                        <option key={it.name} value={it.name}>{it.name} - {it.price}</option>
-                                    ))}
-                                </optgroup>
-                            ))}
-                        </select>
+                            <span>
+                                {formData.services.length === 0
+                                    ? 'Select services'
+                                    : `${formData.services.length} service${formData.services.length > 1 ? 's' : ''} selected`}
+                            </span>
+                            <span className={`text-xs transition-transform ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+                        </button>
+
+                        {isOpen && (
+                            <div className="absolute top-full left-0 w-full mt-1 bg-[#121212] border border-[#333] rounded-lg shadow-xl max-h-60 overflow-y-auto z-50">
+                                {serviceCatalog.map(category => (
+                                    <div key={category.title}>
+                                        <div className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#FF8A00] bg-[#1a1a1a]">
+                                            {category.title}
+                                        </div>
+                                        {category.items.map((service) => {
+                                            const isSelected = formData.services.some(s => s.name === service.name)
+                                            return (
+                                                <button
+                                                    key={service.name}
+                                                    type="button"
+                                                    onClick={() => toggleService(service)}
+                                                    className={`w-full px-3 py-2 text-left text-xs font-bold flex items-center justify-between transition-colors ${isSelected
+                                                            ? 'bg-[#FF8A00]/10 text-[#FF8A00]'
+                                                            : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                                                        }`}
+                                                >
+                                                    <span>{service.name} — {service.price}</span>
+                                                    <span className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] ${isSelected ? 'border-[#FF8A00] bg-[#FF8A00] text-black' : 'border-[#555]'
+                                                        }`}>
+                                                        {isSelected && '✓'}
+                                                    </span>
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {formData.services.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-2">
+                                {formData.services.map((s, i) => (
+                                    <span key={`${s.name}-${i}`} className="inline-flex items-center gap-1.5 bg-[#FF8A00]/10 border border-[#FF8A00]/30 text-[#FF8A00] text-xs font-bold px-2 py-1 rounded-md">
+                                        {s.name} — {s.price}
+                                        <button type="button" onClick={() => toggleService(s)} className="hover:text-white">✕</button>
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+
+                        {formData.stylists.length > 0 && (
+                            <div className="mt-2 text-xs text-gray-400">
+                                Stylists: <span className="text-white font-semibold">{formData.stylists.map(s => s.name).join(', ')}</span>
+                            </div>
+                        )}
+
+                        {formData.services.length > 0 && (
+                            <div className="mt-2 text-xs text-gray-400">
+                                Total: <span className="text-[#FF8A00] font-bold">${totalPrice}</span>
+                            </div>
+                        )}
                     </div>
                     <div>
                         <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Status</label>

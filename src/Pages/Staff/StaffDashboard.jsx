@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Calendar,
@@ -19,47 +19,62 @@ function StaffDashboard() {
     const { getAppointmentsForStaff } = useAppointment()
     const { currentUser } = useAuth()
 
-    const [myAppointments, setMyAppointments] = useState([])
-    const [todayAppointments, setTodayAppointments] = useState([])
-    const [totalRevenue, setTotalRevenue] = useState(0)
-    const [pendingJobs, setPendingJobs] = useState(0)
-    const [completedJobs, setCompletedJobs] = useState(0)
-
     const [editingAppointment, setEditingAppointment] = useState(null)
     const [viewingAppointment, setViewingAppointment] = useState(null)
 
     const handleEdit = (appointment) => setEditingAppointment(appointment)
     const handleView = (appointment) => setViewingAppointment(appointment)
 
-    useEffect(() => {
-        if (!currentUser) return;
+    const getAssignedServices = useCallback((appointment) => {
+        if (!currentUser) return []
+        return appointment.services?.filter((_, i) => {
+            const stylist = appointment.stylists?.[i]
+            return stylist && (stylist.id === currentUser.id || stylist.email?.toLowerCase() === currentUser.email?.toLowerCase())
+        }) || []
+    }, [currentUser])
 
-        const appointments = getAppointmentsForStaff(currentUser.id)
-        setMyAppointments(appointments)
+    const getAssignedTotal = useCallback((appointment) =>
+        getAssignedServices(appointment).reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0),
+        [getAssignedServices])
 
-        // Calculate Total Commissions Earned
-        const revenue = appointments.reduce((acc, curr) => {
-            const price = parseFloat(curr.price?.toString().replace('$', '') || 0)
-            const commission = parseFloat(curr.commission || currentUser?.commission || 0)
-            return acc + (price * commission)
-        }, 0)
-        setTotalRevenue(revenue)
+    const getAssignedServiceText = useCallback((appointment) => {
+        const list = getAssignedServices(appointment)
+        return list.length ? list.map(s => s.name).join(', ') : '—'
+    }, [getAssignedServices])
 
-        // Pending vs Completed Jobs
-        const pending = appointments.filter(a => a.status === 'Awaiting Confirmation' || a.status === 'Confirmed' || a.status === 'Checked In').length
-        const completed = appointments.filter(a => a.status === 'Completed').length
-        setPendingJobs(pending)
-        setCompletedJobs(completed)
-
-        // Today's appointments (assuming date format matches `new Date().toISOString().split('T')[0]` or simple string match)
-        // Since custom date format might be used, let's just use `new Date().toLocaleDateString('en-CA')` or similar. 
-        // Admin Dashboard doesn't filter perfectly by today natively, but we can do our best. Let's just grab the next 4 pending for now if date is hard to parse.
-        // Actually, let's just sort by id desc for "Recent".
-
-        const sorted = [...appointments].sort((a, b) => b.id - a.id)
-        setTodayAppointments(sorted)
-
+    const myAppointments = useMemo(() => {
+        if (!currentUser) return []
+        return getAppointmentsForStaff(currentUser.id)
     }, [currentUser, getAppointmentsForStaff])
+
+    const totalRevenue = useMemo(() => {
+        if (!currentUser) return 0
+        return myAppointments.reduce((acc, curr) => {
+            const assigned = getAssignedServices(curr)
+            const sumForAppointment = assigned.reduce((sub, svc, i) => {
+                const price = parseFloat(svc.price?.toString().replace('$', '') || 0)
+                const stylist = curr.stylists?.[i]
+                const commission = parseFloat(stylist?.commission || currentUser?.commission || 0)
+                return sub + (price * commission)
+            }, 0)
+            return acc + sumForAppointment
+        }, 0)
+    }, [currentUser, getAssignedServices, myAppointments])
+
+    const pendingJobs = useMemo(
+        () => myAppointments.filter(a => a.status === 'Awaiting Confirmation' || a.status === 'Confirmed' || a.status === 'Checked In').length,
+        [myAppointments]
+    )
+
+    const completedJobs = useMemo(
+        () => myAppointments.filter(a => a.status === 'Completed').length,
+        [myAppointments]
+    )
+
+    const todayAppointments = useMemo(
+        () => [...myAppointments].sort((a, b) => b.id - a.id),
+        [myAppointments]
+    )
 
     return (
         <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
@@ -152,7 +167,7 @@ function StaffDashboard() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-[#a1a1aa]">{appointment.service} - {appointment.price || ""}</td>
+                                    <td className="px-6 py-4 text-sm text-[#a1a1aa]">{getAssignedServiceText(appointment)}</td>
                                     <td className="px-6 py-4 text-sm">
                                         <div className="flex flex-col">
                                             <span className="text-white font-medium text-xs">{appointment.date}</span>
@@ -189,7 +204,7 @@ function StaffDashboard() {
                                             <span>{appointment.name}</span>
                                         </h4>
                                         <div className="text-xs text-[#777] flex items-center gap-1 mt-0.5">
-                                            {appointment.service}
+                                            {getAssignedServiceText(appointment)}
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +221,7 @@ function StaffDashboard() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 relative">
-                                    <span className="text-white font-bold text-sm">{appointment.price}</span>
+                                    <span className="text-white font-bold text-sm">${getAssignedTotal(appointment)}</span>
                                     <StaffAppointmentMenu
                                         appointment={appointment}
                                         onEdit={handleEdit}

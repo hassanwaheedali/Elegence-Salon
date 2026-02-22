@@ -18,16 +18,15 @@ const Message = ({ type, text, visible, isClosing, onClose }) => {
     if (!visible) return null
 
     const typeStyles = {
-        success: 'bg-green-500 text-white border-green-600',
-        error: 'bg-red-500 text-white border-red-600',
+        success: 'bg-green-800 text-white border-green-600',
+        error: 'bg-red-900 text-white border-red-600',
         warning: 'bg-yellow-500 text-black border-yellow-600',
         info: 'bg-blue-500 text-white border-blue-600'
     }
 
     return (
-        <div className={`fixed top-20 right-4 z-60 p-4 rounded-lg border-l-4 shadow-2xl transition-all duration-300 ease-out ${typeStyles[type]} max-w-sm ${
-            isClosing ? '-translate-y-full opacity-0' : isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-        }`}>
+        <div className={`fixed top-20 right-4 z-60 p-4 rounded-lg border-l-4 shadow-2xl transition-all duration-300 ease-out ${typeStyles[type]} max-w-sm ${isClosing ? '-translate-y-full opacity-0' : isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+            }`}>
             <div className="flex items-center justify-between">
                 <span className="font-semibold">{text}</span>
                 <button

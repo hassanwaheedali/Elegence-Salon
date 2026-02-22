@@ -28,7 +28,7 @@ const convertToStorageFormat = (dateStr) => {
     return `${month}/${day}/${year}`
 }
 
-function AppointmentCards({ name, date, time, service, price, status, appointmentId, stylistName }) {
+function AppointmentCards({ name, date, time, services, stylists, totalPrice, status, appointmentId }) {
     const { cancelAppointment, rescheduleAppointment } = useAppointment()
     const { showMessage } = useMessage()
 
@@ -94,6 +94,10 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
         }
     }
 
+    const serviceItems = services || []
+    const stylistItems = stylists || []
+    const displayTotal = Number.isFinite(Number(totalPrice)) ? Number(totalPrice) : 0
+
     return (
         <div className={`group relative bg-[#121212] border border-[#222] rounded-2xl p-6 transition-all duration-300 shadow-md shadow-black/20 overflow-hidden ${isRescheduling ? 'min-h-105 md:min-h-78' : ''}`}>
 
@@ -118,41 +122,71 @@ function AppointmentCards({ name, date, time, service, price, status, appointmen
                 />
             )}
 
-            {/* Details Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                    <Calendar size={14} />
-                    <div>
-                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Date</p>
-                        <p className="text-sm font-semibold text-gray-200">{date}</p>
+            {/* Details */}
+            <div className="space-y-4 mb-6">
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                            <Calendar size={14} />
+                        </div>
+                        <div>
+                            <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Date</p>
+                            <p className="text-sm font-semibold text-gray-200">{date}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                            <Clock size={14} />
+                        </div>
+                        <div>
+                            <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Time</p>
+                            <p className="text-sm font-semibold text-gray-200">{time}</p>
+                        </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
-                        <Clock size={14} />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="flex items-center gap-2 mb-2 text-[#FF8A00]">
+                            <Scissors size={14} />
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-[#777]">Services</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {serviceItems.length === 0 ? (
+                                <span className="text-xs text-[#777] italic">No services</span>
+                            ) : (
+                                serviceItems.map((s) => (
+                                    <span key={`${s.name}-${s.price}`} className="inline-flex items-center gap-1.5 bg-[#1a1a1a] border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
+                                        <span className="text-[#fb9d33]">{s.name}</span>
+                                        <span className="text-[#777]">{s.price}</span>
+                                    </span>
+                                ))
+                            )}
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Time</p>
-                        <p className="text-sm font-semibold text-gray-200">{time}</p>
+
+                    <div className="p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="flex items-center gap-2 mb-2 text-[#FF8A00]">
+                            <User size={14} />
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-[#777]">Stylists</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {stylistItems.length === 0 ? (
+                                <span className="text-xs text-[#777] italic">Any available</span>
+                            ) : (
+                                stylistItems.map((s) => (
+                                    <span key={`${s.id}-${s.name}`} className="inline-flex items-center gap-1.5 bg-[#1a1a1a] border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
+                                        <span className="text-[#fb9d33]">{s.name}</span>
+                                    </span>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
-                        <User size={14} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Stylist</p>
-                        <p className="text-sm font-semibold text-gray-200 truncate max-w-20">{stylistName || 'Any'}</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
-                        <Scissors size={14} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] text-[#555] font-bold uppercase tracking-wider">Service</p>
-                        <p className="text-sm font-semibold text-gray-200 truncate max-w-20">{price} {service}</p>
-                    </div>
+
+                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#0d0d0d] border border-[#222]">
+                    <span className="text-[10px] text-[#777] font-bold uppercase tracking-wider">Total</span>
+                    <span className="text-sm font-extrabold text-[#FF8A00]">${displayTotal}</span>
                 </div>
             </div>
 

@@ -18,6 +18,11 @@ function StaffProfile() {
     const { showMessage } = useMessage()
 
     const [isLoading, setIsLoading] = useState(false)
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    })
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -44,6 +49,7 @@ function StaffProfile() {
             const saturday = schedule.saturday || { start: "10:00", end: "16:00" };
             const sunday = schedule.sunday || null;
 
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setFormData({
                 name: staffData.name || '',
                 email: staffData.email || '',
@@ -73,6 +79,11 @@ function StaffProfile() {
             ...formData,
             [name]: type === 'checkbox' ? checked : value
         });
+    }
+
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target
+        setPasswordData(prev => ({ ...prev, [name]: value }))
     }
 
     const handleSubmit = async (e) => {
@@ -106,6 +117,31 @@ function StaffProfile() {
             updatedSchedule.sunday = null;
         }
 
+        const shouldChangePassword = passwordData.currentPassword || passwordData.newPassword || passwordData.confirmPassword
+
+        if (shouldChangePassword) {
+            if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+                showMessage('error', 'Please fill in all password fields')
+                setIsLoading(false)
+                return
+            }
+            if (passwordData.currentPassword !== currentUser?.password) {
+                showMessage('error', 'Current password is incorrect')
+                setIsLoading(false)
+                return
+            }
+            if (passwordData.newPassword.length < 6) {
+                showMessage('error', 'New password must be at least 6 characters')
+                setIsLoading(false)
+                return
+            }
+            if (passwordData.newPassword !== passwordData.confirmPassword) {
+                showMessage('error', 'New password and confirm password do not match')
+                setIsLoading(false)
+                return
+            }
+        }
+
         const updatedStaffData = {
             name: formData.name,
             email: formData.email,
@@ -115,6 +151,10 @@ function StaffProfile() {
             schedule: updatedSchedule
         };
 
+        if (shouldChangePassword) {
+            updatedStaffData.password = passwordData.newPassword
+        }
+
         const result = await updateStaff(currentUser.id, updatedStaffData);
         setIsLoading(false);
 
@@ -122,6 +162,10 @@ function StaffProfile() {
             showMessage('error', result.error);
         } else {
             showMessage('success', 'Profile updated successfully')
+
+            if (shouldChangePassword) {
+                setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
+            }
 
             // Dispatch custom event so AuthContext/other components update
             const event = new CustomEvent('staff-profile-updated', {
@@ -136,7 +180,7 @@ function StaffProfile() {
     }
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
+        <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-black text-white uppercase tracking-tight">
@@ -191,20 +235,20 @@ function StaffProfile() {
                                     <p className="text-xs text-gray-500 ml-1">Contact admin to change email.</p>
                                 </div>
 
-                                <div className="space-y-1.5">
-                                    <label className="text-gray-400 text-xs font-bold uppercase ml-1">Phone *</label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
-                                            <Phone size={16} />
-                                        </div>
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
-                                        />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-gray-400 text-xs font-bold uppercase ml-1">Phone *</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <Phone size={16} />
                                     </div>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -358,6 +402,52 @@ function StaffProfile() {
                                         </div>
                                     )}
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* Security */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
+                                <Clock className="text-[#FF8A00]" size={20} />
+                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Security</h2>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-1.5">
+                                    <label className="text-gray-400 text-xs font-bold uppercase ml-1">Current Password</label>
+                                    <input
+                                        type="password"
+                                        name="currentPassword"
+                                        value={passwordData.currentPassword}
+                                        onChange={handlePasswordChange}
+                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                        placeholder="Enter current password"
+                                    />
+                                </div>
+
+                                <div className="space-y-1.5">
+                                    <label className="text-gray-400 text-xs font-bold uppercase ml-1">New Password</label>
+                                    <input
+                                        type="password"
+                                        name="newPassword"
+                                        value={passwordData.newPassword}
+                                        onChange={handlePasswordChange}
+                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[777777]/70 mt-1"
+                                        placeholder="Enter new password"
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-gray-400 text-xs font-bold uppercase ml-1">Confirm Password</label>
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    value={passwordData.confirmPassword}
+                                    onChange={handlePasswordChange}
+                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                    placeholder="Confirm new password"
+                                />
                             </div>
                         </div>
 

@@ -19,6 +19,7 @@ const Account = lazy(() => import('./Pages/User Panel/Account'));
 const Dashboard = lazy(() => import('./Pages/Admin/Dashboard'));
 const Appointments = lazy(() => import('./Pages/Admin/Appointments'));
 const Staffs = lazy(() => import('./Pages/Admin/Staffs'));
+const Configuration = lazy(() => import('./Pages/Admin/Configuration'));
 const StaffLayout = lazy(() => import('./StaffLayout'));
 const StaffDashboard = lazy(() => import('./Pages/Staff/StaffDashboard'));
 const StaffAppointments = lazy(() => import('./Pages/Staff/StaffAppointments'));
@@ -118,6 +119,13 @@ const Router = createBrowserRouter(
           <Suspense fallback={<LoadingSpinner />}>
             <ProtectedRoute requiredRole="admin">
               <Staffs />
+            </ProtectedRoute>
+          </Suspense>
+        } />
+        <Route path='/admin/configuration' element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProtectedRoute requiredRole="admin">
+              <Configuration />
             </ProtectedRoute>
           </Suspense>
         } />

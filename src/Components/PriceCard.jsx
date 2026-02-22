@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { services } from '../data/services'
 
 function PriceCard() {
@@ -73,7 +73,7 @@ function PriceCard() {
                 {/* Cards Container */}
                 <div className="overflow-hidden">
                     <AnimatePresence mode="wait" custom={direction}>
-                        <motion.div
+                        <Motion.div
                             key={currentIndex}
                             custom={direction}
                             variants={slideVariants}
@@ -115,7 +115,7 @@ function PriceCard() {
                                     </div>
                                 )
                             })}
-                        </motion.div>
+                        </Motion.div>
                     </AnimatePresence>
                 </div>
 

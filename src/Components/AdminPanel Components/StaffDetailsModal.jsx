@@ -10,17 +10,25 @@ const StaffDetailsModal = ({ staff, onClose }) => {
     const stats = useMemo(() => {
         if (!staff || !appointments.length) return { total: 0, active: 0, revenue: 0 };
 
-        const staffAppts = appointments.filter(app => {
-            if (app.stylistId && staff.id) return app.stylistId === staff.id;
-            return app.stylistName?.toLowerCase() === staff.name.toLowerCase();
-        });
+        const staffAppts = appointments.filter(app =>
+            app.stylists?.some(s =>
+                s.id === staff.id ||
+                s.email?.toLowerCase() === staff.email?.toLowerCase() ||
+                s.name?.toLowerCase() === staff.name.toLowerCase()
+            )
+        );
 
         const total = staffAppts.length;
         const active = staffAppts.filter(a => ['Confirmed', 'Pending'].includes(a.status)).length;
         // Mock revenue calculation (assuming price is string like "$50")
         const revenue = staffAppts.reduce((sum, app) => {
-            const price = parseFloat(app.price.replace(/[^0-9.]/g, '')) || 0;
-            return sum + price;
+            if (!app.services?.length || !app.stylists?.length) return sum;
+            const staffServices = app.services.filter((_, i) => {
+                const stylist = app.stylists[i]
+                return stylist && (stylist.id === staff.id || stylist.email?.toLowerCase() === staff.email?.toLowerCase())
+            })
+            const serviceTotal = staffServices.reduce((sub, svc) => sub + (parseFloat(svc.price?.replace(/[^0-9.]/g, '')) || 0), 0)
+            return sum + serviceTotal;
         }, 0);
 
         return { total, active, revenue };

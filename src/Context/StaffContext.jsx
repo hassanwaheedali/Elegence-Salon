@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState, createContext, useContext, useEffect } from "react"
 
 const STORAGE_KEY = "EleganceStaff"
@@ -104,7 +105,6 @@ export function StaffProvider({ children }) {
 
     useEffect(() => {
         const fetchStaff = async () => {
-            const storedRaw = await localStorage.getItem(STORAGE_KEY);
             // ensure default staff include auth fields
             setStaff(defaultStaff);
             await localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultStaff));
@@ -151,7 +151,7 @@ export function StaffProvider({ children }) {
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
 
         // notify other contexts (AuthContext) to refresh runtime users
-        try { window.dispatchEvent(new CustomEvent('staff-added', { detail: staffToAdd })); } catch (e) { /* noop */ }
+        try { window.dispatchEvent(new CustomEvent('staff-added', { detail: staffToAdd })); } catch { /* noop */ }
 
         return { success: "Staff member added successfully.", member: staffToAdd };
     };
@@ -160,7 +160,7 @@ export function StaffProvider({ children }) {
         const updatedStaff = staff.filter(member => member.id !== staffId);
         setStaff(updatedStaff);
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
-        try { window.dispatchEvent(new CustomEvent('staff-removed', { detail: staffId })); } catch (e) { /* noop */ }
+        try { window.dispatchEvent(new CustomEvent('staff-removed', { detail: staffId })); } catch { /* noop */ }
         return { success: "Staff member removed successfully." };
     };
 
@@ -190,7 +190,7 @@ export function StaffProvider({ children }) {
         await localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedStaff));
 
         // notify AuthContext and other listeners
-        try { window.dispatchEvent(new CustomEvent('staff-updated', { detail: updatedMember })); } catch (e) { /* noop */ }
+        try { window.dispatchEvent(new CustomEvent('staff-updated', { detail: updatedMember })); } catch { /* noop */ }
 
         return { success: "Staff member updated successfully.", member: updatedMember };
     };

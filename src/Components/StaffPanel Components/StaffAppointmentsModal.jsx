@@ -9,12 +9,25 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
     // Filter appointments for this stylist
     const stylistAppointments = useMemo(() => {
         if (!staff || !appointments.length) return [];
-        return appointments.filter(app => {
-            // Match by ID if available, otherwise name (case insensitive for name)
-            if (app.stylistId && staff.id) return app.stylistId === staff.id;
-            return app.stylistName?.toLowerCase() === staff.name.toLowerCase();
-        }).sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time)); // Sort by date/time desc
+        return appointments.filter(app =>
+            app.stylists?.some(s =>
+                s.id === staff.id ||
+                s.email?.toLowerCase() === staff.email?.toLowerCase() ||
+                s.name?.toLowerCase() === staff.name.toLowerCase()
+            )
+        ).sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
     }, [staff, appointments]);
+
+    const getStaffServices = (app) => {
+        if (!app.services?.length || !app.stylists?.length) return []
+        return app.services.filter((_, i) => {
+            const stylist = app.stylists[i]
+            return stylist && (stylist.id === staff.id || stylist.email?.toLowerCase() === staff.email?.toLowerCase())
+        })
+    }
+
+    const getStaffTotal = (app) =>
+        getStaffServices(app).reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0)
 
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -77,7 +90,9 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                                             {/* Info */}
                                             <div className="space-y-1">
                                                 <div className="flex items-center gap-2">
-                                                    <h3 className="font-bold text-white text-sm">{app.service}</h3>
+                                                    <h3 className="font-bold text-white text-sm">
+                                                        {getStaffServices(app).map(s => s.name).join(', ') || '—'}
+                                                    </h3>
                                                     <StatusBadge status={app.status} />
                                                 </div>
                                                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400">
@@ -90,7 +105,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                                                         <span>{app.time}</span>
                                                     </div>
                                                     <div className="flex items-center gap-1.5 text-[#FF8A00]">
-                                                        <span className="font-bold">{app.price}</span>
+                                                        <span className="font-bold">${getStaffTotal(app)}</span>
                                                     </div>
                                                 </div>
                                             </div>

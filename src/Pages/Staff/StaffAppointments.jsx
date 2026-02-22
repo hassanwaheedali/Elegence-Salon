@@ -117,6 +117,23 @@ function StaffAppointments() {
     const handleEdit = useCallback((appointment) => setEditingAppointment(appointment), [])
     const handleView = useCallback((appointment) => setViewingAppointment(appointment), [])
 
+    const getAssignedServices = useCallback((appointment) => {
+        if (!currentUser) return []
+        return appointment.services?.filter((_, i) => {
+            const stylist = appointment.stylists?.[i]
+            return stylist && (stylist.id === currentUser.id || stylist.email?.toLowerCase() === currentUser.email?.toLowerCase())
+        }) || []
+    }, [currentUser])
+
+    const getAssignedServiceText = useCallback((appointment) => {
+        const list = getAssignedServices(appointment)
+        return list.length ? list.map(s => s.name).join(', ') : '—'
+    }, [getAssignedServices])
+
+    const getAssignedTotal = useCallback((appointment) =>
+        getAssignedServices(appointment).reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0),
+        [getAssignedServices])
+
     // Enhanced filter and sort logic - optimized with useMemo
     const filteredAndSortedAppointments = useMemo(() => {
         let result = appointments.filter(appointment => {
@@ -124,7 +141,7 @@ function StaffAppointments() {
             const matchedSearch = !searchTerm ||
                 appointment.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 appointment.phone?.includes(searchTerm) ||
-                appointment.service?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                getAssignedServiceText(appointment).toLowerCase().includes(searchTerm.toLowerCase()) ||
                 appointment.id?.toString().includes(searchTerm)
 
             // Status filter
@@ -162,6 +179,11 @@ function StaffAppointments() {
                 let aVal = a[sortConfig.field]
                 let bVal = b[sortConfig.field]
 
+                if (sortConfig.field === 'service') {
+                    aVal = getAssignedServiceText(a)
+                    bVal = getAssignedServiceText(b)
+                }
+
                 if (sortConfig.field === 'date') {
                     aVal = parseStoredDate(a.date)
                     bVal = parseStoredDate(b.date)
@@ -182,7 +204,7 @@ function StaffAppointments() {
         }
 
         return result
-    }, [appointments, searchTerm, statusFilter, dateFilter, timeFilter, sortConfig])
+    }, [appointments, searchTerm, statusFilter, dateFilter, timeFilter, sortConfig, getAssignedServiceText])
 
     return (
         <div className="max-w-7xl mx-auto space-y-8">
@@ -445,8 +467,8 @@ function StaffAppointments() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-gray-300 text-sm font-medium">{appointment.service}</div>
-                                                <div className="text-[#FF8A00] text-xs font-bold mt-1">{appointment.price}</div>
+                                                <div className="text-gray-300 text-sm font-medium">{getAssignedServiceText(appointment)}</div>
+                                                <div className="text-[#FF8A00] text-xs font-bold mt-1">${getAssignedTotal(appointment)}</div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col">

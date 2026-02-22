@@ -14,12 +14,14 @@ function Account() {
 
     // Set active tab from URL query parameters on mount and when params change
     useEffect(() => {
+        /* eslint-disable react-hooks/set-state-in-effect */
         const tabParam = searchParams.get('tab')
         if (tabParam === 'appointments' || tabParam === 'feedback' || tabParam === 'profile') {
             setActiveTab(tabParam)
         } else {
             setActiveTab('profile')
         }
+        /* eslint-enable react-hooks/set-state-in-effect */
     }, [searchParams])
 
     // Handle tab change and update URL
@@ -135,7 +137,7 @@ function Account() {
                             </div>
                         </button>
                         <button
-                            onClick={() => setActiveTab('appointments')}
+                            onClick={() => handleTabChange('appointments')}
                             className={`group relative overflow-hidden bg-linear-to-br from-[#1a1a1a] to-[#0f0f0f] p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${activeTab === 'appointments' ? 'border-yellow-500/40' : 'border-yellow-500/10 hover:border-yellow-500/40'} focus:outline-none focus:ring-2 focus:ring-[#fb9d33] focus:ring-offset-2 focus:ring-offset-[#0F0F0F] cursor-pointer`}
                         >
                             {/* Animated background glow */}

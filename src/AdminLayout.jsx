@@ -19,8 +19,8 @@ const Message = ({ type, text, visible, isClosing, onClose }) => {
     if (!visible) return null
 
     const typeStyles = {
-        success: 'bg-green-500 text-white border-green-600',
-        error: 'bg-red-500 text-white border-red-600',
+        success: 'bg-green-800 text-white border-green-600',
+        error: 'bg-red-900 text-white border-red-600',
         warning: 'bg-yellow-500 text-black border-yellow-600',
         info: 'bg-blue-500 text-white border-blue-600'
     }

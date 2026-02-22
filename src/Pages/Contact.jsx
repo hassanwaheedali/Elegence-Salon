@@ -1,6 +1,6 @@
 import Header from "../Components/Header"
 import Landing from '../assets/contact-bg.webp'
-import AppoinmentFormContact from "../Components/AppoinmentFormContact"
+import AppointmentFormContact from "../Components/AppointmentFormContact"
 import { useState, useEffect } from "react"
 
 function Contact() {
@@ -156,9 +156,9 @@ function Contact() {
                 <div className="container max-w-7xl mx-auto pb-14 px-4 gap-10 md:gap-12 lg:gap-14 grid grid-cols-1 lg:grid-cols-2 pt-8">
                     <div className="section-form bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg w-full flex flex-col items-start rounded-lg transition-all duration-500">
                         <div className="head-background bg-[#1a1a1a] w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 transition-all duration-500 rounded-t-lg ">
-                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33] mt-1"><span className="text-white">Make An</span> Appoinment</h2>
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33] mt-1"><span className="text-white">Make An</span> Appointment</h2>
                         </div>
-                        <AppoinmentFormContact />
+                        <AppointmentFormContact />
                     </div>
                     <div className="store-section mt-8 lg:mt-0 px-6 md:px-8 pb-12 md:pb-0">
                         <div className="visit-store-section">

@@ -324,7 +324,7 @@ const Staffs = () => {
                 />
             )}
 
-            {/* global confirmation modal */}
+            {/* Confirmation modal */}
             {confirmAction && (
                 <ConfirmModal
                     message={confirmAction.message}
