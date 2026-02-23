@@ -14,7 +14,7 @@ function Footer() {
         }, 100)
     }
     return (
-        <footer className='bg-[#121212] border-t border-white'>
+        <footer className='bg-obsidian-surface border-t border-white/10'>
             <div className="py-10 px-4 sm:px-6 lg:px-8 flex md:flex-row flex-col justify-center md:justify-between space-y-4 md:space-y-0 items-center mx-auto max-w-7xl">
                 <div className="flex items-center">
                     <div className="logo ">
@@ -43,7 +43,7 @@ function Footer() {
                     <NavLink
                         to="/"
                         className={({ isActive }) =>
-                            isActive ? 'text-yellow-500 font-bold' : 'text-white hover:text-yellow-500 transition-colors'
+                            isActive ? 'text-champagne font-bold' : 'text-white hover:text-champagne transition-colors duration-500 ease-luxury'
                         }
                     >
                         Home
@@ -54,14 +54,14 @@ function Footer() {
                             e.preventDefault()
                             goToSection('services')
                         }}
-                        className='text-white hover:text-yellow-500 transition-colors'
+                        className='text-white hover:text-champagne transition-colors duration-500 ease-luxury'
                     >
                         Services
                     </a>
                     <NavLink
                         to="/contact"
                         className={({ isActive }) =>
-                            isActive ? 'text-yellow-500 font-bold' : 'text-white hover:text-yellow-500 transition-colors'
+                            isActive ? 'text-champagne font-bold' : 'text-white hover:text-champagne transition-colors duration-500 ease-luxury'
                         }
                     >
                         Contact
@@ -70,18 +70,18 @@ function Footer() {
                 </div>
                 {/* social */}
                 <div className="social-icons flex items-center gap-6 mt-4 md:mt-3">
-                    <a href="#" className="text-white hover:text-yellow-500 transition-colors">
+                    <a href="#" className="text-white hover:text-champagne transition-colors duration-500 ease-luxury">
                         <i className="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" className="text-white hover:text-yellow-500 transition-colors">
+                    <a href="#" className="text-white hover:text-champagne transition-colors duration-500 ease-luxury">
                         <i className="fab fa-twitter"></i>
                     </a>
-                    <a href="#" className="text-white hover:text-yellow-500 transition-colors">
+                    <a href="#" className="text-white hover:text-champagne transition-colors duration-500 ease-luxury">
                         <i className="fab fa-instagram"></i>
                     </a>
                 </div>
             </div>
-            <div className=" bg-[#0d0d0d] text-white py-10 border-t border-white ">
+            <div className="bg-obsidian-card text-white py-10 border-t border-white/10">
                 <div className="container mx-auto text-center">
                     <p className="text-sm">&copy; {new Date().getFullYear()} Elegance. All rights reserved.</p>
                 </div>

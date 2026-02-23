@@ -20,7 +20,7 @@ const Message = ({ type, text, visible, isClosing, onClose }) => {
     const typeStyles = {
         success: 'bg-green-800 text-white border-green-600',
         error: 'bg-red-900 text-white border-red-600',
-        warning: 'bg-yellow-500 text-black border-yellow-600',
+        warning: 'bg-champagne text-obsidian border-champagne-dark',
         info: 'bg-blue-500 text-white border-blue-600'
     }
 
@@ -53,6 +53,12 @@ function Layout() {
                 isClosing={message.isClosing}
                 onClose={hideMessage}
             />
+            {/* LENIS: Wrap <Outlet /> in <ReactLenis root> when @studio-freight/lenis is installed.
+                import ReactLenis from '@studio-freight/react-lenis'
+                <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true }}>
+                  <Outlet />
+                </ReactLenis>
+            */}
             <Outlet />
             <Footer />
         </>
