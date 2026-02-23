@@ -1,12 +1,98 @@
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* Smooth Scroll Behavior */
+/* ═══════════════════════════════════════════════════════════
+   ELEGANCE — "Tactile Obsidian" Design System
+   Tailwind CSS 4 @theme tokens
+   ═══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Obsidian Palette (backgrounds) ── */
+  --color-obsidian:          #050505;
+  --color-obsidian-card:     #0d0d0d;
+  --color-obsidian-surface:  #111111;
+  --color-obsidian-elevated: #1a1a1a;
+
+  /* ── Champagne Gold Palette (accents) ── */
+  --color-champagne:       #D4AF37;
+  --color-champagne-light: #E8D48B;
+  --color-champagne-dark:  #B8960F;
+
+  /* ── Typography ── */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans:  'Montserrat', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ── Luxury Easing ── */
+  --ease-luxury: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Base Typography ── */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-obsidian);
+  color: #e5e5e5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CINEMATIC FILM GRAIN OVERLAY
+   Subtle animated noise texture on digital blacks.
+   Uses an inline SVG feTurbulence filter for zero-asset grain.
+   ═══════════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ── Smooth Scroll Behavior ── */
 html {
   scroll-behavior: smooth;
 }
 
-/* Message Fade-in Animation */
+/* ── Lenis Smooth Scroll Preparation ──
+   These rules prevent layout conflicts when Lenis is installed.
+   Install: npm i @studio-freight/lenis
+   Wrap <Outlet /> in <ReactLenis root> to activate. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LUXURY UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Applies the signature luxury easing to all transitions */
+.ease-luxury {
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Champagne gold text gradient (reusable) */
+.text-gradient-champagne {
+  background: linear-gradient(135deg, #E8D48B 0%, #D4AF37 50%, #B8960F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Message toast fade-in / fade-out */
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -37,7 +123,53 @@ html {
   animation: fade-out 0.5s ease-in;
 }
 
-/* Infinite Scroll Animation for Brand Logos */
+/* Scroll-triggered reveal: slides up from below with opacity */
+@keyframes reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal-up {
+  animation: reveal-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Text wipe reveal via clip-path */
+@keyframes reveal-text {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.animate-reveal-text {
+  animation: reveal-text 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Scale-down reveal for images (starts zoomed, settles) */
+@keyframes scale-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-reveal {
+  animation: scale-reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Brand carousel infinite scroll */
 @keyframes infinite-scroll {
   0% {
     transform: translateX(0);
@@ -47,6 +179,7 @@ html {
   }
 }
 
+/* StatsCard shine sweep */
 @keyframes shine-sweep {
   0% {
     transform: translateX(-120%);
@@ -70,7 +203,9 @@ html {
   animation-play-state: paused;
 }
 
-/* Custom Scrollbar Design */
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM SCROLLBAR — Obsidian + Champagne
+   ═══════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -86,7 +221,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff8a00;
+  background: #D4AF37;
 }
 
 /* Custom scrollbar for filter panel and tables */
@@ -106,5 +241,5 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #ff8a00;
+  background: #D4AF37;
 }
