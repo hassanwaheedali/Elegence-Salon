@@ -180,27 +180,27 @@ function StaffProfile() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-0 sm:px-2 lg:px-8 py-4 sm:py-0">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-black text-white uppercase tracking-tight">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                     My <span className="text-champagne">Profile</span>
                 </h1>
-                <p className="text-gray-400 text-sm mt-1">Manage your personal information and availability</p>
+                <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your personal information and availability</p>
             </div>
 
             <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                <div className="p-6 sm:p-8">
-                    <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="p-4 sm:p-6 md:p-8">
+                    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
 
                         {/* Personal Information */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <User className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
+                        <div className="space-y-4 sm:space-y-6">
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <User className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Full Name *</label>
                                     <div className="relative">
@@ -254,13 +254,13 @@ function StaffProfile() {
                         </div>
 
                         {/* Professional Information */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Briefcase className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Professional Info</h2>
+                        <div className="space-y-4 sm:space-y-6">
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <Briefcase className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Professional Info</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Experience</label>
                                     <select
@@ -300,16 +300,16 @@ function StaffProfile() {
                         </div>
 
                         {/* Schedule Configuration */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Availability</h2>
+                        <div className="space-y-4 sm:space-y-6">
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <Clock className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Availability</h2>
                             </div>
 
-                            <p className="text-sm text-gray-400">Update your default working hours. This affects when clients can book you.</p>
+                            <p className="text-xs sm:text-sm text-gray-400">Update your default working hours. This affects when clients can book you.</p>
 
-                            <div className="bg-[#161515] p-6 rounded-xl border border-white/5 space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-[#161515] p-3 sm:p-4 md:p-6 rounded-xl border border-white/5 space-y-4 sm:space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                     <div className="space-y-4">
                                         <h4 className="text-sm font-bold text-white">Weekdays (Mon-Fri)</h4>
                                         <div className="grid grid-cols-2 gap-4">
@@ -406,13 +406,13 @@ function StaffProfile() {
                         </div>
 
                         {/* Security */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Security</h2>
+                        <div className="space-y-4 sm:space-y-6">
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <Clock className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Security</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Current Password</label>
                                     <input
@@ -452,10 +452,10 @@ function StaffProfile() {
                         </div>
 
                         {/* Form Actions */}
-                        <div className="pt-6 border-t border-[#333] flex justify-end gap-4">
+                        <div className="pt-4 sm:pt-6 border-t border-[#333] flex flex-col sm:flex-row justify-center sm:justify-end gap-3 sm:gap-4">
                             <button
                                 type="button"
-                                className="px-6 py-2.5 bg-transparent border border-[#333] hover:border-gray-500 text-white font-bold rounded-xl transition-all"
+                                className="px-5 sm:px-6 py-2 sm:py-2.5 bg-transparent border border-[#333] hover:border-gray-500 text-white text-sm font-bold rounded-xl transition-all order-2 sm:order-1"
                                 onClick={() => window.history.back()}
                             >
                                 Cancel
@@ -463,9 +463,9 @@ function StaffProfile() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="px-8 py-2.5 bg-champagne hover:bg-champagne-dark text-black font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                                className="px-6 sm:px-8 py-2 sm:py-2.5 bg-champagne hover:bg-champagne-dark text-black text-sm font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 order-1 sm:order-2"
                             >
-                                <Save size={18} />
+                                <Save size={16} />
                                 {isLoading ? 'Saving...' : 'Save Changes'}
                             </button>
                         </div>

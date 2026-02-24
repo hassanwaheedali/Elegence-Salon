@@ -31,17 +31,17 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-            <div className="bg-obsidian-surface border border-white/10 w-full max-w-4xl rounded-2xl shadow-2xl animate-scale-in max-h-[90vh] flex flex-col">
+            <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg sm:max-w-2xl lg:max-w-4xl rounded-2xl shadow-2xl animate-scale-in max-h-[90vh] flex flex-col">
 
                 {/* Header */}
-                <div className="flex justify-between items-center px-6 py-4 border-b border-white/5 bg-[#161515]">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-champagne flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-[#161515]">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-champagne flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg shrink-0">
                             {staff.name.charAt(0)}
                         </div>
-                        <div>
-                            <h2 className="text-xl font-bold text-white">Stylist Schedule</h2>
-                            <p className="text-gray-400 text-xs mt-0.5">Appointments for <span className="text-champagne">{staff.name}</span></p>
+                        <div className="min-w-0">
+                            <h2 className="text-base sm:text-xl font-bold text-white">Stylist Schedule</h2>
+                            <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 truncate">Appointments for <span className="text-champagne">{staff.name}</span></p>
                         </div>
                     </div>
                     <button
@@ -53,7 +53,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 overflow-y-auto flex-1 custom-scrollbar">
+                <div className="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
                     {stylistAppointments.length > 0 ? (
                         <div className="space-y-4">
                             {/* Stats Summary */}
@@ -126,7 +126,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                 </div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 border-t border-white/5 bg-[#161515] flex justify-end">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-[#161515] flex justify-end">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 bg-[#222] hover:bg-[#333] text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"

@@ -77,15 +77,15 @@ function StaffDashboard() {
     )
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-0 sm:px-2 lg:px-8 py-2 sm:py-4 lg:py-0">
             {/* Greeting Header */}
             <div>
-                <h1 className="text-3xl font-black text-white mb-2">Welcome back, {currentUser?.name}</h1>
-                <p className="text-sm text-champagne-muted">Here's what's happening with your schedule today.</p>
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-1 sm:mb-2">Welcome back, {currentUser?.name}</h1>
+                <p className="text-xs sm:text-sm text-champagne-muted">Here's what's happening with your schedule today.</p>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                 <StatsCard
                     title="Total Assigned"
                     value={myAppointments.length}
@@ -126,11 +126,11 @@ function StaffDashboard() {
 
             {/* Appointments Table Section */}
             <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne flex items-center gap-3">
+                <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+                    <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-champagne flex items-center gap-2 sm:gap-3">
                         <span className="text-white">Recent</span> Appointments
                     </h2>
-                    <button className="px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                    <button className="px-4 sm:px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-[10px] sm:text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                         <Link to="/staff/appointments" className="flex items-center gap-1">
                             View All My Appointments
                         </Link>
@@ -191,7 +191,7 @@ function StaffDashboard() {
                 </div>
 
                 {/* Mobile/Tablet Card View */}
-                <div className="lg:hidden p-4 space-y-4">
+                <div className="lg:hidden p-3 sm:p-4 space-y-3 sm:space-y-4">
                     {todayAppointments.length === 0 ? (
                         <div className="text-center text-[#777] py-8">No appointments assigned.</div>
                     ) : todayAppointments.slice(0, 5).map((appointment, idx) => (

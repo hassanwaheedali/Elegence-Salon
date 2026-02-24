@@ -207,39 +207,39 @@ function StaffAppointments() {
     }, [appointments, searchTerm, statusFilter, dateFilter, timeFilter, sortConfig, getAssignedServiceText])
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-white uppercase tracking-tight">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                         My <span className="text-champagne">Appointments</span>
                     </h1>
-                    <p className="text-gray-400 text-sm mt-1">View and manage all your assigned client bookings</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">View and manage all your assigned client bookings</p>
                 </div>
 
                 {/* Action Toolbar */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full md:w-auto">
                     {/* Search */}
-                    <div className="relative group">
+                    <div className="relative group flex-1 sm:flex-none">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted group-focus-within:text-champagne transition-colors">
-                            <Search size={18} />
+                            <Search size={16} />
                         </div>
                         <input
                             type="text"
                             placeholder="Search client, service, ID..."
-                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-64 pl-10 p-2.5 transition-all outline-none"
+                            className="bg-obsidian-surface border border-[#333] text-white text-xs sm:text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-52 md:w-64 pl-9 sm:pl-10 p-2 sm:p-2.5 transition-all outline-none"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
 
                     {/* Status Filter */}
-                    <div className="relative">
+                    <div className="relative flex-1 sm:flex-none">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
-                            <Filter size={18} />
+                            <Filter size={16} />
                         </div>
                         <select
-                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-48 pl-10 p-2.5 appearance-none cursor-pointer outline-none transition-all"
+                            className="bg-obsidian-surface border border-[#333] text-white text-xs sm:text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-44 md:w-48 pl-9 sm:pl-10 p-2 sm:p-2.5 appearance-none cursor-pointer outline-none transition-all"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
@@ -257,9 +257,9 @@ function StaffAppointments() {
                         <button
                             onClick={() => setShowFilterPanel(!showFilterPanel)}
                             className={`relative bg-obsidian-surface border ${hasActiveFilters ? 'border-champagne text-champagne' : 'border-[#333] text-gray-400'
-                                } text-sm rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-champagne hover:text-champagne transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
+                                } text-xs sm:text-sm rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2 hover:border-champagne hover:text-champagne transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
                         >
-                            <Filter size={18} />
+                            <Filter size={16} />
                             <span>Filters</span>
                             {hasActiveFilters && (
                                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-champagne text-black text-xs font-black rounded-full flex items-center justify-center shadow-lg">
@@ -270,7 +270,7 @@ function StaffAppointments() {
 
                         {/* Filter Panel */}
                         {showFilterPanel && (
-                            <div className="absolute top-full mt-2 right-0 w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="absolute top-full mt-2 right-0 left-0 sm:left-auto w-full sm:w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                 <div className="bg-[#161515] px-4 py-3 border-b border-[#333] flex justify-between items-center">
                                     <h3 className="text-white font-bold text-sm uppercase tracking-wider">Filter Appointments</h3>
                                     <button
@@ -423,7 +423,8 @@ function StaffAppointments() {
                     </div>
                 ) : (
                     <>
-                        <div className="overflow-x-auto overflow-y-auto max-h-[65vh] min-h-100 custom-scrollbar">
+                        {/* Desktop Table - hidden on mobile */}
+                        <div className="hidden lg:block overflow-x-auto overflow-y-auto max-h-[65vh] min-h-100 custom-scrollbar">
                             <table className="w-full text-left border-collapse">
                                 <thead className="bg-[#161515] text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333] sticky top-0 z-10">
                                     <tr>
@@ -495,8 +496,60 @@ function StaffAppointments() {
                                 </tbody>
                             </table>
                         </div>
-                        {/* Footer / Pagination Placeholder */}
-                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-champagne-muted">
+
+                        {/* Mobile Card View - visible below lg */}
+                        <div className="lg:hidden divide-y divide-white/5 max-h-[65vh] overflow-y-auto custom-scrollbar">
+                            {filteredAndSortedAppointments.map((appointment) => (
+                                <div key={appointment.id} className="p-3 sm:p-4 hover:bg-white/2 transition-colors">
+                                    {/* Top row: avatar + name + status + menu */}
+                                    <div className="flex items-start justify-between gap-2 mb-2">
+                                        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-linear-to-br from-champagne to-champagne-dark flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg shrink-0">
+                                                {appointment.name.charAt(0)}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <div className="font-bold text-white text-xs sm:text-sm truncate">{appointment.name}</div>
+                                                <div className="text-[#777] text-[10px] sm:text-xs">#{appointment.id} · {appointment.phone || "No Phone"}</div>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            <StatusBadge status={appointment.status} />
+                                            <StaffAppointmentMenu
+                                                appointment={appointment}
+                                                onEdit={handleEdit}
+                                                onView={handleView}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Details grid */}
+                                    <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[10px] sm:text-xs ml-10 sm:ml-11.5">
+                                        <div>
+                                            <span className="text-[#555] uppercase tracking-wide font-bold">Services</span>
+                                            <div className="text-gray-300 font-medium mt-0.5 truncate">{getAssignedServiceText(appointment)}</div>
+                                        </div>
+                                        <div>
+                                            <span className="text-[#555] uppercase tracking-wide font-bold">Total</span>
+                                            <div className="text-champagne font-bold mt-0.5">${getAssignedTotal(appointment)}</div>
+                                        </div>
+                                        <div>
+                                            <span className="text-[#555] uppercase tracking-wide font-bold">Date</span>
+                                            <div className="text-white font-medium mt-0.5 flex items-center gap-1">
+                                                <Calendar size={10} className="text-champagne-muted" /> {appointment.date}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className="text-[#555] uppercase tracking-wide font-bold">Time</span>
+                                            <div className="text-[#999] font-medium mt-0.5 flex items-center gap-1">
+                                                <Clock size={10} /> {appointment.time}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Footer */}
+                        <div className="bg-[#161515] px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
                             <span>Showing <span className="text-champagne font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span> entries</span>
                         </div>
                     </>

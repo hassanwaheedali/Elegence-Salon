@@ -48,11 +48,11 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
     const totalPrice = Number.isFinite(Number(appointment.totalPrice)) ? Number(appointment.totalPrice) : 0
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-obsidian-surface border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex justify-between items-center p-6 border-b border-[#333]">
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                        <CheckCircle2 className="text-champagne mt-0.5" size={20} />
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+            <div className="bg-obsidian-surface border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+                <div className="flex justify-between items-center p-4 sm:p-6 border-b border-[#333] shrink-0">
+                    <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-2">
+                        <CheckCircle2 className="text-champagne mt-0.5" size={18} />
                         Appointment Details
                     </h2>
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors cursor-pointer">
@@ -60,12 +60,12 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                     </button>
                 </div>
 
-                <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh] custom-scrollbar">
+                <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto custom-scrollbar">
                     {/* Header Info */}
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <h3 className="text-xl font-black text-white">{serviceSummary}</h3>
-                            <p className="text-champagne font-bold text-lg">${totalPrice}</p>
+                    <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                            <h3 className="text-base sm:text-xl font-black text-white">{serviceSummary}</h3>
+                            <p className="text-champagne font-bold text-base sm:text-lg">${totalPrice}</p>
                         </div>
                         <div className='mt-0.5'>
                             <StatusBadge status={appointment.status} />
@@ -73,7 +73,7 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                     </div>
 
                     {/* Grid Details */}
-                    <div className="grid grid-cols-2 gap-6">
+                    <div className="grid grid-cols-2 gap-4 sm:gap-6">
                         <div className="space-y-1">
                             <label className="text-xs font-bold text-champagne-muted uppercase flex items-center gap-1.5">
                                 <Calendar size={12} /> Date
@@ -101,12 +101,12 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                     </div>
 
                     {/* Contact Info */}
-                    <div className="bg-obsidian-elevated p-4 rounded-xl border border-[#333] space-y-3">
-                        <div className="flex items-center gap-3 text-sm">
+                    <div className="bg-obsidian-elevated p-3 sm:p-4 rounded-xl border border-[#333] space-y-3">
+                        <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                             <Mail size={16} className="text-champagne-muted" />
                             <span className="text-gray-300">{appointment.email || 'No email provided'}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-sm">
+                        <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                             <Phone size={16} className="text-champagne-muted" />
                             <span className="text-gray-300">{appointment.phone || 'No phone provided'}</span>
                         </div>
@@ -125,7 +125,7 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
                     )}
                 </div>
 
-                <div className="p-6 border-t border-[#333] flex justify-end">
+                <div className="p-4 sm:p-6 border-t border-[#333] flex justify-end shrink-0">
                     <button
                         onClick={onClose}
                         className="px-6 py-2 bg-obsidian-elevated hover:bg-[#222] text-white border border-[#333] rounded-lg text-sm font-bold transition-colors cursor-pointer"

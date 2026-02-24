@@ -87,35 +87,35 @@ const Staffs = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-white uppercase tracking-tight">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                         Staff <span className="text-champagne">Management</span>
                     </h1>
-                    <p className="text-gray-400 text-sm mt-1">Manage your team of stylists and professionals</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your team of stylists and professionals</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="flex items-center gap-2 cursor-pointer bg-champagne hover:bg-champagne-dark text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg hover:shadow-champagne/20 active:scale-95"
+                    className="flex items-center gap-1.5 sm:gap-2 cursor-pointer bg-champagne hover:bg-champagne-dark text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-lg hover:shadow-champagne/20 active:scale-95"
                 >
-                    <Plus size={18} />
+                    <Plus size={16} />
                     <span>Add New Member</span>
                 </button>
             </div>
 
             {/* Toolbar Section */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-obsidian-surface/50 backdrop-blur-sm border border-white/5 p-4 rounded-xl">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-stretch sm:items-center bg-obsidian-surface/50 backdrop-blur-sm border border-white/5 p-3 sm:p-4 rounded-xl">
                 {/* Search */}
                 <div className="relative group w-full sm:w-72">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted group-focus-within:text-champagne transition-colors">
-                        <Search size={18} />
+                        <Search size={16} />
                     </div>
                     <input
                         type="text"
                         placeholder="Search by name, email, or role..."
-                        className="bg-obsidian border border-[#27272a] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-600"
+                        className="bg-obsidian border border-[#27272a] text-white text-xs sm:text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-9 sm:pl-10 p-2 sm:p-2.5 outline-none transition-all placeholder-gray-600"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -123,8 +123,8 @@ const Staffs = () => {
 
                 {/* Role Filter */}
                 <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <div className="bg-obsidian border border-[#27272a] rounded-lg px-3 py-2 flex items-center gap-2 w-full sm:w-48">
-                        <Filter size={16} className="text-champagne-muted" />
+                    <div className="bg-obsidian border border-[#27272a] rounded-lg px-3 py-2 flex items-center gap-2 w-full sm:w-44 md:w-48">
+                        <Filter size={14} className="text-champagne-muted shrink-0" />
                         <select
                             value={filterRole}
                             onChange={(e) => setFilterRole(e.target.value)}
@@ -235,9 +235,9 @@ const Staffs = () => {
                         </div>
 
                         {/* Mobile Card View */}
-                        <div className="lg:hidden p-4 space-y-4">
+                        <div className="lg:hidden p-3 sm:p-4 space-y-3 sm:space-y-4">
                             {filteredStaff.map((member) => (
-                                <div key={member.id} className="bg-obsidian-elevated border border-white/5 rounded-xl p-4 space-y-4">
+                                <div key={member.id} className="bg-obsidian-elevated border border-white/5 rounded-xl p-3 sm:p-4 space-y-3 sm:space-y-4">
                                     <div className="flex justify-between items-start">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 rounded-full bg-[#27272a] flex items-center justify-center text-white font-bold text-sm ring-1 ring-white/10">
@@ -279,11 +279,11 @@ const Staffs = () => {
                         </div>
 
                         {/* Pagination/Footer */}
-                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-champagne-muted">
+                        <div className="bg-[#161515] px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
                             <span>Showing {filteredStaff.length} members</span>
-                            <div className="flex gap-2">
-                                <button className="px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Previous</button>
-                                <button className="px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Next</button>
+                            <div className="flex gap-1.5 sm:gap-2">
+                                <button className="px-2 sm:px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Previous</button>
+                                <button className="px-2 sm:px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Next</button>
                             </div>
                         </div>
                     </>

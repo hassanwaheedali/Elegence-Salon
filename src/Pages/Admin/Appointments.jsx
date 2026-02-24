@@ -235,39 +235,39 @@ function Appointments() {
     }, [appointments, searchTerm, statusFilter, dateFilter, timeFilter, stylistFilter, sortConfig])
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-white uppercase tracking-tight">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                         Appointments <span className="text-champagne">Manager</span>
                     </h1>
-                    <p className="text-gray-400 text-sm mt-1">View and manage all client bookings</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">View and manage all client bookings</p>
                 </div>
 
                 {/* Action Toolbar */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full md:w-auto">
                     {/* Search */}
-                    <div className="relative group">
+                    <div className="relative group flex-1 sm:flex-none">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted group-focus-within:text-champagne transition-colors">
-                            <Search size={18} />
+                            <Search size={16} />
                         </div>
                         <input
                             type="text"
                             placeholder="Search client, service, ID..."
-                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-64 pl-10 p-2.5 transition-all outline-none"
+                            className="bg-obsidian-surface border border-[#333] text-white text-xs sm:text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-52 md:w-64 pl-9 sm:pl-10 p-2 sm:p-2.5 transition-all outline-none"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
 
                     {/* Status Filter */}
-                    <div className="relative">
+                    <div className="relative flex-1 sm:flex-none">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
-                            <Filter size={18} />
+                            <Filter size={16} />
                         </div>
                         <select
-                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-48 pl-10 p-2.5 appearance-none cursor-pointer outline-none transition-all"
+                            className="bg-obsidian-surface border border-[#333] text-white text-xs sm:text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-44 md:w-48 pl-9 sm:pl-10 p-2 sm:p-2.5 appearance-none cursor-pointer outline-none transition-all"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
@@ -285,9 +285,9 @@ function Appointments() {
                         <button
                             onClick={() => setShowFilterPanel(!showFilterPanel)}
                             className={`relative bg-obsidian-surface border ${hasActiveFilters ? 'border-champagne text-champagne' : 'border-[#333] text-gray-400'
-                                } text-sm rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-champagne hover:text-champagne transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
+                                } text-xs sm:text-sm rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2 hover:border-champagne hover:text-champagne transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
                         >
-                            <Filter size={18} />
+                            <Filter size={16} />
                             <span>Filters</span>
                             {hasActiveFilters && (
                                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-champagne text-black text-xs font-black rounded-full flex items-center justify-center shadow-lg">
@@ -298,7 +298,7 @@ function Appointments() {
 
                         {/* Filter Panel */}
                         {showFilterPanel && (
-                            <div className="absolute top-full mt-2 right-0 w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="absolute top-full mt-2 right-0 left-0 sm:left-auto w-full sm:w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                 {/* Panel Header */}
                                 <div className="bg-[#161515] px-4 py-3 border-b border-[#333] flex justify-between items-center">
                                     <h3 className="text-white font-bold text-sm uppercase tracking-wider">Filter Appointments</h3>
@@ -493,7 +493,8 @@ function Appointments() {
                     </div>
                 ) : (
                     <>
-                        <div className="overflow-x-auto min-h-100">
+                        {/* Desktop Table View */}
+                        <div className="hidden lg:block overflow-x-auto min-h-100">
                             <table className="w-full text-left border-collapse">
                                 <thead className="bg-[#161515] text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333]">
                                     <tr>
@@ -604,12 +605,84 @@ function Appointments() {
                                 </tbody>
                             </table>
                         </div>
+
+                        {/* Mobile/Tablet Card View */}
+                        <div className="lg:hidden">
+                            {filteredAndSortedAppointments.length > 0 ? (
+                                <div className="p-3 sm:p-4 space-y-3">
+                                    {filteredAndSortedAppointments.map((appointment) => (
+                                        <div key={appointment.id} className="bg-obsidian-elevated p-3 sm:p-4 rounded-xl border border-white/5 space-y-3">
+                                            <div className="flex justify-between items-start gap-2">
+                                                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                                    <div className="w-9 h-9 shrink-0 rounded-full bg-linear-to-br from-champagne to-champagne-dark flex items-center justify-center text-white font-bold text-xs shadow-lg">
+                                                        {appointment.name.charAt(0)}
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <div className="flex items-center gap-1.5 flex-wrap">
+                                                            <h4 className="font-bold text-white text-sm truncate">{appointment.name}</h4>
+                                                            <span className="text-[#555] font-mono text-[10px]">#{appointment.id}</span>
+                                                            {appointment.userId == null && (
+                                                                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-champagne/20 text-champagne text-[9px] font-bold uppercase">Guest</span>
+                                                            )}
+                                                        </div>
+                                                        <p className="text-[#777] text-xs truncate mt-0.5">{getServiceText(appointment) || '—'}</p>
+                                                    </div>
+                                                </div>
+                                                <StatusBadge status={appointment.status} />
+                                            </div>
+
+                                            <div className="flex justify-between items-center border-t border-white/5 pt-2.5">
+                                                <div className="flex flex-col gap-1 min-w-0 flex-1">
+                                                    <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                                                        <Calendar size={11} className="shrink-0" />
+                                                        <span>{appointment.date}</span>
+                                                        <span className="text-[#333]">|</span>
+                                                        <span>{appointment.time}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5 text-xs text-[#777]">
+                                                        <User size={11} className="shrink-0" />
+                                                        <span className="truncate">{getStylistText(appointment) || 'Unassigned'}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 shrink-0">
+                                                    <span className="text-champagne font-bold text-sm">${getTotalPrice(appointment)}</span>
+                                                    <AppointmentMenu
+                                                        appointment={appointment}
+                                                        onEdit={handleEdit}
+                                                        onView={handleView}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="flex flex-col items-center gap-3 py-12 px-4 text-center">
+                                    <Search size={40} className="text-[#333]" />
+                                    <h3 className="text-white font-bold text-base">No appointments found</h3>
+                                    <p className="text-champagne-muted text-xs max-w-sm">
+                                        {hasActiveFilters
+                                            ? "Try adjusting your filters or search terms."
+                                            : "No appointments match your search criteria."}
+                                    </p>
+                                    {hasActiveFilters && (
+                                        <button
+                                            onClick={clearAllFilters}
+                                            className="mt-2 px-4 py-2 bg-champagne hover:bg-champagne-dark text-white cursor-pointer font-bold rounded-lg text-xs transition-colors uppercase tracking-wide shadow-lg"
+                                        >
+                                            Clear All Filters
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
                         {/* Footer / Pagination Placeholder */}
-                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-champagne-muted">
-                            <span>Showing <span className="text-champagne font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span> entries</span>
-                            <div className="flex gap-2">
-                                <button className={`px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 ${filteredAndSortedAppointments.length === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>Previous</button>
-                                <button className={`px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 ${filteredAndSortedAppointments.length > 10 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>Next</button>
+                        <div className="bg-[#161515] px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
+                            <span>Showing <span className="text-champagne font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span></span>
+                            <div className="flex gap-1.5 sm:gap-2">
+                                <button className={`px-2 sm:px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 ${filteredAndSortedAppointments.length === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>Prev</button>
+                                <button className={`px-2 sm:px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 ${filteredAndSortedAppointments.length > 10 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>Next</button>
                             </div>
                         </div>
                     </>

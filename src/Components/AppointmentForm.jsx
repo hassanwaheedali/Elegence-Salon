@@ -195,7 +195,7 @@ function Appointment() {
                 </div>
             </div>
             <div className="submit-btn w-full mt-4">
-                <button type="submit" className="w-full border-5 border-[text-champagne] hover:border-white  text-white font-black p-3 px-6 hover:bg-[#d28127] transition-colors cursor-pointer">
+                <button type="submit" className="w-full border-5 border-champagne hover:border-white  text-white font-black p-3 px-6 hover:bg-[#d28127] transition-colors cursor-pointer">
                     BOOK APPOINTMENT
                 </button>
             </div>

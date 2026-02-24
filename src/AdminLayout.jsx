@@ -76,7 +76,7 @@ function AdminLayout() {
             {/* Main Content Wrapper */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Top Header */}
-                <header className="h-20 bg-obsidian/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 lg:px-8 z-30 top-0">
+                <header className="h-14 sm:h-16 lg:h-20 bg-obsidian/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-3 sm:px-6 lg:px-8 z-30 top-0">
                     <div className="flex items-center gap-6">
                         <button
                             onClick={() => setSidebarOpen(true)}
@@ -89,13 +89,13 @@ function AdminLayout() {
                     <div className="flex items-center gap-4">
                         <button className="relative p-2 text-[#a1a1aa] hover:text-white transition-colors cursor-pointer hover:bg-white/5 rounded-full">
                             <Bell size={20} />
-                            <span className="absolute top-2 right-2.5 w-1.5 h-1.5 bg-champagne rounded-full ring-2 ring-[#0d0d0d]"></span>
+                            <span className="absolute top-2 right-2.5 w-1.5 h-1.5 bg-champagne rounded-full ring-2 ring-obsidian"></span>
                         </button>
                     </div>
                 </header>
 
                 {/* Main Scrollable Content */}
-                <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 scroll-smooth">
+                <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 lg:p-8 scroll-smooth">
                     <Outlet />
                 </main>
             </div>

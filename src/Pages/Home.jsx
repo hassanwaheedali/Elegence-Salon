@@ -84,7 +84,7 @@ function Home() {
             <section
                 ref={heroRef}
                 data-scroll-section
-                className="relative min-h-fit md:min-h-svh overflow-hidden bg-obsidian"
+                className="relative min-h-fit md:min-h-svh overflow-hidden bg-obsidian py-6 md:py-0"
                 id="main-hero"
             >
                 {/* Background Image Layer */}
@@ -109,7 +109,7 @@ function Home() {
                     <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0 md:min-h-[calc(100svh-120px)]">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
-                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-2 sm:pt-4 lg:pt-16 xl:pt-20 z-10">
+                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-8 lg:pt-16 xl:pt-20 z-10">
 
                             {/* Tagline — horizontal line + text */}
                             <div data-hero-tagline className="flex items-center gap-4 mb-6 sm:mb-8 lg:mb-10">
@@ -200,7 +200,7 @@ function Home() {
                 </div>
 
                 {/* ── Stats Strip — Aligned with hero container ── */}
-                <div className="relative z-10  bg-obsidian-card">
+                <div className="relative z-10 bg-obsidian-card/70 md:bg-obsidian-card">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="grid grid-cols-4">
                             {[
@@ -212,10 +212,10 @@ function Home() {
                                 <div
                                     key={i}
                                     data-stats-item
-                                    className="flex flex-row items-center px-0 sm:px-2 lg:px-8 py-4 sm:py-8 gap-4"
+                                    className="flex flex-col sm:flex-row items-center sm:items-center px-4 sm:px-2 lg:px-8 py-6 sm:py-8 gap-2 sm:gap-4 text-center sm:text-left"
                                 >
-                                    <span className="font-sans text-champagne text-lg sm:text-2xl lg:text-3xl font-black leading-none">{stat.value}</span>
-                                    <span className="font-sans text-white/30 text-[6px] sm:text-[9px] lg:text-[11px] uppercase tracking-widest sm:tracking-[0.2em] mt-1 font-semibold">{stat.label}</span>
+                                    <span className="font-sans text-champagne text-xl sm:text-2xl lg:text-3xl font-black leading-none">{stat.value}</span>
+                                    <span className="font-sans text-white/30 text-[8px] sm:text-[9px] lg:text-[11px] uppercase tracking-widest sm:tracking-[0.2em] mt-1 sm:mt-0 font-semibold">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -225,7 +225,7 @@ function Home() {
 
             {/* ═══════════════════════ ABOUT ═══════════════════════ */}
             <section className='about bg-obsidian-card text-white' id='about'>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-20 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-10 md:pt-20 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
                     {/* left image - responsive sizing */}
                     <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end">
                         <img src={About} alt="About Us" className="w-full max-w-sm md:max-w-xl h-auto object-contain" />
@@ -278,15 +278,15 @@ function Home() {
                }) */}
             <section
                 data-scroll-section
-                className="service-section bg-obsidian-card text-white py-28 relative"
+                className="service-section bg-obsidian-card text-white py-16 md:py-28 relative"
                 id='services'
             >
-                <div className='mx-auto px-6 lg:px-16 max-w-11/12'>
+                <div className='mx-auto px-2 lg:px-16 max-w-11/12'>
                     {/* Section Header — Editorial type pairing */}
                     <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-16 lg:mb-24 gap-6">
                         <div className="text-center md:text-left">
                             <span className="font-sans text-champagne/70 tracking-[0.5em] text-[10px] sm:text-xs uppercase mb-3 block">Our Menu</span>
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
+                            <h2 className="text-5xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
                                 Curated{' '}
                                 <span className='font-sans font-black text-champagne normal-case'>Services</span>
                             </h2>
@@ -334,17 +334,17 @@ function Home() {
             {/* ═══════════════════════ PRICE LIST ═══════════════════════ */}
             <section className="price-section bg-obsidian-card text-white">
                 <div className='pb-8 mx-auto flex flex-col gap-8 lg:gap-12'>
-                    <div className="heading w-full mb-2 md:mb-8 text-center">
-                        <h1 className="text-6xl font-sans font-black text-champagne">PRICE LIST</h1>
+                    <div className="heading w-full mb-2 md:mb-6 text-center my-8 sm:my-0">
+                        <h1 className="text-4xl md:text-5xl font-sans font-black text-champagne mb-4">PRICE LIST</h1>
                     </div>
                     <PriceCard />
                 </div>
             </section>
 
             {/* ═══════════════════════ APPOINTMENT ═══════════════════════ */}
-            <section className="appoinment-section bg-obsidian-card text-white" id='appointment'>
+            <section className="appoinment-section bg-obsidian-card text-white my-4 md:my-0" id='appointment'>
                 <div className='pb-8 mx-auto flex flex-col gap-2'>
-                    <div className="heading w-full text-center text-4xl lg:text-5xl font-black uppercase">
+                    <div className="heading w-full text-center text-3xl lg:text-5xl font-black uppercase">
                         <h1 className='text-white font-sans'>Make</h1>
                         <h1 className='text-champagne font-sans font-black normal-case text-4xl lg:text-5xl'>An Appointment</h1>
                         <hr className='max-w-115 mx-auto border-obsidian-elevated border mt-5' />

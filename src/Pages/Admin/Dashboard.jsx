@@ -74,9 +74,9 @@ function Dashboard() {
     }, [appointments])
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-0 sm:px-2 lg:px-8 py-2 sm:py-4 lg:py-0">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                 <StatsCard
                     title="Total Revenue"
                     value={`$${totalRevenue.toFixed(2)}`}
@@ -117,12 +117,12 @@ function Dashboard() {
 
             {/* Appointments Table Section */}
             <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne flex items-center gap-3">
+                <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+                    <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-champagne flex items-center gap-2 sm:gap-3">
                         <span className="text-white">Recent</span> Appointments
                         <span className="flex items-center justify-center text-[10px] font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2.5 py-1 rounded-md tracking-wider uppercase shadow-[0_0_10px_rgba(251,157,51,0.1)]">Live</span>
                     </h2>
-                    <button className="px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                    <button className="px-4 sm:px-6 py-2 border border-champagne/60 bg-transparent text-champagne font-sans font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-lg shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne cursor-pointer">
                         <Link to="/admin/appointments" className="flex items-center gap-1">
                             View All
                         </Link>
@@ -180,7 +180,7 @@ function Dashboard() {
                 </div>
 
                 {/* Mobile/Tablet Card View */}
-                <div className="lg:hidden p-4 space-y-4">
+                <div className="lg:hidden p-3 sm:p-4 space-y-3 sm:space-y-4">
                     {appointments.slice(0, 4).map((appointment, idx) => (
                         <div key={appointment.id || idx} className="bg-obsidian-elevated p-4 rounded-xl border border-white/5 space-y-4">
                             <div className="flex justify-between items-start">
@@ -229,19 +229,19 @@ function Dashboard() {
             </div>
 
             {/* Inventory & Staff Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                 {/* Inventory Card */}
                 <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
-                    <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center gap-4">
-                        <h2 className="text-2xl font-extrabold text-champagne flex items-center gap-2">
+                    <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center gap-3 sm:gap-4">
+                        <h2 className="text-lg sm:text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Inventory</span> Status
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Real-time</span> */}
                         </h2>
-                        <button className="px-4 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                        <button className="px-3 sm:px-4 py-1.5 sm:py-2 border border-champagne/60 bg-transparent text-champagne font-sans font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-lg shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne cursor-pointer whitespace-nowrap">
                             Manage Stock
                         </button>
                     </div>
-                    <div className="p-6 space-y-6 flex-1">
+                    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 flex-1">
                         <InventoryItem name="Premium Shampoo" stock={85} max={100} image="https://placehold.co/100x100/222/FFF?text=S" />
                         <InventoryItem name="Matte Wax" stock={35} max={100} image="https://placehold.co/100x100/222/FFF?text=W" />
                         <InventoryItem name="Beard Oil" stock={12} max={100} low image="https://placehold.co/100x100/222/FFF?text=O" />
@@ -251,16 +251,16 @@ function Dashboard() {
 
                 {/* Staff List Card */}
                 <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
-                    <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center">
-                        <h2 className="text-2xl font-extrabold text-champagne flex items-center gap-2">
+                    <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center">
+                        <h2 className="text-lg sm:text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Staff</span> Scheduling
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Today</span> */}
                         </h2>
-                        <button className="px-4 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                        <button className="px-3 sm:px-4 py-1.5 sm:py-2 border border-champagne/60 bg-transparent text-champagne font-sans font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-lg shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne cursor-pointer whitespace-nowrap">
                             View ALL
                         </button>
                     </div>
-                    <div className="p-6 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
+                    <div className="p-4 sm:p-6 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                         {todayStaff.length > 0 ? (
                             todayStaff.slice(0, 4).map(staffMember => (
                                 <StaffRow

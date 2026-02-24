@@ -201,16 +201,16 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
     }
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-obsidian-surface border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex justify-between items-center p-6 border-b border-[#333]">
-                    <h2 className="text-xl font-bold text-white">Edit Appointment</h2>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+            <div className="bg-obsidian-surface border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+                <div className="flex justify-between items-center p-4 sm:p-6 border-b border-[#333] shrink-0">
+                    <h2 className="text-base sm:text-xl font-bold text-white">Edit Appointment</h2>
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors cursor-pointer">
                         <X size={20} />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Date</label>
@@ -276,8 +276,8 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                                                     type="button"
                                                     onClick={() => toggleService(service)}
                                                     className={`w-full px-3 py-2 text-left text-xs font-bold flex items-center justify-between transition-colors ${isSelected
-                                                            ? 'bg-champagne/10 text-champagne'
-                                                            : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                                                        ? 'bg-champagne/10 text-champagne'
+                                                        : 'text-gray-300 hover:bg-white/5 hover:text-white'
                                                         }`}
                                                 >
                                                     <span>{service.name} — {service.price}</span>
@@ -332,18 +332,18 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                         </select>
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-4">
+                    <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 bg-transparent border border-[#333] text-gray-400 hover:text-white rounded-lg text-sm font-bold transition-colors cursor-pointer"
+                            className="px-4 py-2 bg-transparent border border-[#333] text-gray-400 hover:text-white rounded-lg text-sm font-bold transition-colors cursor-pointer order-2 sm:order-1"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-4 py-2 bg-champagne hover:bg-champagne-dark text-white rounded-lg text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer"
+                            className="px-4 py-2 bg-champagne hover:bg-champagne-dark text-white rounded-lg text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer order-1 sm:order-2"
                         >
                             {loading ? 'Saving...' : 'Save Changes'}
                         </button>

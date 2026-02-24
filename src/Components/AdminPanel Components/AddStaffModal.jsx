@@ -102,12 +102,12 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
     };
 
     return createPortal(
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-            <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg max-h-[85vh] rounded-2xl shadow-2xl animate-scale-in flex flex-col">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+            <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg max-h-[90vh] rounded-2xl shadow-2xl animate-scale-in flex flex-col">
 
                 {/* Header */}
-                <div className="flex justify-between items-center px-6 py-4 border-b border-white/5 bg-[#161515]">
-                    <h2 className="text-xl font-bold text-white">Add New Staff Member</h2>
+                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-[#161515]">
+                    <h2 className="text-base sm:text-xl font-bold text-white">Add New Staff Member</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-white p-2 hover:bg-white/10 rounded-full transition-all cursor-pointer"
@@ -117,7 +117,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                 </div>
 
                 {/* Form Content */}
-                <div className="p-6 overflow-y-auto">
+                <div className="p-4 sm:p-6 overflow-y-auto">
                     {error && (
                         <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm rounded-lg">
                             {error}
@@ -382,7 +382,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-6 py-4 border-t border-white/5 bg-[#161515] flex justify-end gap-3">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-[#161515] flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
                     <button
                         type="button"
                         onClick={onClose}

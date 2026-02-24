@@ -100,23 +100,23 @@ function Configuration() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 px-0 sm:px-2 lg:px-8 py-2 sm:py-4 lg:py-0">
             <div>
-                <h1 className="text-3xl font-black text-white uppercase tracking-tight">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
                     My <span className="text-champagne">Profile</span>
                 </h1>
-                <p className="text-gray-400 text-sm mt-1">Manage your account information and security</p>
+                <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your account information and security</p>
             </div>
 
             <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
 
 
-                <div className="p-6 sm:p-8">
-                    <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="p-4 sm:p-6 md:p-8">
+                    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
                         <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <User className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <User className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -173,9 +173,9 @@ function Configuration() {
                         </div>
 
                         <div className="space-y-6">
-                            <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-champagne" size={20} />
-                                <h2 className="text-lg font-bold text-white uppercase tracking-wider">Security</h2>
+                            <div className="flex items-center gap-2 sm:gap-3 border-b border-[#333] pb-3">
+                                <Clock className="text-champagne" size={18} />
+                                <h2 className="text-sm sm:text-base lg:text-lg font-bold text-white uppercase tracking-wider">Security</h2>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -217,11 +217,11 @@ function Configuration() {
                             </div>
                         </div>
 
-                        <div className="pt-6 border-t border-[#333] flex justify-end gap-4">
+                        <div className="pt-4 sm:pt-6 border-t border-[#333] flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="flex items-center gap-2 px-8 py-2.5 bg-champagne hover:bg-champagne-dark text-black font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                                className="flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 border-champagne/60 bg-transparent text-champagne font-sans border font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 cursor-pointer disabled:opacity-50 transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne text-sm"
                             >
                                 <Save size={16} />
                                 {isLoading ? 'Saving...' : 'Save Changes'}

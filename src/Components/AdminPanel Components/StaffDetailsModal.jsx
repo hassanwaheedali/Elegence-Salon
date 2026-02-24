@@ -35,8 +35,8 @@ const StaffDetailsModal = ({ staff, onClose }) => {
     }, [staff, appointments]);
 
     return (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-            <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl animate-scale-in flex flex-col overflow-hidden relative">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+            <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl animate-scale-in flex flex-col overflow-hidden relative max-h-[90vh]">
 
                 {/* Close Button */}
                 <button
@@ -56,17 +56,17 @@ const StaffDetailsModal = ({ staff, onClose }) => {
                 </div>
 
                 {/* Content */}
-                <div className="pt-14 px-6 pb-6 space-y-6">
+                <div className="pt-14 px-4 sm:px-6 pb-4 sm:pb-6 space-y-4 sm:space-y-6 overflow-y-auto">
 
                     {/* Basic Info */}
                     <div>
-                        <h2 className="text-2xl font-black text-white">{staff.name}</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-white">{staff.name}</h2>
                         <p className="text-champagne font-bold text-sm tracking-wide uppercase mt-1">{staff.role}</p>
 
-                        <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-400">
-                            <div className="flex items-center gap-2 bg-obsidian-elevated px-3 py-1.5 rounded-lg border border-white/5">
-                                <Mail size={14} className="text-[#555]" />
-                                {staff.email}
+                        <div className="flex flex-wrap gap-2 sm:gap-4 mt-4 text-xs sm:text-sm text-gray-400">
+                            <div className="flex items-center gap-2 bg-obsidian-elevated px-2 sm:px-3 py-1.5 rounded-lg border border-white/5 truncate">
+                                <Mail size={14} className="text-[#555] shrink-0" />
+                                <span className="truncate">{staff.email}</span>
                             </div>
                             <div className="flex items-center gap-2 bg-obsidian-elevated px-3 py-1.5 rounded-lg border border-white/5">
                                 <Phone size={14} className="text-[#555]" />

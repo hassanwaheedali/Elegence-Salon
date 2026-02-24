@@ -89,7 +89,7 @@ function PriceCard() {
                                 return (
                                     <div key={index} className="flex-1 flex flex-col gap-4">
                                         <div className="text-center">
-                                            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-wider text-white mb-4">
+                                            <h2 className="text-3xl font-black uppercase tracking-wider text-white mb-4">
                                                 {card.title}
                                             </h2>
                                             <div className="w-24 h-1 bg-champagne-light mx-auto mb-6"></div>
@@ -105,8 +105,8 @@ function PriceCard() {
                                                 <div className="flex-1 flex flex-col gap-4 md:gap-5 justify-center">
                                                     {card.items.map((item, idx) => (
                                                         <div key={idx} className="price-item flex justify-between items-center py-3 border-b border-gray-700 hover:border-yellow-500 transition-colors duration-300">
-                                                            <span className="text-base md:text-lg font-bold text-[#f9fffc]">{item.name}</span>
-                                                            <span className="text-xl md:text-2xl font-bold text-champagne-light">{item.price}</span>
+                                                            <span className="text-base md:text-md font-bold text-[#f9fffc]">{item.name}</span>
+                                                            <span className="text-xl md:text-xl font-bold text-champagne-light">{item.price}</span>
                                                         </div>
                                                     ))}
                                                 </div>
