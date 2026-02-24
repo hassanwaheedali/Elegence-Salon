@@ -84,7 +84,7 @@ function Home() {
             <section
                 ref={heroRef}
                 data-scroll-section
-                className="relative min-h-fit md:min-h-svh overflow-hidden bg-obsidian py-6 md:py-0"
+                className="relative min-h-fit overflow-hidden bg-obsidian py-6 md:py-0"
                 id="main-hero"
             >
                 {/* Background Image Layer */}
@@ -105,22 +105,22 @@ function Home() {
                 }}></div>
 
                 {/* ── Hero Content Grid ── */}
-                <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 pt-20 sm:pt-16 pb-0">
-                    <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0 md:min-h-[calc(100svh-120px)]">
+                <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 pt-24 pb-0">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
-                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-8 lg:pt-16 xl:pt-20 z-10">
+                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 xl:pt-20 z-10">
 
                             {/* Tagline — horizontal line + text */}
                             <div data-hero-tagline className="flex items-center gap-4 mb-6 sm:mb-8 lg:mb-10">
-                                <div className="w-8 sm:w-12 h-px bg-champagne/50"></div>
-                                <p className="font-sans text-champagne/80 text-[9px] sm:text-[10px] md:text-xs tracking-[0.4em] sm:tracking-[0.5em] uppercase font-semibold">
+                                <div className="w-8 sm:w-12 hidden md:flex h-px bg-champagne/50"></div>
+                                <p className="font-sans text-champagne/80 text-[8px] sm:text-[10px] md:text-xs tracking-[0.4em] sm:tracking-[0.5em] uppercase font-semibold">
                                     Est. 2011 — Gentlemen's Grooming
                                 </p>
                             </div>
 
                             {/* Main Heading — Bold, aggressive spacing */}
-                            <div data-hero-heading className="heading-text text-center lg:text-left mb-6">
+                            <div data-hero-heading className="heading-text text-center lg:text-left mb-4">
                                 {/* Line 1 */}
                                 <h1 className="font-serif font-bold text-champagne text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-[1.1] uppercase">
                                     The Art of
@@ -225,7 +225,7 @@ function Home() {
 
             {/* ═══════════════════════ ABOUT ═══════════════════════ */}
             <section className='about bg-obsidian-card text-white' id='about'>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-10 md:pt-20 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-10 md:pt-26 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
                     {/* left image - responsive sizing */}
                     <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end">
                         <img src={About} alt="About Us" className="w-full max-w-sm md:max-w-xl h-auto object-contain" />
@@ -233,10 +233,10 @@ function Home() {
                     {/* right content - responsive sizing */}
                     <div className="w-full md:w-1/2 flex flex-col justify-start md:items-start text-center md:text-left px-4 md:px-0">
                         <div className="f1-head">
-                            <h2 className="font-serif text-4xl lg:text-6xl text-gray-300 uppercase font-bold">WE ARE <span className="text-white font-bold uppercase">Elegance</span></h2>
+                            <h2 className="font-serif text-4xl lg:text-6xl text-gray-300 uppercase font-bold">WE ARE <span className="text-white font-bold uppercase font-sans">Elegance</span></h2>
                         </div>
                         <div className="f2-head mt-2">
-                            <h2 className='font-serif text-4xl lg:text-6xl font-bold text-champagne'>THE BARBER SHOP</h2>
+                            <h2 className='font-serif text-4xl lg:text-6xl font-bold text-champagne tracking-wide'>THE BARBER SHOP</h2>
                         </div>
                         <div className="description space-y-4 mt-8 md:mt-6">
                             <div className="f-para1">
@@ -283,12 +283,12 @@ function Home() {
             >
                 <div className='mx-auto px-2 lg:px-16 max-w-11/12'>
                     {/* Section Header — Editorial type pairing */}
-                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-16 lg:mb-24 gap-6">
+                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-12 lg:mb-24 gap-6">
                         <div className="text-center md:text-left">
                             <span className="font-sans text-champagne/70 tracking-[0.5em] text-[10px] sm:text-xs uppercase mb-3 block">Our Menu</span>
-                            <h2 className="text-5xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
+                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
                                 Curated{' '}
-                                <span className='font-sans font-black text-champagne normal-case'>Services</span>
+                                <span className='font-serif font-black text-champagne normal-case tracking-wide'>Services</span>
                             </h2>
                         </div>
                         <p className="font-sans font-light text-champagne-muted max-w-sm text-right hidden md:block text-sm tracking-wide leading-relaxed">
@@ -332,21 +332,32 @@ function Home() {
             </section>
 
             {/* ═══════════════════════ PRICE LIST ═══════════════════════ */}
-            <section className="price-section bg-obsidian-card text-white">
-                <div className='pb-8 mx-auto flex flex-col gap-8 lg:gap-12'>
-                    <div className="heading w-full mb-2 md:mb-6 text-center my-8 sm:my-0">
-                        <h1 className="text-4xl md:text-5xl font-sans font-black text-champagne mb-4">PRICE LIST</h1>
+            <section className="price-section bg-obsidian-card text-white py-10 md:pt-0 md:py-24">
+                <div className='mx-auto flex flex-col'>
+                    {/* Section Header — Editorial type pairing (matches Services section) */}
+                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-8 gap-6 px-4 md:px-6 lg:px-16 max-w-10/12 mx-auto w-full">
+                        <div className="text-center md:text-left">
+                            <span className="font-sans text-champagne/70 tracking-[0.5em] text-[9px] sm:text-xs uppercase mb-3 block">Our Rates</span>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
+                                Price{' '}
+                                <span className='font-serif tracking-wide uppercase font-black text-champagne '>List</span>
+                            </h2>
+                        </div>
+                        <p className="font-sans font-light text-champagne-muted max-w-sm text-right hidden md:block text-sm tracking-wide leading-relaxed">
+                            Transparent pricing for every service. Premium quality at fair value.
+                        </p>
                     </div>
+
                     <PriceCard />
                 </div>
             </section>
 
             {/* ═══════════════════════ APPOINTMENT ═══════════════════════ */}
-            <section className="appoinment-section bg-obsidian-card text-white my-4 md:my-0" id='appointment'>
+            <section className="appoinment-section bg-obsidian-card text-white my-0 md:my-0" id='appointment'>
                 <div className='pb-8 mx-auto flex flex-col gap-2'>
                     <div className="heading w-full text-center text-3xl lg:text-5xl font-black uppercase">
-                        <h1 className='text-white font-sans'>Make</h1>
-                        <h1 className='text-champagne font-sans font-black normal-case text-4xl lg:text-5xl'>An Appointment</h1>
+                        <h1 className='text-white font-serif'>Make</h1>
+                        <h1 className='text-champagne font-sans font-black normal-case text-3xl lg:text-5xl'>An Appointment</h1>
                         <hr className='max-w-115 mx-auto border-obsidian-elevated border mt-5' />
                     </div>
                     <div className='mx-auto max-w-7xl w-full px-8 md:px-6 lg:px-8 py-4 md:py-12 mb-8'>
@@ -359,7 +370,7 @@ function Home() {
             <section className="brand-images bg-obsidian-card overflow-hidden pt-4 pb-16">
                 {/* Section Title */}
                 <div className="text-center mb-16">
-                    <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-wider mb-2 font-sans">
+                    <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-wide mb-2 font-serif">
                         Trusted <span className="font-sans font-black text-champagne normal-case">Brands</span>
                     </h2>
                     <p className="font-sans font-light text-champagne-muted text-sm tracking-wide">Premium products for exceptional results</p>
@@ -377,7 +388,7 @@ function Home() {
             <section className="customer-reviews-section bg-obsidian-card text-white pt-12">
                 <div className='mx-auto flex flex-col gap-4 md:gap-6'>
                     <div className="heading w-full text-center">
-                        <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase font-sans'>Customer <span className='font-sans font-black text-champagne normal-case'>Reviews</span></h1>
+                        <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase font-serif'>Customer <span className='font-sans font-black text-champagne normal-case'>Reviews</span></h1>
                         <hr className='max-w-xs sm:max-w-md md:max-w-lg mx-auto border-obsidian-elevated border mt-3 md:mt-5' />
                     </div>
                     <div className='mx-auto max-w-7xl w-full px-4 sm:px-6 md:px-8 lg:px-10 py-6 md:py-8 mb-4 md:mb-8'>

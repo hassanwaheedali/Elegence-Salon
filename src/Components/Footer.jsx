@@ -14,7 +14,7 @@ function Footer() {
         }, 100)
     }
     return (
-        <footer className='bg-obsidian-surface border-t border-white/10'>
+        <footer className='bg-obsidian border-t border-white/10'>
             <div className="py-10 px-4 sm:px-6 lg:px-8 flex md:flex-row flex-col justify-center md:justify-between space-y-4 md:space-y-0 items-center mx-auto max-w-7xl">
                 <div className="flex items-center">
                     <div className="logo ">

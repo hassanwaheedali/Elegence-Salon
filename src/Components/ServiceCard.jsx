@@ -36,23 +36,23 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
 
                 {/* Text Content */}
                 <div className="transform transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                    <h3 className="mb-3 text-3xl font-black uppercase leading-none text-white tracking-wide shadow-black drop-shadow-md">
+                    <h3 className="mb-3 text-2xl md:text-3xl font-black uppercase leading-none text-white tracking-wide shadow-black drop-shadow-md">
                         {title}
                     </h3>
 
                     <div className="mb-4 h-0.5 w-12 bg-champagne transition-all duration-500 group-hover:w-full" />
 
-                    <p className="mb-6 text-sm text-gray-300 line-clamp-3 group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
+                    <p className="mb-6 text-xs md:text-sm text-gray-300 line-clamp-3 group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
                         {description}
                     </p>
 
                     {/* Price and Action */}
                     <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <span className="text-2xl font-black text-champagne tracking-wider drop-shadow-sm">
+                        <span className="text-xl md:text-2xl font-black text-champagne tracking-wider drop-shadow-sm">
                             {price}
                         </span>
                         <a href="#appointment">
-                            <button className="group/btn flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-300 hover:bg-champagne border border-white/10 hover:border-champagne">
+                            <button className="group/btn flex items-center gap-2 rounded-full bg-white/5 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-300 hover:bg-champagne border border-champagne hover:border-champagne">
                                 <span>Book Now</span>
                                 <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
                             </button>
