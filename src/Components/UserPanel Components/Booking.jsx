@@ -19,7 +19,7 @@ function Booking() {
         fetchAppointments()
     }, [displayAppointmentsByUser, appointments])
     return (
-        <div ref={appointmentSectionRef} className="bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='appoinments'>
+        <div ref={appointmentSectionRef} className="bg-obsidian-surface px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='appoinments'>
             <div className="head-background bg-obsidian-elevated w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne mt-1"><span className="text-white">My</span> Appointments</h2>
             </div>

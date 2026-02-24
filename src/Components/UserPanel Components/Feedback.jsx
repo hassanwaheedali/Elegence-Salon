@@ -26,7 +26,7 @@ function Feedback() {
         await localStorage.setItem("FeedbackData", JSON.stringify(feedbackData))
         console.log('Feedback submitted:', feedbackData)
         showMessage('success', 'Thank you for your feedback! We appreciate you taking the time to share your thoughts with us.')
-        
+
         // Reset form after submission
         setFeedbackData({
             userId: currentUser?.id,
@@ -37,7 +37,7 @@ function Feedback() {
     }
 
     return (
-        <div className="bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500">
+        <div className="bg-obsidian-surface px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500">
             <div className="head-background bg-obsidian-elevated w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne mt-1"><span className="text-white">Submit</span> Feedback</h2>
             </div>

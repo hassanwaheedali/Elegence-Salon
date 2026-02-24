@@ -44,7 +44,7 @@ function LoginInput() {
             <div className="head bg-obsidian-elevated p-4 sm:p-5 text-center rounded-t-2xl text-champagne text-2xl sm:text-3xl md:text-4xl font-black uppercase" style={{ textShadow: "0 4px 4px rgba(0, 0, 0, 0.25)" }}>
                 <h2>Login</h2>
             </div>
-            <div className="login-form bg-[#161515] rounded-b-2xl pb-4 pt-2">
+            <div className="login-form bg-obsidian-surface rounded-b-2xl pb-4 pt-2">
                 <form className='p-4 sm:p-6 md:p-8' onSubmit={handleSubmit} method="post">
                     <div className="input-forms space-y-4 sm:space-y-5 md:space-y-7 mb-2">
                         <input type="email" name="userMail" value={email} id="userMail" placeholder="EMAIL" onChange={(e) => setEmail(e.target.value)} className="w-full font-black border-4 border-[#454545] p-2 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base placeholder-[#454545] text-[#dddddd] tracking-tight hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] rounded-md" required />

@@ -271,7 +271,7 @@ function StaffAppointments() {
                         {/* Filter Panel */}
                         {showFilterPanel && (
                             <div className="absolute top-full mt-2 right-0 left-0 sm:left-auto w-full sm:w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                                <div className="bg-[#161515] px-4 py-3 border-b border-[#333] flex justify-between items-center">
+                                <div className="bg-obsidian-surface px-4 py-3 border-b border-[#333] flex justify-between items-center">
                                     <h3 className="text-white font-bold text-sm uppercase tracking-wider">Filter Appointments</h3>
                                     <button
                                         onClick={clearAllFilters}
@@ -348,7 +348,7 @@ function StaffAppointments() {
                                     </div>
                                 </div>
 
-                                <div className="bg-[#161515] px-4 py-3 border-t border-[#333]">
+                                <div className="bg-obsidian-surface px-4 py-3 border-t border-[#333]">
                                     <button
                                         onClick={() => setShowFilterPanel(false)}
                                         className="w-full bg-champagne hover:bg-champagne-dark text-black cursor-pointer font-black py-2.5 rounded-lg transition-colors text-sm uppercase tracking-wide shadow-lg"
@@ -426,7 +426,7 @@ function StaffAppointments() {
                         {/* Desktop Table - hidden on mobile */}
                         <div className="hidden lg:block overflow-x-auto overflow-y-auto max-h-[65vh] min-h-100 custom-scrollbar">
                             <table className="w-full text-left border-collapse">
-                                <thead className="bg-[#161515] text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333] sticky top-0 z-10">
+                                <thead className="bg-obsidian-surface text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333] sticky top-0 z-10">
                                     <tr>
                                         <SortableHeader field="id" currentSort={sortConfig} onSort={handleSort}>
                                             ID
@@ -549,7 +549,7 @@ function StaffAppointments() {
                         </div>
 
                         {/* Footer */}
-                        <div className="bg-[#161515] px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
+                        <div className="bg-obsidian-surface px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
                             <span>Showing <span className="text-champagne font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span> entries</span>
                         </div>
                     </>

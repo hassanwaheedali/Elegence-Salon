@@ -53,7 +53,7 @@ function Header({ bgImage = "bg-transparent" }) {
     return (
         <header className={`fixed top-0 left-0 w-full z-50 text-white pb-2 transition-colors duration-300 ${headerBg}`}>
             <nav>
-                <div className="flex flex-wrap justify-between items-center py-4 px-6 md:px-14 relative">
+                <div className="flex flex-wrap justify-between items-center py-4 px-6 md:px-14 relative mt-0.5">
                     <div className="logo ">
                         <Link to="/">
                             <svg width="99" height="46" viewBox="0 0 99 46" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +161,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                     {/* Dropdown Menu */}
                                     {isDropdownOpen && (
                                         <div
-                                            className="absolute right-0 top-full mt-5 w-64 bg-obsidian-card border border-gray-800/80 shadow-2xl rounded-lg z-50 py-2"
+                                            className="absolute right-0 top-full mt-6 w-64 bg-obsidian/70 border border-gray-800/80 shadow-2xl rounded-lg z-50 py-2"
                                             onMouseEnter={() => setIsDropdownOpen(true)}
                                             onMouseLeave={() => setIsDropdownOpen(false)}
                                         >
@@ -233,7 +233,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                                 e.preventDefault()
                                                                 goToSection('appointment')
                                                             }}
-                                                            className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-champagne hover:bg-gray-900/30 transition-colors'
+                                                            className='flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-champagne hover:bg-gray-900/3 transition-colors'
                                                         >
                                                             <i className="fas fa-plus-circle w-5"></i>
                                                             <span>Book Appointment</span>

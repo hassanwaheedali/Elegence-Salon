@@ -51,7 +51,7 @@ function RegisterInput() {
             <div className="head bg-obsidian-elevated p-6 text-center rounded-t-2xl text-champagne text-2xl md:text-4xl font-black" style={{ textShadow: "0 4px 4px rgba(0, 0, 0, 0.25)" }}>
                 <h2>Create Your Account</h2>
             </div>
-            <div className="register-form bg-[#161515] rounded-b-2xl pb-3">
+            <div className="register-form bg-obsidian-surface rounded-b-2xl pb-3">
                 <form className='px-5 md:px-9 py-6' onSubmit={handleSubmit} method="post">
                     <div className="input-forms space-y-6 mb-2">
                         <input type="text" placeholder="FULL NAME" value={fullname} id='fullname' onChange={(e) => setFullname(e.target.value)} className="w-full font-black border-4 border-[#454545] p-2 px-3 sm:px-4  py-3 text-sm sm:text-base placeholder-[#454545] text-[#dddddd] tracking-tight hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] rounded-md" required />

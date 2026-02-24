@@ -172,7 +172,7 @@ function Home() {
                                 data-scroll
                                 data-scroll-speed="0.5"
                                 data-parallax
-                                className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
+                                className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-xl"
                             >
                                 {/* Image with soft top clip */}
                                 <div className="overflow-hidden rounded-t-3xl">
@@ -332,10 +332,10 @@ function Home() {
             </section>
 
             {/* ═══════════════════════ PRICE LIST ═══════════════════════ */}
-            <section className="price-section bg-obsidian-card text-white py-10 md:pt-0 md:py-24">
+            <section className="price-section bg-obsidian-card text-white py-10 md:pt-4 md:py-24">
                 <div className='mx-auto flex flex-col'>
                     {/* Section Header — Editorial type pairing (matches Services section) */}
-                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-8 gap-6 px-4 md:px-6 lg:px-16 max-w-10/12 mx-auto w-full">
+                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-18 gap-6 px-4 md:px-6 lg:px-16 max-w-11/12 mx-auto w-full">
                         <div className="text-center md:text-left">
                             <span className="font-sans text-champagne/70 tracking-[0.5em] text-[9px] sm:text-xs uppercase mb-3 block">Our Rates</span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">

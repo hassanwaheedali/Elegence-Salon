@@ -34,7 +34,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
             <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg sm:max-w-2xl lg:max-w-4xl rounded-2xl shadow-2xl animate-scale-in max-h-[90vh] flex flex-col">
 
                 {/* Header */}
-                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-[#161515]">
+                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-obsidian-surface">
                     <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-champagne flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg shrink-0">
                             {staff.name.charAt(0)}
@@ -126,7 +126,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                 </div>
 
                 {/* Footer */}
-                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-[#161515] flex justify-end">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-obsidian-surface flex justify-end">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 bg-[#222] hover:bg-[#333] text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"

@@ -106,7 +106,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
             <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg max-h-[90vh] rounded-2xl shadow-2xl animate-scale-in flex flex-col">
 
                 {/* Header */}
-                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-[#161515]">
+                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-obsidian-surface">
                     <h2 className="text-base sm:text-xl font-bold text-white">Add New Staff Member</h2>
                     <button
                         onClick={onClose}
@@ -277,7 +277,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                                 <span className="text-[11px] text-champagne-muted group-open:text-champagne">Toggle</span>
                             </summary>
                             <div className="px-3 pb-3 pt-2 space-y-3">
-                                <details className="rounded-lg border border-white/5 bg-[#161515]">
+                                <details className="rounded-lg border border-white/5 bg-obsidian-surface">
                                     <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2">
                                         <span className="text-gray-400 text-[11px] font-bold uppercase">Weekdays</span>
                                         <span className="text-[11px] text-champagne-muted">Set</span>
@@ -305,7 +305,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                                         </div>
                                     </div>
                                 </details>
-                                <details className="rounded-lg border border-white/5 bg-[#161515]">
+                                <details className="rounded-lg border border-white/5 bg-obsidian-surface">
                                     <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2">
                                         <span className="text-gray-400 text-[11px] font-bold uppercase">Saturday</span>
                                         <span className="text-[11px] text-champagne-muted">Set</span>
@@ -333,7 +333,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                                         </div>
                                     </div>
                                 </details>
-                                <details className="rounded-lg border border-white/5 bg-[#161515]">
+                                <details className="rounded-lg border border-white/5 bg-obsidian-surface">
                                     <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2">
                                         <span className="text-gray-400 text-[11px] font-bold uppercase">Sunday</span>
                                         <span className="text-[11px] text-champagne-muted">Set</span>
@@ -382,7 +382,7 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-[#161515] flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-obsidian-surface flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
                     <button
                         type="button"
                         onClick={onClose}

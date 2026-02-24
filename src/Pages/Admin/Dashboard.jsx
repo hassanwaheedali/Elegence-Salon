@@ -117,7 +117,7 @@ function Dashboard() {
 
             {/* Appointments Table Section */}
             <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+                <div className="bg-obsidian-surface px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
                     <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-champagne flex items-center gap-2 sm:gap-3">
                         <span className="text-white">Recent</span> Appointments
                         <span className="flex items-center justify-center text-[10px] font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2.5 py-1 rounded-md tracking-wider uppercase shadow-[0_0_10px_rgba(251,157,51,0.1)]">Live</span>
@@ -232,7 +232,7 @@ function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                 {/* Inventory Card */}
                 <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
-                    <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center gap-3 sm:gap-4">
+                    <div className="bg-obsidian-surface px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center gap-3 sm:gap-4">
                         <h2 className="text-lg sm:text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Inventory</span> Status
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Real-time</span> */}
@@ -251,7 +251,7 @@ function Dashboard() {
 
                 {/* Staff List Card */}
                 <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
-                    <div className="bg-[#161515] px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center">
+                    <div className="bg-obsidian-surface px-4 sm:px-6 py-4 sm:py-6 border-b border-[#333] flex justify-between items-center">
                         <h2 className="text-lg sm:text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Staff</span> Scheduling
                             {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Today</span> */}

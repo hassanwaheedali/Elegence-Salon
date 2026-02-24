@@ -139,7 +139,7 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
             <div className="bg-obsidian-surface border border-white/10 w-full max-w-lg max-h-[90vh] rounded-2xl shadow-2xl animate-scale-in flex flex-col">
 
                 {/* Header */}
-                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-[#161515]">
+                <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 bg-obsidian-surface">
                     <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-champagne/10 p-1.5 sm:p-2 rounded-lg">
                             <EditIcon size={18} className="text-champagne" />
@@ -388,7 +388,7 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
                                 </div>
                             </div>
 
-                            <div className="bg-[#161515] p-3 rounded-lg border border-white/5 space-y-3">
+                            <div className="bg-obsidian-surface p-3 rounded-lg border border-white/5 space-y-3">
                                 <label className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -430,7 +430,7 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
                 </div>
 
                 {/* Footer */}
-                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-[#161515] flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 rounded-b-2xl">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/5 bg-obsidian-surface flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 rounded-b-2xl">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors cursor-pointer"

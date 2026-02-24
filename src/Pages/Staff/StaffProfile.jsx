@@ -308,7 +308,7 @@ function StaffProfile() {
 
                             <p className="text-xs sm:text-sm text-gray-400">Update your default working hours. This affects when clients can book you.</p>
 
-                            <div className="bg-[#161515] p-3 sm:p-4 md:p-6 rounded-xl border border-white/5 space-y-4 sm:space-y-6">
+                            <div className="bg-obsidian-surface p-3 sm:p-4 md:p-6 rounded-xl border border-white/5 space-y-4 sm:space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                     <div className="space-y-4">
                                         <h4 className="text-sm font-bold text-white">Weekdays (Mon-Fri)</h4>

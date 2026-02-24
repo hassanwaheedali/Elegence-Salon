@@ -161,7 +161,7 @@ const Staffs = () => {
                         {/* Desktop Table */}
                         <div className="hidden lg:block overflow-x-auto">
                             <table className="w-full text-left border-collapse">
-                                <thead className="bg-[#161515] text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333]">
+                                <thead className="bg-obsidian-surface text-[#777] uppercase text-[11px] font-bold tracking-wider border-b border-[#333]">
                                     <tr>
                                         <th className="px-6 py-5">Staff Member</th>
                                         <th className="px-6 py-5">Role & Expertise</th>
@@ -279,7 +279,7 @@ const Staffs = () => {
                         </div>
 
                         {/* Pagination/Footer */}
-                        <div className="bg-[#161515] px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
+                        <div className="bg-obsidian-surface px-3 sm:px-6 py-3 sm:py-4 border-t border-[#333] flex justify-between items-center text-[10px] sm:text-xs text-champagne-muted">
                             <span>Showing {filteredStaff.length} members</span>
                             <div className="flex gap-1.5 sm:gap-2">
                                 <button className="px-2 sm:px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Previous</button>

@@ -10,7 +10,7 @@ function Profile() {
         email: currentUser?.email || '',
         phone: currentUser?.phone || ''
     })
-    
+
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isFadingOut, setIsFadingOut] = useState(false)
     const [message, setMessage] = useState('')
@@ -22,7 +22,7 @@ function Profile() {
         setMessageType(type)
         setIsSubmitted(true)
         setIsFadingOut(false)
-        
+
         // Start fade-out animation 2.5 seconds in, then hide completely at 3 seconds
         setTimeout(() => setIsFadingOut(true), 2500)
         setTimeout(() => {
@@ -79,7 +79,7 @@ function Profile() {
     }
 
     return (
-        <div className="bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='profile'>
+        <div className="bg-obsidian-surface px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='profile'>
             <div className="head-background bg-obsidian-elevated w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne mt-1"><span className="text-white">Profile</span> Settings</h2>
             </div>
@@ -146,22 +146,19 @@ function Profile() {
                     </button>
                 </div>
             </form>
-            
+
             {/* Success/Error Message */}
             {isSubmitted && (
-                <div className={`mt-6 p-4 rounded-lg border transition-all duration-500 ease-out transform ${
-                    isFadingOut 
-                        ? 'opacity-0 -translate-y-2.5' 
-                        : 'animate-fade-in opacity-100 translate-y-0'
-                } ${
-                    messageType === 'success' 
-                        ? 'bg-green-900/20 border-green-500/30' 
+                <div className={`mt-6 p-4 rounded-lg border transition-all duration-500 ease-out transform ${isFadingOut
+                    ? 'opacity-0 -translate-y-2.5'
+                    : 'animate-fade-in opacity-100 translate-y-0'
+                    } ${messageType === 'success'
+                        ? 'bg-green-900/20 border-green-500/30'
                         : 'bg-red-900/20 border-red-500/30'
-                }`}>
+                    }`}>
                     <div className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
-                            messageType === 'success' ? 'bg-green-500' : 'bg-red-500'
-                        }`}>
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${messageType === 'success' ? 'bg-green-500' : 'bg-red-500'
+                            }`}>
                             {messageType === 'success' ? (
                                 <svg className="w-4 h-4 text-white transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -173,14 +170,12 @@ function Profile() {
                             )}
                         </div>
                         <div className="transition-all duration-300">
-                            <h3 className={`font-semibold transition-colors duration-300 ${
-                                messageType === 'success' ? 'text-green-400' : 'text-red-400'
-                            }`}>
+                            <h3 className={`font-semibold transition-colors duration-300 ${messageType === 'success' ? 'text-green-400' : 'text-red-400'
+                                }`}>
                                 {messageType === 'success' ? 'Success!' : 'Error'}
                             </h3>
-                            <p className={`text-sm transition-colors duration-300 ${
-                                messageType === 'success' ? 'text-green-300' : 'text-red-300'
-                            }`}>
+                            <p className={`text-sm transition-colors duration-300 ${messageType === 'success' ? 'text-green-300' : 'text-red-300'
+                                }`}>
                                 {message}
                             </p>
                         </div>
