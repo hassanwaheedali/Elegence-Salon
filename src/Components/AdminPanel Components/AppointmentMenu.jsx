@@ -97,7 +97,7 @@ const AppointmentMenu = ({ appointment, onEdit, onView }) => {
                         position: 'fixed',
                         zIndex: 9999
                     }}
-                    className="w-48 bg-[#121212] border border-[#333] rounded-lg shadow-xl py-1 animate-in fade-in zoom-in-95 duration-100 origin-top-right"
+                    className="w-48 bg-obsidian-surface border border-[#333] rounded-lg shadow-xl py-1 animate-in fade-in zoom-in-95 duration-100 origin-top-right"
                 >
                     {/* Quick Status Change */}
                     {appointment.status !== 'Confirmed' && appointment.status !== 'Cancelled' && (
@@ -130,7 +130,7 @@ const AppointmentMenu = ({ appointment, onEdit, onView }) => {
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-[#cbd5e1] hover:bg-white/5 hover:text-white flex items-center gap-2 transition-colors border-b border-[#333]/50"
                     >
-                        <Edit size={14} className="text-[#fb9d33]" />
+                        <Edit size={14} className="text-champagne" />
                         Edit Details
                     </button>
 

@@ -31,17 +31,17 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-            <div className="bg-[#121212] border border-white/10 w-full max-w-4xl rounded-2xl shadow-2xl animate-scale-in max-h-[90vh] flex flex-col">
+            <div className="bg-obsidian-surface border border-white/10 w-full max-w-4xl rounded-2xl shadow-2xl animate-scale-in max-h-[90vh] flex flex-col">
 
                 {/* Header */}
                 <div className="flex justify-between items-center px-6 py-4 border-b border-white/5 bg-[#161515]">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[#FF8A00] flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                        <div className="w-10 h-10 rounded-full bg-champagne flex items-center justify-center text-white font-bold text-sm shadow-lg">
                             {staff.name.charAt(0)}
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-white">Stylist Schedule</h2>
-                            <p className="text-gray-400 text-xs mt-0.5">Appointments for <span className="text-[#FF8A00]">{staff.name}</span></p>
+                            <p className="text-gray-400 text-xs mt-0.5">Appointments for <span className="text-champagne">{staff.name}</span></p>
                         </div>
                     </div>
                     <button
@@ -58,19 +58,19 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                         <div className="space-y-4">
                             {/* Stats Summary */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                                <div className="bg-[#1a1a1a] p-3 rounded-xl border border-white/5">
-                                    <h4 className="text-gray-500 text-xs uppercase font-bold">Total</h4>
+                                <div className="bg-obsidian-elevated p-3 rounded-xl border border-white/5">
+                                    <h4 className="text-champagne-muted text-xs uppercase font-bold">Total</h4>
                                     <p className="text-white text-xl font-black mt-1">{stylistAppointments.length}</p>
                                 </div>
-                                <div className="bg-[#1a1a1a] p-3 rounded-xl border border-white/5">
+                                <div className="bg-obsidian-elevated p-3 rounded-xl border border-white/5">
                                     <h4 className="text-emerald-500/80 text-xs uppercase font-bold">Confirmed</h4>
                                     <p className="text-white text-xl font-black mt-1">{stylistAppointments.filter(a => a.status === 'Confirmed').length}</p>
                                 </div>
-                                <div className="bg-[#1a1a1a] p-3 rounded-xl border border-white/5">
+                                <div className="bg-obsidian-elevated p-3 rounded-xl border border-white/5">
                                     <h4 className="text-amber-500/80 text-xs uppercase font-bold">Pending</h4>
                                     <p className="text-white text-xl font-black mt-1">{stylistAppointments.filter(a => ['Pending', 'Awaiting Confirmation'].includes(a.status)).length}</p>
                                 </div>
-                                <div className="bg-[#1a1a1a] p-3 rounded-xl border border-white/5">
+                                <div className="bg-obsidian-elevated p-3 rounded-xl border border-white/5">
                                     <h4 className="text-rose-500/80 text-xs uppercase font-bold">Cancelled</h4>
                                     <p className="text-white text-xl font-black mt-1">{stylistAppointments.filter(a => a.status === 'Cancelled').length}</p>
                                 </div>
@@ -79,11 +79,11 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                             {/* Appointments List */}
                             <div className="space-y-3 max-h-[45vh] overflow-y-auto pr-1">
                                 {stylistAppointments.map((app) => (
-                                    <div key={app.id} className="bg-[#1a1a1a] border border-white/5 rounded-xl p-4 flex flex-col sm:flex-row justify-between gap-4 hover:border-white/10 transition-colors group">
+                                    <div key={app.id} className="bg-obsidian-elevated border border-white/5 rounded-xl p-4 flex flex-col sm:flex-row justify-between gap-4 hover:border-white/10 transition-colors group">
                                         <div className="flex gap-4">
                                             {/* Date Box */}
-                                            <div className="bg-[#222] rounded-lg p-2 flex flex-col items-center justify-center min-w-15 border border-white/5 group-hover:border-[#FF8A00]/30 transition-colors">
-                                                <span className="text-[#FF8A00] font-bold text-xs uppercase tracking-wider">{new Date(app.date).toLocaleString('default', { month: 'short' })}</span>
+                                            <div className="bg-[#222] rounded-lg p-2 flex flex-col items-center justify-center min-w-15 border border-white/5 group-hover:border-champagne/30 transition-colors">
+                                                <span className="text-champagne font-bold text-xs uppercase tracking-wider">{new Date(app.date).toLocaleString('default', { month: 'short' })}</span>
                                                 <span className="text-white font-black text-xl">{new Date(app.date).getDate()}</span>
                                             </div>
 
@@ -104,7 +104,7 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                                                         <Clock size={12} className="text-[#555]" />
                                                         <span>{app.time}</span>
                                                     </div>
-                                                    <div className="flex items-center gap-1.5 text-[#FF8A00]">
+                                                    <div className="flex items-center gap-1.5 text-champagne">
                                                         <span className="font-bold">${getStaffTotal(app)}</span>
                                                     </div>
                                                 </div>
@@ -116,11 +116,11 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-16 text-center">
-                            <div className="bg-[#1a1a1a] p-4 rounded-full mb-4 ring-1 ring-white/5">
+                            <div className="bg-obsidian-elevated p-4 rounded-full mb-4 ring-1 ring-white/5">
                                 <Calendar size={48} className="text-[#333]" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">No Appointments Yet</h3>
-                            <p className="text-gray-500 max-w-sm text-sm">Use the 'Add Appointment' feature to schedule bookings for {staff.name}.</p>
+                            <p className="text-champagne-muted max-w-sm text-sm">Use the 'Add Appointment' feature to schedule bookings for {staff.name}.</p>
                         </div>
                     )}
                 </div>

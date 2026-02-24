@@ -100,12 +100,12 @@ function Appointment() {
     return (
         <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <input type="text" placeholder="NAME" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
-                <input type="email" placeholder="EMAIL" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
-                <input type="tel" placeholder="PHONE NUMBER" id='phonenumber' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
+                <input type="text" placeholder="NAME" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
+                <input type="email" placeholder="EMAIL" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
+                <input type="tel" placeholder="PHONE NUMBER" id='phonenumber' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
                 <div className="date-time-section flex flex-col sm:flex-row gap-3 md:gap-5">
-                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
-                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" required />
+                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
+                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
                 </div>
                 <div className="service-select w-full relative" ref={dropdownRef}>
                     {/* Custom Multi-Select Dropdown */}
@@ -114,7 +114,7 @@ function Appointment() {
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`w-full font-black border-2 md:border-5 p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base tracking-tight bg-[#0d0d0d] text-left flex justify-between items-center transition-colors ${isOpen ? 'border-[#fb9d33] text-[#fb9d33]' : 'border-[#454545] text-[#777777] hover:border-[#fb9d33]'
+                            className={`w-full font-black border-2 md:border-5 p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base tracking-tight bg-obsidian text-left flex justify-between items-center transition-colors ${isOpen ? 'border-[text-champagne] text-champagne' : 'border-[#454545] text-champagne-muted hover:border-[text-champagne]'
                                 }`}
                         >
                             <span>
@@ -127,11 +127,11 @@ function Appointment() {
 
                         {/* Dropdown Menu */}
                         {isOpen && (
-                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-[#fb9d33] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
+                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-[text-champagne] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
                                 {services.map((serviceCategory) => (
                                     <div key={serviceCategory.title}>
                                         {/* Category Header */}
-                                        <div className="font-extrabold text-[#fb9d33] bg-[#191919] px-3 md:px-4 py-2 text-xs md:text-sm tracking-wide uppercase">
+                                        <div className="font-extrabold text-champagne bg-[#191919] px-3 md:px-4 py-2 text-xs md:text-sm tracking-wide uppercase">
                                             {serviceCategory.title}
                                         </div>
 
@@ -144,12 +144,12 @@ function Appointment() {
                                                     type="button"
                                                     onClick={() => toggleService(service)}
                                                     className={`w-full text-left px-3 md:px-4 py-2 md:py-3 transition-colors font-black tracking-tight text-xs md:text-sm flex items-center justify-between gap-2 ${isSelected
-                                                        ? 'bg-[#fb9d33]/10 text-[#fb9d33]'
-                                                        : 'text-[#bfbdbd] hover:bg-[#fb9d33]/5 hover:text-white'
+                                                        ? 'bg-[text-champagne]/10 text-champagne'
+                                                        : 'text-[#bfbdbd] hover:bg-[text-champagne]/5 hover:text-white'
                                                         }`}
                                                 >
                                                     <span>{service.name} — {service.price}</span>
-                                                    <span className={`shrink-0 w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] transition-colors ${isSelected ? 'border-[#fb9d33] bg-[#fb9d33] text-black' : 'border-[#555]'
+                                                    <span className={`shrink-0 w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] transition-colors ${isSelected ? 'border-[text-champagne] bg-[text-champagne] text-black' : 'border-[#555]'
                                                         }`}>
                                                         {isSelected && '✓'}
                                                     </span>
@@ -168,13 +168,13 @@ function Appointment() {
                             {selectedService.map(s => (
                                 <span
                                     key={s.name}
-                                    className="inline-flex items-center gap-1.5 bg-[#fb9d33]/15 border border-[#fb9d33]/40 text-[#fb9d33] text-xs font-black px-2 py-1 rounded-sm tracking-tight mt-1.5"
+                                    className="inline-flex items-center gap-1.5 bg-[text-champagne]/15 border border-[text-champagne]/40 text-champagne text-xs font-black px-2 py-1 rounded-sm tracking-tight mt-1.5"
                                 >
                                     {s.name} — {s.price}
                                     <button
                                         type="button"
                                         onClick={() => toggleService(s)}
-                                        className="text-[#fb9d33] hover:text-white transition-colors leading-none"
+                                        className="text-champagne hover:text-white transition-colors leading-none"
                                     >
                                         ✕
                                     </button>
@@ -185,17 +185,17 @@ function Appointment() {
 
                     {/* Total Price */}
                     {selectedService.length > 0 && (
-                        <div className="mt-2.5 text-left text-xs font-black text-[#777777] tracking-wide">
-                            TOTAL: <span className="text-[#fb9d33]">${totalPrice}</span>
+                        <div className="mt-2.5 text-left text-xs font-black text-champagne-muted tracking-wide">
+                            TOTAL: <span className="text-champagne">${totalPrice}</span>
                         </div>
                     )}
                 </div>
                 <div className="message-section">
-                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33]" rows={1} />
+                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" rows={1} />
                 </div>
             </div>
             <div className="submit-btn w-full mt-4">
-                <button type="submit" className="w-full border-5 border-[#fb9d33] hover:border-white  text-white font-black p-3 px-6 hover:bg-[#d28127] transition-colors cursor-pointer">
+                <button type="submit" className="w-full border-5 border-[text-champagne] hover:border-white  text-white font-black p-3 px-6 hover:bg-[#d28127] transition-colors cursor-pointer">
                     BOOK APPOINTMENT
                 </button>
             </div>

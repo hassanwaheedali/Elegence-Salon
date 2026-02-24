@@ -1,90 +1,62 @@
 import { ArrowRight } from 'lucide-react'
 
-/* ═══════════════════════════════════════════════════════════
-   ServiceCard — Editorial Spread Component
-   ─────────────────────────────────────────────────────────
-   Props:
-     icon        — Lucide React icon element (strokeWidth={1})
-     title       — Service name
-     description — Service description
-     price       — Formatted price string
-     onClick     — Optional click handler (preserved from original API)
-     image       — Image URL (swap-ready: replace with .webp assets)
-     index       — Position index for stagger offsets (0-based)
-     variant     — "featured" for full-width editorial layout, default for standard
-
-   GSAP integration point:
-     Each card has [data-service-reveal] for ScrollTrigger targeting.
-     Image has [data-service-image] for parallax scrub.
-   ═══════════════════════════════════════════════════════════ */
-
-const ServiceCard = ({ icon, title, description, price, onClick, image, index = 0, variant }) => {
-    const isFeatured = variant === 'featured'
-    const isReversed = index % 2 !== 0
-
+const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
     return (
         <div
             onClick={onClick}
-            data-service-reveal
-            className={`group relative w-full overflow-hidden rounded-2xl bg-obsidian-elevated shadow-lg cursor-pointer border border-white/5 transition-all duration-700 ease-luxury ${
-                isFeatured ? 'min-h-[28rem] lg:min-h-[32rem]' : 'min-h-[24rem] lg:min-h-[28rem]'
-            }`}
+            className="group relative h-112.5 w-full overflow-hidden rounded-2xl bg-obsidian-elevated shadow-lg transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
         >
-            {/* ── Layout: Horizontal split on desktop, stacked on mobile ── */}
-            <div className={`flex flex-col ${isFeatured ? 'lg:flex-row' : 'lg:flex-row'} h-full ${isReversed && !isFeatured ? 'lg:flex-row-reverse' : ''}`}>
+            {/* Background Image with Zoom Effect */}
+            <div
+                className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110"
+                style={{
+                    backgroundImage: `url(${image || 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop'})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            />
 
-                {/* ── Image Area (60% on desktop, full on mobile) ── */}
-                <div className={`relative overflow-hidden ${isFeatured ? 'lg:w-[60%]' : 'lg:w-[55%]'} w-full h-56 sm:h-64 lg:h-auto`}>
-                    <div
-                        data-service-image
-                        className="absolute inset-0 transition-transform duration-[1200ms] ease-luxury scale-[1.05] group-hover:scale-100"
-                        style={{
-                            backgroundImage: `url(${image || 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop'})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                        }}
-                    />
-                    {/* Subtle vignette on image */}
-                    <div className="absolute inset-0 bg-linear-to-r from-obsidian-elevated/60 via-transparent to-transparent opacity-0 lg:opacity-100" />
-                    <div className="absolute inset-0 bg-linear-to-t from-obsidian-elevated via-transparent to-transparent lg:hidden" />
-                </div>
+            {/* Gradient Overlay - Darker for better text readability */}
+            <div className="absolute inset-0 bg-linear-to-t from-black via-black/80 to-black/40 transition-opacity duration-500 group-hover:opacity-90" />
 
-                {/* ── Content Area ── */}
-                <div className={`relative z-10 flex flex-col justify-between ${isFeatured ? 'lg:w-[40%]' : 'lg:w-[45%]'} w-full p-6 sm:p-8 lg:p-10`}>
-                    {/* Icon — minimalist, no circle background */}
-                    <div className="mb-6 lg:mb-8">
-                        <span className="text-champagne opacity-70 group-hover:opacity-100 transition-opacity duration-500 ease-luxury">
+            {/* Decorative Top Line */}
+            <div className="absolute left-0 top-0 h-1 w-full bg-linear-to-r from-transparent via-champagne to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+            {/* Content Container */}
+            <div className="relative z-10 flex h-full flex-col p-8 justify-between">
+
+                {/* Icon Circle - Floating effect */}
+                <div className="flex">
+                    <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-champagne transition-all duration-500 group-hover:scale-110 group-hover:bg-champagne group-hover:text-white group-hover:border-champagne shadow-lg">
+                        <span className="text-3xl transition-transform duration-300">
                             {icon}
                         </span>
                     </div>
+                </div>
 
-                    {/* Text Content */}
-                    <div className="flex-1 flex flex-col justify-end">
-                        <h3 className={`font-serif font-semibold leading-[1.1] text-white mb-4 transition-colors duration-500 ${
-                            isFeatured ? 'text-3xl sm:text-4xl lg:text-5xl' : 'text-2xl sm:text-3xl lg:text-4xl'
-                        }`}>
-                            {title}
-                        </h3>
+                {/* Text Content */}
+                <div className="transform transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                    <h3 className="mb-3 text-3xl font-black uppercase leading-none text-white tracking-wide shadow-black drop-shadow-md">
+                        {title}
+                    </h3>
 
-                        {/* Champagne separator — expands on hover */}
-                        <div className="h-px w-12 bg-champagne/30 transition-all duration-700 ease-luxury group-hover:w-full mb-4 lg:mb-6" />
+                    <div className="mb-4 h-0.5 w-12 bg-champagne transition-all duration-500 group-hover:w-full" />
 
-                        <p className="font-sans font-light text-gray-500 text-sm leading-relaxed tracking-wide mb-6 lg:mb-8 group-hover:text-gray-400 transition-colors duration-500 ease-luxury line-clamp-3">
-                            {description}
-                        </p>
+                    <p className="mb-6 text-sm text-gray-300 line-clamp-3 group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
+                        {description}
+                    </p>
 
-                        {/* Price and Action */}
-                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                            <span className="font-sans text-champagne text-xl sm:text-2xl font-semibold tracking-wider">
-                                {price}
-                            </span>
-                            <a href="#appointment" onClick={(e) => e.stopPropagation()}>
-                                <span className="group/btn inline-flex items-center gap-2 text-gray-500 hover:text-champagne font-sans text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all duration-500 ease-luxury">
-                                    Book Now
-                                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-500 ease-luxury group-hover/btn:translate-x-1" strokeWidth={1} />
-                                </span>
-                            </a>
-                        </div>
+                    {/* Price and Action */}
+                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                        <span className="text-2xl font-black text-champagne tracking-wider drop-shadow-sm">
+                            {price}
+                        </span>
+                        <a href="#appointment">
+                            <button className="group/btn flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-300 hover:bg-champagne border border-white/10 hover:border-champagne">
+                                <span>Book Now</span>
+                                <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

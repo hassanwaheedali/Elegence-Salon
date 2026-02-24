@@ -202,7 +202,7 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-[#121212] border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div className="bg-obsidian-surface border border-[#333] w-full max-w-lg rounded-2xl shadow-2xl animate-in fade-in zoom-in-95 duration-200">
                 <div className="flex justify-between items-center p-6 border-b border-[#333]">
                     <h2 className="text-xl font-bold text-white">Edit Appointment</h2>
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors cursor-pointer">
@@ -213,44 +213,44 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Date</label>
+                            <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Date</label>
                             <input
                                 type="date"
                                 name="date"
                                 value={formData.date}
                                 onChange={handleChange}
-                                className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
+                                className="w-full bg-obsidian-elevated border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-champagne outline-none transition-colors"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Time</label>
+                            <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Time</label>
                             <input
                                 type="time"
                                 name="time"
                                 value={formData.time}
                                 onChange={handleChange}
-                                className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
+                                className="w-full bg-obsidian-elevated border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-champagne outline-none transition-colors"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Client Name</label>
+                        <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Client Name</label>
                         <input
                             type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
+                            className="w-full bg-obsidian-elevated border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-champagne outline-none transition-colors"
                         />
                     </div>
 
                     <div ref={dropdownRef} className="relative">
-                        <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Services</label>
+                        <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Services</label>
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`w-full bg-[#1a1a1a] border rounded-lg p-2.5 text-sm text-left flex items-center justify-between transition-colors ${isOpen ? 'border-[#FF8A00] text-[#FF8A00]' : 'border-[#333] text-white hover:border-[#FF8A00]'
+                            className={`w-full bg-obsidian-elevated border rounded-lg p-2.5 text-sm text-left flex items-center justify-between transition-colors ${isOpen ? 'border-champagne text-champagne' : 'border-[#333] text-white hover:border-champagne'
                                 }`}
                         >
                             <span>
@@ -262,10 +262,10 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                         </button>
 
                         {isOpen && (
-                            <div className="absolute top-full left-0 w-full mt-1 bg-[#121212] border border-[#333] rounded-lg shadow-xl max-h-60 overflow-y-auto z-50">
+                            <div className="absolute top-full left-0 w-full mt-1 bg-obsidian-surface border border-[#333] rounded-lg shadow-xl max-h-60 overflow-y-auto z-50">
                                 {serviceCatalog.map(category => (
                                     <div key={category.title}>
-                                        <div className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#FF8A00] bg-[#1a1a1a]">
+                                        <div className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-champagne bg-obsidian-elevated">
                                             {category.title}
                                         </div>
                                         {category.items.map((service) => {
@@ -276,12 +276,12 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                                                     type="button"
                                                     onClick={() => toggleService(service)}
                                                     className={`w-full px-3 py-2 text-left text-xs font-bold flex items-center justify-between transition-colors ${isSelected
-                                                            ? 'bg-[#FF8A00]/10 text-[#FF8A00]'
+                                                            ? 'bg-champagne/10 text-champagne'
                                                             : 'text-gray-300 hover:bg-white/5 hover:text-white'
                                                         }`}
                                                 >
                                                     <span>{service.name} — {service.price}</span>
-                                                    <span className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] ${isSelected ? 'border-[#FF8A00] bg-[#FF8A00] text-black' : 'border-[#555]'
+                                                    <span className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] ${isSelected ? 'border-champagne bg-champagne text-black' : 'border-[#555]'
                                                         }`}>
                                                         {isSelected && '✓'}
                                                     </span>
@@ -296,7 +296,7 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                         {formData.services.length > 0 && (
                             <div className="mt-2 flex flex-wrap gap-2">
                                 {formData.services.map((s, i) => (
-                                    <span key={`${s.name}-${i}`} className="inline-flex items-center gap-1.5 bg-[#FF8A00]/10 border border-[#FF8A00]/30 text-[#FF8A00] text-xs font-bold px-2 py-1 rounded-md">
+                                    <span key={`${s.name}-${i}`} className="inline-flex items-center gap-1.5 bg-champagne/10 border border-champagne/30 text-champagne text-xs font-bold px-2 py-1 rounded-md">
                                         {s.name} — {s.price}
                                         <button type="button" onClick={() => toggleService(s)} className="hover:text-white">✕</button>
                                     </span>
@@ -312,17 +312,17 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
 
                         {formData.services.length > 0 && (
                             <div className="mt-2 text-xs text-gray-400">
-                                Total: <span className="text-[#FF8A00] font-bold">${totalPrice}</span>
+                                Total: <span className="text-champagne font-bold">${totalPrice}</span>
                             </div>
                         )}
                     </div>
                     <div>
-                        <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Status</label>
+                        <label className="block text-xs font-bold uppercase text-champagne-muted mb-1">Status</label>
                         <select
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
-                            className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-[#FF8A00] outline-none transition-colors"
+                            className="w-full bg-obsidian-elevated border border-[#333] rounded-lg p-2.5 text-white text-sm focus:border-champagne outline-none transition-colors"
                         >
                             <option value="Pending">Pending</option>
                             <option value="Confirmed">Confirmed</option>
@@ -343,7 +343,7 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-4 py-2 bg-[#FF8A00] hover:bg-[#e67a00] text-white rounded-lg text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer"
+                            className="px-4 py-2 bg-champagne hover:bg-champagne-dark text-white rounded-lg text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer"
                         >
                             {loading ? 'Saving...' : 'Save Changes'}
                         </button>

@@ -80,21 +80,21 @@ function Profile() {
 
     return (
         <div className="bg-[#161515] px-6 sm:px-8 pb-12 sm:pb-14 shadow-lg rounded-lg transition-all duration-500" id='profile'>
-            <div className="head-background bg-[#1a1a1a] w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33] mt-1"><span className="text-white">Profile</span> Settings</h2>
+            <div className="head-background bg-obsidian-elevated w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] -mx-6 sm:-mx-8 -mt-8 px-6 sm:px-8 py-6 sm:py-8 mb-6 rounded-t-lg">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne mt-1"><span className="text-white">Profile</span> Settings</h2>
             </div>
 
             <form onSubmit={handleProfileSubmit} className="space-y-8">
                 {/* Name Field */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label className="block text-[#777777] font-semibold mb-1" htmlFor='name'>Full Name</label>
+                        <label className="block text-champagne-muted font-semibold mb-1" htmlFor='name'>Full Name</label>
                         <input
                             type="text"
                             name="name"
                             value={profileData.name}
                             onChange={handleProfileChange}
-                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5"
+                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5"
                             placeholder="Enter your full name"
                             id='name'
                         />
@@ -102,13 +102,13 @@ function Profile() {
 
                     {/* Email Field */}
                     <div>
-                        <label className="block text-[#777777] font-semibold mb-1" htmlFor='email'>Email Address</label>
+                        <label className="block text-champagne-muted font-semibold mb-1" htmlFor='email'>Email Address</label>
                         <input
                             type="email"
                             name="email"
                             value={profileData.email}
                             onChange={handleProfileChange}
-                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#777777] tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5 cursor-not-allowed"
+                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5 cursor-not-allowed"
                             placeholder="Enter your email"
                             id='email'
                             readOnly
@@ -118,13 +118,13 @@ function Profile() {
 
                 {/* Phone Field */}
                 <div>
-                    <label className="block text-[#777777] font-semibold mb-1" htmlFor='phone'>Phone Number</label>
+                    <label className="block text-champagne-muted font-semibold mb-1" htmlFor='phone'>Phone Number</label>
                     <input
                         type="tel"
                         name="phone"
                         value={profileData.phone}
                         onChange={handleProfileChange}
-                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-[#0d0d0d] hover:border-[#fb9d33] transition-colors focus:outline-none focus:border-[#fb9d33] mt-1.5"
+                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5"
                         placeholder="Enter your phone number"
                         id='phone'
                     />
@@ -134,13 +134,13 @@ function Profile() {
                 <div className="flex gap-4 pt-4">
                     <button
                         type="submit"
-                        className="px-8 py-4 bg-[#0d0d0d] hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none"
+                        className="px-8 py-4 bg-obsidian hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none"
                     >
                         Save Changes
                     </button>
                     <button
                         type="button"
-                        className="px-8 py-4 bg-[#0d0d0d] text-white border-5 border-[#454545] hover:border-red-600 font-extrabold rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none"
+                        className="px-8 py-4 bg-obsidian text-white border-5 border-[#454545] hover:border-red-600 font-extrabold rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none"
                     >
                         Cancel
                     </button>

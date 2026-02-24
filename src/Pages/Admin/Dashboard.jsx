@@ -83,8 +83,8 @@ function Dashboard() {
                     change={totalRevenue > 0 ? `${((totalRevenue - 100) / 100 * 100).toFixed(1)}%` : "0%"}
                     positive={totalRevenue >= 100}
                     icon={<TrendingUp size={24} />}
-                    color="text-[#FF8A00]"
-                    bg="bg-[#FF8A00]/10"
+                    color="text-champagne"
+                    bg="bg-champagne/10"
                 />
                 <StatsCard
                     title="Total Appointments"
@@ -116,13 +116,13 @@ function Dashboard() {
             </div>
 
             {/* Appointments Table Section */}
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                 <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33] flex items-center gap-3">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne flex items-center gap-3">
                         <span className="text-white">Recent</span> Appointments
-                        <span className="flex items-center justify-center text-[10px] font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2.5 py-1 rounded-md tracking-wider uppercase shadow-[0_0_10px_rgba(251,157,51,0.1)]">Live</span>
+                        <span className="flex items-center justify-center text-[10px] font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2.5 py-1 rounded-md tracking-wider uppercase shadow-[0_0_10px_rgba(251,157,51,0.1)]">Live</span>
                     </h2>
-                    <button className="px-6 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                    <button className="px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                         <Link to="/admin/appointments" className="flex items-center gap-1">
                             View All
                         </Link>
@@ -150,7 +150,7 @@ function Dashboard() {
                                             <span className="font-semibold text-white text-sm">
                                                 {appointment.name}
                                                 {appointment.userId == null && (
-                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</span>
+                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[text-champagne] text-black text-[10px] font-bold uppercase">Guest</span>
                                                 )}
                                             </span>
                                         </div>
@@ -182,7 +182,7 @@ function Dashboard() {
                 {/* Mobile/Tablet Card View */}
                 <div className="lg:hidden p-4 space-y-4">
                     {appointments.slice(0, 4).map((appointment, idx) => (
-                        <div key={appointment.id || idx} className="bg-[#1a1a1a] p-4 rounded-xl border border-white/5 space-y-4">
+                        <div key={appointment.id || idx} className="bg-obsidian-elevated p-4 rounded-xl border border-white/5 space-y-4">
                             <div className="flex justify-between items-start">
                                 <div className="flex items-center gap-3">
                                     <img src={`https://placehold.co/150x150/222/FFF?text=${appointment.name.charAt(0)}`} alt={appointment.name} className="w-10 h-10 rounded-full border border-white/10" />
@@ -190,7 +190,7 @@ function Dashboard() {
                                         <h4 className="font-bold text-white text-sm flex items-center gap-2">
                                             <span>{appointment.name}</span>
                                             {appointment.userId == null && (
-                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</span>
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[text-champagne] text-black text-[10px] font-bold uppercase">Guest</span>
                                             )}
                                         </h4>
                                         <div className="text-xs text-[#777] flex items-center gap-1 mt-0.5">
@@ -209,7 +209,7 @@ function Dashboard() {
                                         <span className="text-[#333]">|</span>
                                         <span>{appointment.time}</span>
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-xs text-[#FF8A00]">
+                                    <div className="flex items-center gap-1.5 text-xs text-champagne">
                                         <Scissors size={12} />
                                         <span>{getStylistSummary(appointment)}</span>
                                     </div>
@@ -231,13 +231,13 @@ function Dashboard() {
             {/* Inventory & Staff Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Inventory Card */}
-                <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
+                <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
                     <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center gap-4">
-                        <h2 className="text-2xl font-extrabold text-[#fb9d33] flex items-center gap-2">
+                        <h2 className="text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Inventory</span> Status
-                            {/* <span className="hidden sm:inline-flex text-xs font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2 py-1 rounded-md tracking-wider uppercase">Real-time</span> */}
+                            {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Real-time</span> */}
                         </h2>
-                        <button className="px-4 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                        <button className="px-4 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                             Manage Stock
                         </button>
                     </div>
@@ -250,13 +250,13 @@ function Dashboard() {
                 </div>
 
                 {/* Staff List Card */}
-                <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
+                <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
                     <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex justify-between items-center">
-                        <h2 className="text-2xl font-extrabold text-[#fb9d33] flex items-center gap-2">
+                        <h2 className="text-2xl font-extrabold text-champagne flex items-center gap-2">
                             <span className="text-white">Staff</span> Scheduling
-                            {/* <span className="hidden sm:inline-flex text-xs font-bold text-[#fb9d33] bg-[#fb9d33]/10 border border-[#fb9d33]/20 px-2 py-1 rounded-md tracking-wider uppercase">Today</span> */}
+                            {/* <span className="hidden sm:inline-flex text-xs font-bold text-champagne bg-[text-champagne]/10 border border-[text-champagne]/20 px-2 py-1 rounded-md tracking-wider uppercase">Today</span> */}
                         </h2>
-                        <button className="px-4 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                        <button className="px-4 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                             View ALL
                         </button>
                     </div>

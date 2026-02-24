@@ -92,13 +92,13 @@ const Staffs = () => {
             <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-black text-white uppercase tracking-tight">
-                        Staff <span className="text-[#FF8A00]">Management</span>
+                        Staff <span className="text-champagne">Management</span>
                     </h1>
                     <p className="text-gray-400 text-sm mt-1">Manage your team of stylists and professionals</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="flex items-center gap-2 cursor-pointer bg-[#FF8A00] hover:bg-[#e67a00] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg hover:shadow-[#FF8A00]/20 active:scale-95"
+                    className="flex items-center gap-2 cursor-pointer bg-champagne hover:bg-champagne-dark text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg hover:shadow-champagne/20 active:scale-95"
                 >
                     <Plus size={18} />
                     <span>Add New Member</span>
@@ -106,16 +106,16 @@ const Staffs = () => {
             </div>
 
             {/* Toolbar Section */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-[#121212]/50 backdrop-blur-sm border border-white/5 p-4 rounded-xl">
+            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-obsidian-surface/50 backdrop-blur-sm border border-white/5 p-4 rounded-xl">
                 {/* Search */}
                 <div className="relative group w-full sm:w-72">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#FF8A00] transition-colors">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted group-focus-within:text-champagne transition-colors">
                         <Search size={18} />
                     </div>
                     <input
                         type="text"
                         placeholder="Search by name, email, or role..."
-                        className="bg-[#09090b] border border-[#27272a] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-600"
+                        className="bg-obsidian border border-[#27272a] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-600"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -123,15 +123,15 @@ const Staffs = () => {
 
                 {/* Role Filter */}
                 <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <div className="bg-[#09090b] border border-[#27272a] rounded-lg px-3 py-2 flex items-center gap-2 w-full sm:w-48">
-                        <Filter size={16} className="text-gray-500" />
+                    <div className="bg-obsidian border border-[#27272a] rounded-lg px-3 py-2 flex items-center gap-2 w-full sm:w-48">
+                        <Filter size={16} className="text-champagne-muted" />
                         <select
                             value={filterRole}
                             onChange={(e) => setFilterRole(e.target.value)}
                             className="bg-transparent text-white text-xs font-medium w-full outline-none cursor-pointer"
                         >
                             {roles.map(role => (
-                                <option key={role} value={role} className="bg-[#121212] text-white">{role}</option>
+                                <option key={role} value={role} className="bg-obsidian-surface text-white">{role}</option>
                             ))}
                         </select>
                     </div>
@@ -139,19 +139,19 @@ const Staffs = () => {
             </div>
 
             {/* Staff Table Container */}
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                 {filteredStaff.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
-                        <div className="bg-[#1a1a1a] p-4 rounded-full mb-4 ring-1 ring-white/5">
+                        <div className="bg-obsidian-elevated p-4 rounded-full mb-4 ring-1 ring-white/5">
                             <User size={48} className="text-[#333]" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">No Staff Members Found</h3>
-                        <p className="text-gray-500 max-w-sm mx-auto">
+                        <p className="text-champagne-muted max-w-sm mx-auto">
                             We couldn't find any staff matching your search criteria. Try adjusting your filters or add a new team member.
                         </p>
                         <button
                             onClick={() => { setSearchTerm(''); setFilterRole('All') }}
-                            className="mt-6 text-[#FF8A00] hover:text-[#e67a00] text-sm font-bold flex items-center gap-2 transition-colors"
+                            className="mt-6 text-champagne hover:text-champagne-dark text-sm font-bold flex items-center gap-2 transition-colors"
                         >
                             Clear Filters
                         </button>
@@ -175,7 +175,7 @@ const Staffs = () => {
                                         <tr key={member.id} className="hover:bg-white/2 transition-colors group">
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#27272a] to-[#18181b] flex items-center justify-center text-white font-bold text-sm shadow-inner ring-1 ring-white/10 group-hover:ring-[#FF8A00]/50 transition-all">
+                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#27272a] to-[#18181b] flex items-center justify-center text-white font-bold text-sm shadow-inner ring-1 ring-white/10 group-hover:ring-champagne/50 transition-all">
                                                         {member.name.charAt(0)}
                                                     </div>
                                                     <div>
@@ -189,17 +189,17 @@ const Staffs = () => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="text-white text-sm font-medium flex items-center gap-1.5">
-                                                    <Briefcase size={12} className="text-gray-500" />
+                                                    <Briefcase size={12} className="text-champagne-muted" />
                                                     {member.role}
                                                 </div>
                                                 <div className="flex flex-wrap gap-1 mt-1.5">
                                                     {member.specialties.slice(0, 2).map((tech, idx) => (
-                                                        <span key={idx} className="text-[10px] bg-[#1a1a1a] border border-[#333] text-gray-400 px-1.5 py-0.5 rounded">
+                                                        <span key={idx} className="text-[10px] bg-obsidian-elevated border border-[#333] text-gray-400 px-1.5 py-0.5 rounded">
                                                             {tech}
                                                         </span>
                                                     ))}
                                                     {member.specialties.length > 2 && (
-                                                        <span className="text-[10px] bg-[#1a1a1a] border border-[#333] text-gray-400 px-1.5 py-0.5 rounded">
+                                                        <span className="text-[10px] bg-obsidian-elevated border border-[#333] text-gray-400 px-1.5 py-0.5 rounded">
                                                             +{member.specialties.length - 2}
                                                         </span>
                                                     )}
@@ -210,11 +210,11 @@ const Staffs = () => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-1 text-[#FF8A00] font-bold text-sm">
-                                                        <Star size={12} fill="#FF8A00" />
+                                                    <div className="flex items-center gap-1 text-champagne font-bold text-sm">
+                                                        <Star size={12} className="text-champagne fill-current" />
                                                         {member.rating}
                                                     </div>
-                                                    <div className="text-xs text-gray-500 font-medium">
+                                                    <div className="text-xs text-champagne-muted font-medium">
                                                         {member.experience} exp
                                                     </div>
                                                 </div>
@@ -237,7 +237,7 @@ const Staffs = () => {
                         {/* Mobile Card View */}
                         <div className="lg:hidden p-4 space-y-4">
                             {filteredStaff.map((member) => (
-                                <div key={member.id} className="bg-[#1a1a1a] border border-white/5 rounded-xl p-4 space-y-4">
+                                <div key={member.id} className="bg-obsidian-elevated border border-white/5 rounded-xl p-4 space-y-4">
                                     <div className="flex justify-between items-start">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 rounded-full bg-[#27272a] flex items-center justify-center text-white font-bold text-sm ring-1 ring-white/10">
@@ -245,7 +245,7 @@ const Staffs = () => {
                                             </div>
                                             <div>
                                                 <h3 className="font-bold text-white text-sm">{member.name}</h3>
-                                                <p className="text-xs text-gray-500">{member.role}</p>
+                                                <p className="text-xs text-champagne-muted">{member.role}</p>
                                             </div>
                                         </div>
                                         <StaffMenu
@@ -268,8 +268,8 @@ const Staffs = () => {
 
                                     <div className="flex justify-between items-center">
                                         <StatusBadge status={member.status} />
-                                        <div className="flex items-center gap-1 text-[#FF8A00] font-bold text-xs">
-                                            <Star size={12} fill="#FF8A00" />
+                                        <div className="flex items-center gap-1 text-champagne font-bold text-xs">
+                                            <Star size={12} className="text-champagne fill-current" />
                                             <span>{member.rating}</span>
                                             <span className="text-gray-600 font-normal">({member.experience})</span>
                                         </div>
@@ -279,11 +279,11 @@ const Staffs = () => {
                         </div>
 
                         {/* Pagination/Footer */}
-                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-gray-500">
+                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-champagne-muted">
                             <span>Showing {filteredStaff.length} members</span>
                             <div className="flex gap-2">
-                                <button className="px-3 py-1 bg-[#121212] border border-[#333] rounded hover:border-[#FF8A00] hover:text-[#FF8A00] transition-colors disabled:opacity-50 cursor-pointer">Previous</button>
-                                <button className="px-3 py-1 bg-[#121212] border border-[#333] rounded hover:border-[#FF8A00] hover:text-[#FF8A00] transition-colors disabled:opacity-50 cursor-pointer">Next</button>
+                                <button className="px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Previous</button>
+                                <button className="px-3 py-1 bg-obsidian-surface border border-[#333] rounded hover:border-champagne hover:text-champagne transition-colors disabled:opacity-50 cursor-pointer">Next</button>
                             </div>
                         </div>
                     </>

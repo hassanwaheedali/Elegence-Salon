@@ -15,7 +15,7 @@ const StaffRow = ({ name, role, time, commission, online }) => (
             </div>
         </div>
         <div className="text-right">
-            <p className="text-white font-bold text-xs bg-[#FF8A00]/10 px-2 py-1 rounded-md inline-block mb-1 group-hover:bg-[#FF8A00]/20 transition-colors">{commission}</p>
+            <p className="text-white font-bold text-xs bg-champagne/10 px-2 py-1 rounded-md inline-block mb-1 group-hover:bg-champagne/20 transition-colors">{commission}</p>
             <p className="text-[#555] text-[10px] font-medium flex items-center gap-1.5 justify-end">
                 <Clock size={10} />
                 {time}

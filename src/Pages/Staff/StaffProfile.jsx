@@ -184,19 +184,19 @@ function StaffProfile() {
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-black text-white uppercase tracking-tight">
-                    My <span className="text-[#FF8A00]">Profile</span>
+                    My <span className="text-champagne">Profile</span>
                 </h1>
                 <p className="text-gray-400 text-sm mt-1">Manage your personal information and availability</p>
             </div>
 
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                 <div className="p-6 sm:p-8">
                     <form onSubmit={handleSubmit} className="space-y-8">
 
                         {/* Personal Information */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <User className="text-[#FF8A00]" size={20} />
+                                <User className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
                             </div>
 
@@ -204,7 +204,7 @@ function StaffProfile() {
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Full Name *</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                             <User size={16} />
                                         </div>
                                         <input
@@ -212,7 +212,7 @@ function StaffProfile() {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                            className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                         />
                                     </div>
                                 </div>
@@ -220,7 +220,7 @@ function StaffProfile() {
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Email *</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                             <Mail size={16} />
                                         </div>
                                         <input
@@ -228,18 +228,18 @@ function StaffProfile() {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                            className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                             disabled // Email is typically not editable by staff themselves, or if so, requires re-auth
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-500 ml-1">Contact admin to change email.</p>
+                                    <p className="text-xs text-champagne-muted ml-1">Contact admin to change email.</p>
                                 </div>
 
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-gray-400 text-xs font-bold uppercase ml-1">Phone *</label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                         <Phone size={16} />
                                     </div>
                                     <input
@@ -247,7 +247,7 @@ function StaffProfile() {
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                     />
                                 </div>
                             </div>
@@ -256,7 +256,7 @@ function StaffProfile() {
                         {/* Professional Information */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Briefcase className="text-[#FF8A00]" size={20} />
+                                <Briefcase className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Professional Info</h2>
                             </div>
 
@@ -267,7 +267,7 @@ function StaffProfile() {
                                         name="experience"
                                         value={formData.experience}
                                         onChange={handleChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all appearance-none cursor-pointer"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all appearance-none cursor-pointer"
                                     >
                                         <option value="1 year">1 year</option>
                                         <option value="2 years">2 years</option>
@@ -282,7 +282,7 @@ function StaffProfile() {
                                 <div className="space-y-1.5 md:col-span-2">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Specialties</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                             <Scissors size={16} />
                                         </div>
                                         <input
@@ -291,10 +291,10 @@ function StaffProfile() {
                                             value={formData.specialties}
                                             onChange={handleChange}
                                             placeholder="Haircut, Color, Styling..."
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                            className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-500 ml-1">Comma separated. Example: Haircut, Color, Styling</p>
+                                    <p className="text-xs text-champagne-muted ml-1">Comma separated. Example: Haircut, Color, Styling</p>
                                 </div>
                             </div>
                         </div>
@@ -302,7 +302,7 @@ function StaffProfile() {
                         {/* Schedule Configuration */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-[#FF8A00]" size={20} />
+                                <Clock className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Availability</h2>
                             </div>
 
@@ -314,23 +314,23 @@ function StaffProfile() {
                                         <h4 className="text-sm font-bold text-white">Weekdays (Mon-Fri)</h4>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-1.5">
-                                                <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">Start Time</label>
+                                                <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">Start Time</label>
                                                 <input
                                                     type="time"
                                                     name="weekdayStart"
                                                     value={formData.weekdayStart}
                                                     onChange={handleChange}
-                                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                 />
                                             </div>
                                             <div className="space-y-1.5">
-                                                <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">End Time</label>
+                                                <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">End Time</label>
                                                 <input
                                                     type="time"
                                                     name="weekdayEnd"
                                                     value={formData.weekdayEnd}
                                                     onChange={handleChange}
-                                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                 />
                                             </div>
                                         </div>
@@ -340,23 +340,23 @@ function StaffProfile() {
                                         <h4 className="text-sm font-bold text-white">Saturday</h4>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-1.5">
-                                                <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">Start Time</label>
+                                                <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">Start Time</label>
                                                 <input
                                                     type="time"
                                                     name="saturdayStart"
                                                     value={formData.saturdayStart}
                                                     onChange={handleChange}
-                                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                 />
                                             </div>
                                             <div className="space-y-1.5">
-                                                <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">End Time</label>
+                                                <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">End Time</label>
                                                 <input
                                                     type="time"
                                                     name="saturdayEnd"
                                                     value={formData.saturdayEnd}
                                                     onChange={handleChange}
-                                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                 />
                                             </div>
                                         </div>
@@ -370,7 +370,7 @@ function StaffProfile() {
                                             name="sundayEnabled"
                                             checked={formData.sundayEnabled}
                                             onChange={handleChange}
-                                            className="w-4 h-4 accent-[#FF8A00] rounded"
+                                            className="w-4 h-4 accent-champagne rounded"
                                         />
                                         Available on Sundays
                                     </label>
@@ -379,23 +379,23 @@ function StaffProfile() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="space-y-1.5">
-                                                    <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">Start Time</label>
+                                                    <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">Start Time</label>
                                                     <input
                                                         type="time"
                                                         name="sundayStart"
                                                         value={formData.sundayStart}
                                                         onChange={handleChange}
-                                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                     />
                                                 </div>
                                                 <div className="space-y-1.5">
-                                                    <label className="text-gray-500 text-[11px] font-semibold uppercase ml-1">End Time</label>
+                                                    <label className="text-champagne-muted text-[11px] font-semibold uppercase ml-1">End Time</label>
                                                     <input
                                                         type="time"
                                                         name="sundayEnd"
                                                         value={formData.sundayEnd}
                                                         onChange={handleChange}
-                                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-2.5 outline-none transition-all"
+                                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-2.5 outline-none transition-all"
                                                     />
                                                 </div>
                                             </div>
@@ -408,7 +408,7 @@ function StaffProfile() {
                         {/* Security */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-[#FF8A00]" size={20} />
+                                <Clock className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Security</h2>
                             </div>
 
@@ -420,7 +420,7 @@ function StaffProfile() {
                                         name="currentPassword"
                                         value={passwordData.currentPassword}
                                         onChange={handlePasswordChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-champagne-muted/70 mt-1"
                                         placeholder="Enter current password"
                                     />
                                 </div>
@@ -432,7 +432,7 @@ function StaffProfile() {
                                         name="newPassword"
                                         value={passwordData.newPassword}
                                         onChange={handlePasswordChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[777777]/70 mt-1"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-[777777]/70 mt-1"
                                         placeholder="Enter new password"
                                     />
                                 </div>
@@ -445,7 +445,7 @@ function StaffProfile() {
                                     name="confirmPassword"
                                     value={passwordData.confirmPassword}
                                     onChange={handlePasswordChange}
-                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-champagne-muted/70 mt-1"
                                     placeholder="Confirm new password"
                                 />
                             </div>
@@ -463,7 +463,7 @@ function StaffProfile() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="px-8 py-2.5 bg-[#FF8A00] hover:bg-[#e67a00] text-black font-black rounded-xl shadow-lg hover:shadow-[#FF8A00]/20 active:scale-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                                className="px-8 py-2.5 bg-champagne hover:bg-champagne-dark text-black font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
                             >
                                 <Save size={18} />
                                 {isLoading ? 'Saving...' : 'Save Changes'}

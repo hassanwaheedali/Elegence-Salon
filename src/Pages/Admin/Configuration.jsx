@@ -103,19 +103,19 @@ function Configuration() {
         <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-4 sm:py-0">
             <div>
                 <h1 className="text-3xl font-black text-white uppercase tracking-tight">
-                    My <span className="text-[#FF8A00]">Profile</span>
+                    My <span className="text-champagne">Profile</span>
                 </h1>
                 <p className="text-gray-400 text-sm mt-1">Manage your account information and security</p>
             </div>
 
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
 
 
                 <div className="p-6 sm:p-8">
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <User className="text-[#FF8A00]" size={20} />
+                                <User className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Personal Information</h2>
                             </div>
 
@@ -123,7 +123,7 @@ function Configuration() {
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Full Name *</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                             <User size={16} />
                                         </div>
                                         <input
@@ -131,7 +131,7 @@ function Configuration() {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                            className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                         />
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@ function Configuration() {
                                 <div className="space-y-1.5">
                                     <label className="text-gray-400 text-xs font-bold uppercase ml-1">Email *</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                             <Mail size={16} />
                                         </div>
                                         <input
@@ -147,18 +147,18 @@ function Configuration() {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                            className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                             disabled
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-500 ml-1">Contact support to change email.</p>
+                                    <p className="text-xs text-champagne-muted ml-1">Contact support to change email.</p>
                                 </div>
 
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-gray-400 text-xs font-bold uppercase ml-1">Phone *</label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                                         <Phone size={16} />
                                     </div>
                                     <input
@@ -166,7 +166,7 @@ function Configuration() {
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full pl-10 p-3 outline-none transition-all placeholder-gray-700"
                                     />
                                 </div>
                             </div>
@@ -174,7 +174,7 @@ function Configuration() {
 
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 border-b border-[#333] pb-3">
-                                <Clock className="text-[#FF8A00]" size={20} />
+                                <Clock className="text-champagne" size={20} />
                                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">Security</h2>
                             </div>
 
@@ -186,7 +186,7 @@ function Configuration() {
                                         name="currentPassword"
                                         value={passwordData.currentPassword}
                                         onChange={handlePasswordChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-champagne-muted/70 mt-1"
                                         placeholder="Enter current password"
                                     />
                                 </div>
@@ -198,7 +198,7 @@ function Configuration() {
                                         name="newPassword"
                                         value={passwordData.newPassword}
                                         onChange={handlePasswordChange}
-                                        className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                        className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-champagne-muted/70 mt-1"
                                         placeholder="Enter new password"
                                     />
                                 </div>
@@ -211,7 +211,7 @@ function Configuration() {
                                     name="confirmPassword"
                                     value={passwordData.confirmPassword}
                                     onChange={handlePasswordChange}
-                                    className="bg-[#1a1a1a] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full p-3 outline-none transition-all placeholder-[#777777]/70 mt-1"
+                                    className="bg-obsidian-elevated border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full p-3 outline-none transition-all placeholder-champagne-muted/70 mt-1"
                                     placeholder="Confirm new password"
                                 />
                             </div>
@@ -221,7 +221,7 @@ function Configuration() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="flex items-center gap-2 px-8 py-2.5 bg-[#FF8A00] hover:bg-[#e67a00] text-black font-black rounded-xl shadow-lg hover:shadow-[#FF8A00]/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                                className="flex items-center gap-2 px-8 py-2.5 bg-champagne hover:bg-champagne-dark text-black font-black rounded-xl shadow-lg hover:shadow-champagne/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
                             >
                                 <Save size={16} />
                                 {isLoading ? 'Saving...' : 'Save Changes'}

@@ -56,7 +56,7 @@ function PriceCard() {
                 {/* Navigation Arrows */}
                 <button
                     onClick={prevSlide}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-18 z-20 text-yellow-600 rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110 cursor-pointer"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-18 z-20 text-champagne rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110 cursor-pointer"
                     aria-label="Previous slide"
                 >
                     <i className="fas fa-chevron-left text-lg md:text-xl"></i>
@@ -64,7 +64,7 @@ function PriceCard() {
 
                 <button
                     onClick={nextSlide}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-18 z-20 text-yellow-600 rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110 cursor-pointer"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-18 z-20 text-champagne rounded-full p-3 md:p-4 shadow-lg transition-all duration-300 hover:scale-110 cursor-pointer"
                     aria-label="Next slide"
                 >
                     <i className="fas fa-chevron-right text-lg md:text-xl"></i>
@@ -92,7 +92,7 @@ function PriceCard() {
                                             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-wider text-white mb-4">
                                                 {card.title}
                                             </h2>
-                                            <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                                            <div className="w-24 h-1 bg-champagne-light mx-auto mb-6"></div>
                                         </div>
 
                                         <div
@@ -106,7 +106,7 @@ function PriceCard() {
                                                     {card.items.map((item, idx) => (
                                                         <div key={idx} className="price-item flex justify-between items-center py-3 border-b border-gray-700 hover:border-yellow-500 transition-colors duration-300">
                                                             <span className="text-base md:text-lg font-bold text-[#f9fffc]">{item.name}</span>
-                                                            <span className="text-xl md:text-2xl font-bold text-yellow-500">{item.price}</span>
+                                                            <span className="text-xl md:text-2xl font-bold text-champagne-light">{item.price}</span>
                                                         </div>
                                                     ))}
                                                 </div>

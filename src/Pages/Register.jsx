@@ -11,7 +11,7 @@ function Register() {
                 <div
                     className="fixed left-0 top-0 w-screen h-screen pointer-events-none z-0 hidden md:block"
                     style={{
-                        background: 'linear-gradient(117deg, #FF8A00 1.24%, #E67C00 44.24%, #C56A00 100.64%)',
+                        background: 'linear-gradient(117deg, var(--color-champagne) 1.24%, var(--color-champagne-light) 44.24%, var(--color-champagne-dark) 100.64%)',
                         clipPath: 'polygon(0 12%, 100% 100%, 0 100%)'
                     }}
                 />

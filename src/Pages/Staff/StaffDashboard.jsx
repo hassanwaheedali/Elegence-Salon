@@ -81,7 +81,7 @@ function StaffDashboard() {
             {/* Greeting Header */}
             <div>
                 <h1 className="text-3xl font-black text-white mb-2">Welcome back, {currentUser?.name}</h1>
-                <p className="text-sm text-[#8A8A8A]">Here's what's happening with your schedule today.</p>
+                <p className="text-sm text-champagne-muted">Here's what's happening with your schedule today.</p>
             </div>
 
             {/* Stats Grid */}
@@ -101,8 +101,8 @@ function StaffDashboard() {
                     change={pendingJobs > 0 ? "Needs Action" : "All Clear"}
                     positive={pendingJobs === 0}
                     icon={<Scissors size={24} />}
-                    color="text-[#FF8A00]"
-                    bg="bg-[#FF8A00]/10"
+                    color="text-champagne"
+                    bg="bg-champagne/10"
                 />
                 <StatsCard
                     title="Completed Jobs"
@@ -125,12 +125,12 @@ function StaffDashboard() {
             </div>
 
             {/* Appointments Table Section */}
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                 <div className="bg-[#161515] px-6 py-6 border-b border-[#333] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[#fb9d33] flex items-center gap-3">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-champagne flex items-center gap-3">
                         <span className="text-white">Recent</span> Appointments
                     </h2>
-                    <button className="px-6 py-2 bg-[#0d0d0d] text-white border border-[#333] hover:border-[#fb9d33] hover:text-[#fb9d33] text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                    <button className="px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                         <Link to="/staff/appointments" className="flex items-center gap-1">
                             View All My Appointments
                         </Link>
@@ -162,7 +162,7 @@ function StaffDashboard() {
                                             <span className="font-semibold text-white text-sm">
                                                 {appointment.name}
                                                 {appointment.userId == null && (
-                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[#fb9d33] text-black text-[10px] font-bold uppercase">Guest</span>
+                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[text-champagne] text-black text-[10px] font-bold uppercase">Guest</span>
                                                 )}
                                             </span>
                                         </div>
@@ -195,7 +195,7 @@ function StaffDashboard() {
                     {todayAppointments.length === 0 ? (
                         <div className="text-center text-[#777] py-8">No appointments assigned.</div>
                     ) : todayAppointments.slice(0, 5).map((appointment, idx) => (
-                        <div key={appointment.id || idx} className="bg-[#1a1a1a] p-4 rounded-xl border border-white/5 space-y-4">
+                        <div key={appointment.id || idx} className="bg-obsidian-elevated p-4 rounded-xl border border-white/5 space-y-4">
                             <div className="flex justify-between items-start">
                                 <div className="flex items-center gap-3">
                                     <img src={`https://placehold.co/150x150/222/FFF?text=${appointment.name.charAt(0)}`} alt={appointment.name} className="w-10 h-10 rounded-full border border-white/10" />

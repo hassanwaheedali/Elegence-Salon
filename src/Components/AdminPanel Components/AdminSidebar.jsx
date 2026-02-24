@@ -22,23 +22,23 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen, handleLogout, currentUser, 
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${collapsed ? 'w-20' : 'w-64'} bg-[#0d0d0d]/80 backdrop-blur-2xl border-r border-white/5 transform transition-all duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+            <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${collapsed ? 'w-20' : 'w-64'} bg-obsidian/80 backdrop-blur-2xl border-r border-white/5 transform transition-all duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <div className="h-full flex flex-col">
                     {/* Logo Area */}
                     <div className={`h-20 flex items-center ${collapsed ? 'justify-center' : 'justify-between px-6'} border-b border-white/5 relative`}>
                         {!collapsed && (
                             <h1 className="text-xl font-black uppercase tracking-[0.2em] text-white">
-                                <span className="text-[#FF8A00]">Elegance</span>
+                                <span className="text-champagne">Elegance</span>
                             </h1>
                         )}
                         {collapsed && (
-                            <span className="text-xl font-black text-[#FF8A00] bg-[#FF8A00]/10 rounded-full px-4 py-2">E</span>
+                            <span className="text-xl font-black text-champagne bg-champagne/10 rounded-full px-4 py-2">E</span>
                         )}
 
                         {/* Desktop Collapse Toggle */}
                         <button
                             onClick={() => setCollapsed(!collapsed)}
-                            className={`hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#1a1a1a] border border-white/10 rounded-full items-center justify-center text-[#777] hover:text-white hover:border-[#FF8A00] transition-colors z-50 shadow-md ${collapsed ? '-right-3' : '-right-3'}`}
+                            className={`hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-obsidian-elevated border border-white/10 rounded-full items-center justify-center text-[#777] hover:text-white hover:border-champagne transition-colors z-50 shadow-md ${collapsed ? '-right-3' : '-right-3'}`}
                         >
                             {collapsed ? <PanelLeftOpen size={12} /> : <PanelLeftClose size={12} />}
                         </button>
@@ -71,7 +71,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen, handleLogout, currentUser, 
                     {/* User Profile Snippet */}
                     <div className={`p-4 border-t border-white/5 bg-white/1 backdrop-blur-sm ${collapsed ? 'flex justify-center' : ''}`}>
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-linear-to-br from-[#FF8A00] to-[#fdba74] flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-orange-500/20 shrink-0">
+                            <div className="w-9 h-9 rounded-full bg-linear-to-br from-champagne to-champagne-light flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-champagne/20 shrink-0">
                                 {currentUser?.name?.charAt(0) || 'A'}
                             </div>
                             {!collapsed && (

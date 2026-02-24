@@ -8,19 +8,21 @@
 
 @theme {
   /* ── Obsidian Palette (backgrounds) ── */
-  --color-obsidian:          #050505;
-  --color-obsidian-card:     #0d0d0d;
-  --color-obsidian-surface:  #111111;
-  --color-obsidian-elevated: #1a1a1a;
+  --color-obsidian: #0d0d0d;
+  --color-obsidian-card: #090909;
+  --color-obsidian-surface: #111111;
+  --color-obsidian-elevated: #171717;
 
   /* ── Champagne Gold Palette (accents) ── */
-  --color-champagne:       #D4AF37;
-  --color-champagne-light: #E8D48B;
-  --color-champagne-dark:  #B8960F;
+  /* Refined, less saturated Orange-Gold */
+  --color-champagne: #d9822b; /* Professional, desaturated base orange */
+  --color-champagne-light: #f5a34d; /* Soft highlight orange */
+  --color-champagne-dark: #b36b24; /* Rich, earthy orange for hover states */
+  --color-champagne-muted: #8a8a8a;
 
-  /* ── Typography ── */
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-sans:  'Montserrat', 'Inter', system-ui, -apple-system, sans-serif;
+  /* /* ── Typography 121212/ */
+  --font-serif: "Sansation", Georgia, "Times New Roman", sans-serif;
+  --font-sans: "Montserrat", "Inter", system-ui, -apple-system, sans-serif;
 
   /* ── Luxury Easing ── */
   --ease-luxury: cubic-bezier(0.23, 1, 0.32, 1);
@@ -41,7 +43,7 @@ body {
    Uses an inline SVG feTurbulence filter for zero-asset grain.
    ═══════════════════════════════════════════════════════════ */
 body::after {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -81,7 +83,7 @@ html.lenis.smooth [data-lenis-prevent] {
 
 /* Champagne gold text gradient (reusable) */
 .text-gradient-champagne {
-  background: linear-gradient(135deg, #E8D48B 0%, #D4AF37 50%, #B8960F 100%);
+  background: linear-gradient(135deg, #e8d48b 0%, #d4af37 50%, #b8960f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -221,7 +223,7 @@ html.lenis.smooth [data-lenis-prevent] {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
+  background: #d4af37;
 }
 
 /* Custom scrollbar for filter panel and tables */
@@ -241,5 +243,5 @@ html.lenis.smooth [data-lenis-prevent] {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
+  background: #d4af37;
 }

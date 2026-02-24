@@ -212,7 +212,7 @@ function StaffAppointments() {
             <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-black text-white uppercase tracking-tight">
-                        My <span className="text-[#FF8A00]">Appointments</span>
+                        My <span className="text-champagne">Appointments</span>
                     </h1>
                     <p className="text-gray-400 text-sm mt-1">View and manage all your assigned client bookings</p>
                 </div>
@@ -221,13 +221,13 @@ function StaffAppointments() {
                 <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                     {/* Search */}
                     <div className="relative group">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#FF8A00] transition-colors">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted group-focus-within:text-champagne transition-colors">
                             <Search size={18} />
                         </div>
                         <input
                             type="text"
                             placeholder="Search client, service, ID..."
-                            className="bg-[#121212] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full sm:w-64 pl-10 p-2.5 transition-all outline-none"
+                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-64 pl-10 p-2.5 transition-all outline-none"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -235,11 +235,11 @@ function StaffAppointments() {
 
                     {/* Status Filter */}
                     <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-champagne-muted">
                             <Filter size={18} />
                         </div>
                         <select
-                            className="bg-[#121212] border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-[#FF8A00] focus:border-[#FF8A00] block w-full sm:w-48 pl-10 p-2.5 appearance-none cursor-pointer outline-none transition-all"
+                            className="bg-obsidian-surface border border-[#333] text-white text-sm rounded-lg focus:ring-1 focus:ring-champagne focus:border-champagne block w-full sm:w-48 pl-10 p-2.5 appearance-none cursor-pointer outline-none transition-all"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
@@ -247,7 +247,7 @@ function StaffAppointments() {
                                 <option key={cat} value={cat}>{cat}</option>
                             ))}
                         </select>
-                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500">
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-champagne-muted">
                             <span className="text-xs">▼</span>
                         </div>
                     </div>
@@ -256,13 +256,13 @@ function StaffAppointments() {
                     <div className="relative filter-panel-container">
                         <button
                             onClick={() => setShowFilterPanel(!showFilterPanel)}
-                            className={`relative bg-[#121212] border ${hasActiveFilters ? 'border-[#FF8A00] text-[#FF8A00]' : 'border-[#333] text-gray-400'
-                                } text-sm rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-[#FF8A00] hover:text-[#FF8A00] transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
+                            className={`relative bg-obsidian-surface border ${hasActiveFilters ? 'border-champagne text-champagne' : 'border-[#333] text-gray-400'
+                                } text-sm rounded-lg px-4 py-2.5 flex items-center gap-2 hover:border-champagne hover:text-champagne transition-all outline-none w-full sm:w-auto justify-center font-medium cursor-pointer`}
                         >
                             <Filter size={18} />
                             <span>Filters</span>
                             {hasActiveFilters && (
-                                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#FF8A00] text-black text-xs font-black rounded-full flex items-center justify-center shadow-lg">
+                                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-champagne text-black text-xs font-black rounded-full flex items-center justify-center shadow-lg">
                                     {activeFilterCount}
                                 </span>
                             )}
@@ -270,12 +270,12 @@ function StaffAppointments() {
 
                         {/* Filter Panel */}
                         {showFilterPanel && (
-                            <div className="absolute top-full mt-2 right-0 w-80 bg-[#121212] border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="absolute top-full mt-2 right-0 w-80 bg-obsidian-surface border border-[#333] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                                 <div className="bg-[#161515] px-4 py-3 border-b border-[#333] flex justify-between items-center">
                                     <h3 className="text-white font-bold text-sm uppercase tracking-wider">Filter Appointments</h3>
                                     <button
                                         onClick={clearAllFilters}
-                                        className="text-xs text-[#FF8A00] hover:text-white transition-colors font-bold uppercase tracking-wide"
+                                        className="text-xs text-champagne hover:text-white transition-colors font-bold uppercase tracking-wide"
                                     >
                                         Clear All
                                     </button>
@@ -291,8 +291,8 @@ function StaffAppointments() {
                                                     key={preset}
                                                     onClick={() => applyDatePreset(preset)}
                                                     className={`px-3 py-2 text-xs font-bold rounded-lg border transition-all ${selectedPreset === preset
-                                                        ? 'bg-[#FF8A00] border-[#FF8A00] text-black shadow-lg shadow-[#FF8A00]/30'
-                                                        : 'bg-[#0d0d0d] border-[#333] text-gray-400 hover:border-[#FF8A00] hover:text-[#FF8A00]'
+                                                        ? 'bg-champagne border-champagne text-black shadow-lg shadow-champagne/30'
+                                                        : 'bg-obsidian border-[#333] text-gray-400 hover:border-champagne hover:text-champagne'
                                                         }`}
                                                 >
                                                     {preset}
@@ -312,7 +312,7 @@ function StaffAppointments() {
                                                     setDateFilter({ ...dateFilter, from: e.target.value })
                                                     setSelectedPreset(null)
                                                 }}
-                                                className="w-full bg-[#0d0d0d] border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-[#FF8A00] focus:ring-1 focus:ring-[#FF8A00] outline-none transition-all"
+                                                className="w-full bg-obsidian border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-champagne focus:ring-1 focus:ring-champagne outline-none transition-all"
                                                 placeholder="From"
                                             />
                                             <input
@@ -322,7 +322,7 @@ function StaffAppointments() {
                                                     setDateFilter({ ...dateFilter, to: e.target.value })
                                                     setSelectedPreset(null)
                                                 }}
-                                                className="w-full bg-[#0d0d0d] border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-[#FF8A00] focus:ring-1 focus:ring-[#FF8A00] outline-none transition-all"
+                                                className="w-full bg-obsidian border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-champagne focus:ring-1 focus:ring-champagne outline-none transition-all"
                                                 placeholder="To"
                                             />
                                         </div>
@@ -336,13 +336,13 @@ function StaffAppointments() {
                                                 type="time"
                                                 value={timeFilter.from}
                                                 onChange={(e) => setTimeFilter({ ...timeFilter, from: e.target.value })}
-                                                className="w-full bg-[#0d0d0d] border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-[#FF8A00] focus:ring-1 focus:ring-[#FF8A00] outline-none transition-all"
+                                                className="w-full bg-obsidian border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-champagne focus:ring-1 focus:ring-champagne outline-none transition-all"
                                             />
                                             <input
                                                 type="time"
                                                 value={timeFilter.to}
                                                 onChange={(e) => setTimeFilter({ ...timeFilter, to: e.target.value })}
-                                                className="w-full bg-[#0d0d0d] border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-[#FF8A00] focus:ring-1 focus:ring-[#FF8A00] outline-none transition-all"
+                                                className="w-full bg-obsidian border border-[#333] rounded-lg px-3 py-2 text-sm text-white focus:border-champagne focus:ring-1 focus:ring-champagne outline-none transition-all"
                                             />
                                         </div>
                                     </div>
@@ -351,7 +351,7 @@ function StaffAppointments() {
                                 <div className="bg-[#161515] px-4 py-3 border-t border-[#333]">
                                     <button
                                         onClick={() => setShowFilterPanel(false)}
-                                        className="w-full bg-[#FF8A00] hover:bg-[#E67C00] text-black cursor-pointer font-black py-2.5 rounded-lg transition-colors text-sm uppercase tracking-wide shadow-lg"
+                                        className="w-full bg-champagne hover:bg-champagne-dark text-black cursor-pointer font-black py-2.5 rounded-lg transition-colors text-sm uppercase tracking-wide shadow-lg"
                                     >
                                         Apply Filters
                                     </button>
@@ -364,11 +364,11 @@ function StaffAppointments() {
 
             {/* Active Filter Tags */}
             {hasActiveFilters && (
-                <div className="flex flex-wrap gap-2 items-center bg-[#121212]/30 border border-[#333] rounded-lg p-3">
-                    <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Active Filters:</span>
+                <div className="flex flex-wrap gap-2 items-center bg-obsidian-surface/30 border border-[#333] rounded-lg p-3">
+                    <span className="text-champagne-muted text-xs font-bold uppercase tracking-wider">Active Filters:</span>
 
                     {dateFilter.from && (
-                        <span className="bg-[#1a1a1a] border border-[#FF8A00]/50 text-[#FF8A00] px-3 py-1.5 rounded-full text-xs flex items-center gap-2 font-medium">
+                        <span className="bg-obsidian-elevated border border-champagne/50 text-champagne px-3 py-1.5 rounded-full text-xs flex items-center gap-2 font-medium">
                             <Calendar size={12} />
                             {dateFilter.from} {dateFilter.to && `→ ${dateFilter.to}`}
                             <button
@@ -381,7 +381,7 @@ function StaffAppointments() {
                     )}
 
                     {timeFilter.from && (
-                        <span className="bg-[#1a1a1a] border border-[#FF8A00]/50 text-[#FF8A00] px-3 py-1.5 rounded-full text-xs flex items-center gap-2 font-medium">
+                        <span className="bg-obsidian-elevated border border-champagne/50 text-champagne px-3 py-1.5 rounded-full text-xs flex items-center gap-2 font-medium">
                             <Clock size={12} />
                             {timeFilter.from} {timeFilter.to && `→ ${timeFilter.to}`}
                             <button
@@ -395,7 +395,7 @@ function StaffAppointments() {
 
                     <button
                         onClick={clearAllFilters}
-                        className="ml-auto text-xs text-white hover:text-[#FF8A00] transition-colors font-bold uppercase tracking-wide"
+                        className="ml-auto text-xs text-white hover:text-champagne transition-colors font-bold uppercase tracking-wide"
                     >
                         Clear All
                     </button>
@@ -403,19 +403,19 @@ function StaffAppointments() {
             )}
 
             {/* Appointments Table Card */}
-            <div className="bg-[#121212]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl relative">
+            <div className="bg-obsidian-surface/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-2xl relative">
 
                 {filteredAndSortedAppointments.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
-                        <div className="bg-[#1a1a1a] p-4 rounded-full mb-4">
+                        <div className="bg-obsidian-elevated p-4 rounded-full mb-4">
                             <Calendar size={48} className="text-[#333]" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-2">No Appointments Found</h3>
-                        <p className="text-gray-500 max-w-md">There are no appointments matching your criteria.</p>
+                        <p className="text-champagne-muted max-w-md">There are no appointments matching your criteria.</p>
                         {hasActiveFilters && (
                             <button
                                 onClick={clearAllFilters}
-                                className="mt-4 px-6 py-2.5 bg-[#FF8A00] hover:bg-[#E67C00] text-black cursor-pointer font-bold rounded-lg text-sm transition-colors uppercase tracking-wide shadow-lg"
+                                className="mt-4 px-6 py-2.5 bg-champagne hover:bg-champagne-dark text-black cursor-pointer font-bold rounded-lg text-sm transition-colors uppercase tracking-wide shadow-lg"
                             >
                                 Clear All Filters
                             </button>
@@ -453,7 +453,7 @@ function StaffAppointments() {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#FF8A00] to-[#FF5C00] flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-champagne to-champagne-dark flex items-center justify-center text-white font-bold text-sm shadow-lg">
                                                         {appointment.name.charAt(0)}
                                                     </div>
                                                     <div>
@@ -468,12 +468,12 @@ function StaffAppointments() {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="text-gray-300 text-sm font-medium">{getAssignedServiceText(appointment)}</div>
-                                                <div className="text-[#FF8A00] text-xs font-bold mt-1">${getAssignedTotal(appointment)}</div>
+                                                <div className="text-champagne text-xs font-bold mt-1">${getAssignedTotal(appointment)}</div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col">
                                                     <div className="flex items-center gap-1.5 text-white text-sm font-medium">
-                                                        <Calendar size={12} className="text-gray-500" /> {appointment.date}
+                                                        <Calendar size={12} className="text-champagne-muted" /> {appointment.date}
                                                     </div>
                                                     <div className="flex items-center gap-1.5 text-[#777] text-xs mt-1 pl-0.5">
                                                         <Clock size={12} /> {appointment.time}
@@ -496,8 +496,8 @@ function StaffAppointments() {
                             </table>
                         </div>
                         {/* Footer / Pagination Placeholder */}
-                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-gray-500">
-                            <span>Showing <span className="text-[#FF8A00] font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span> entries</span>
+                        <div className="bg-[#161515] px-6 py-4 border-t border-[#333] flex justify-between items-center text-xs text-champagne-muted">
+                            <span>Showing <span className="text-champagne font-bold">{filteredAndSortedAppointments.length}</span> of <span className="text-white font-bold">{appointments.length}</span> entries</span>
                         </div>
                     </>
                 )}

@@ -99,7 +99,7 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
     const displayTotal = Number.isFinite(Number(totalPrice)) ? Number(totalPrice) : 0
 
     return (
-        <div className={`group relative bg-[#121212] border border-[#222] rounded-2xl p-6 transition-all duration-300 shadow-md shadow-black/20 overflow-hidden ${isRescheduling ? 'min-h-105 md:min-h-78' : ''}`}>
+        <div className={`group relative bg-obsidian-surface border border-[#222] rounded-2xl p-6 transition-all duration-300 shadow-md shadow-black/20 overflow-hidden ${isRescheduling ? 'min-h-105 md:min-h-78' : ''}`}>
 
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
@@ -125,8 +125,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
             {/* Details */}
             <div className="space-y-4 mb-6">
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                        <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-obsidian border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="w-8 h-8 rounded-full bg-obsidian-elevated border border-[#333] flex items-center justify-center text-champagne">
                             <Calendar size={14} />
                         </div>
                         <div>
@@ -134,8 +134,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                             <p className="text-sm font-semibold text-gray-200">{date}</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                        <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#333] flex items-center justify-center text-[#FF8A00]">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-obsidian border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="w-8 h-8 rounded-full bg-obsidian-elevated border border-[#333] flex items-center justify-center text-champagne">
                             <Clock size={14} />
                         </div>
                         <div>
@@ -146,8 +146,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                        <div className="flex items-center gap-2 mb-2 text-[#FF8A00]">
+                    <div className="p-3 rounded-xl bg-obsidian border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="flex items-center gap-2 mb-2 text-champagne">
                             <Scissors size={14} />
                             <span className="text-[10px] font-bold uppercase tracking-wider text-[#777]">Services</span>
                         </div>
@@ -156,8 +156,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                                 <span className="text-xs text-[#777] italic">No services</span>
                             ) : (
                                 serviceItems.map((s) => (
-                                    <span key={`${s.name}-${s.price}`} className="inline-flex items-center gap-1.5 bg-[#1a1a1a] border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
-                                        <span className="text-[#fb9d33]">{s.name}</span>
+                                    <span key={`${s.name}-${s.price}`} className="inline-flex items-center gap-1.5 bg-obsidian-elevated border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
+                                        <span className="text-champagne">{s.name}</span>
                                         <span className="text-[#777]">{s.price}</span>
                                     </span>
                                 ))
@@ -165,8 +165,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                         </div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-[#0d0d0d] border border-[#222] group-hover:border-[#333] transition-colors">
-                        <div className="flex items-center gap-2 mb-2 text-[#FF8A00]">
+                    <div className="p-3 rounded-xl bg-obsidian border border-[#222] group-hover:border-[#333] transition-colors">
+                        <div className="flex items-center gap-2 mb-2 text-champagne">
                             <User size={14} />
                             <span className="text-[10px] font-bold uppercase tracking-wider text-[#777]">Stylists</span>
                         </div>
@@ -175,8 +175,8 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                                 <span className="text-xs text-[#777] italic">Any available</span>
                             ) : (
                                 stylistItems.map((s) => (
-                                    <span key={`${s.id}-${s.name}`} className="inline-flex items-center gap-1.5 bg-[#1a1a1a] border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
-                                        <span className="text-[#fb9d33]">{s.name}</span>
+                                    <span key={`${s.id}-${s.name}`} className="inline-flex items-center gap-1.5 bg-obsidian-elevated border border-[#333] text-gray-200 text-xs font-semibold px-2 py-1 rounded-lg">
+                                        <span className="text-champagne">{s.name}</span>
                                     </span>
                                 ))
                             )}
@@ -184,9 +184,9 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#0d0d0d] border border-[#222]">
+                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-obsidian border border-[#222]">
                     <span className="text-[10px] text-[#777] font-bold uppercase tracking-wider">Total</span>
-                    <span className="text-sm font-extrabold text-[#FF8A00]">${displayTotal}</span>
+                    <span className="text-sm font-extrabold text-champagne">${displayTotal}</span>
                 </div>
             </div>
 
@@ -198,7 +198,7 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                         requestAnimationFrame(() => setIsRescheduling(true))
                     }}
                     disabled={status === 'Cancelled'}
-                    className="flex justify-center items-center py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 text-white hover:bg-[#FF8A00] hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    className="flex justify-center items-center py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider bg-white/5 text-white hover:bg-champagne hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                     Reschedule
                 </button>
@@ -213,11 +213,11 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
 
             {/* Reschedule Form Overlay */}
             <div
-                className={`absolute inset-0 bg-[#121212] p-6 transition-transform duration-300 ease-in-out space-y-6 ${isRescheduling ? 'translate-y-0' : 'translate-y-full'} overflow-y-auto`}
+                className={`absolute inset-0 bg-obsidian-surface p-6 transition-transform duration-300 ease-in-out space-y-6 ${isRescheduling ? 'translate-y-0' : 'translate-y-full'} overflow-y-auto`}
             >
                 <div className="flex justify-between items-center">
                     <h4 className="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
-                        <Calendar size={14} className="text-[#FF8A00]" />
+                        <Calendar size={14} className="text-champagne" />
                         New Time
                     </h4>
                     <button
@@ -235,7 +235,7 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                             type="date"
                             value={newDate}
                             onChange={(e) => setNewDate(e.target.value)}
-                            className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#FF8A00] focus:outline-none transition-colors"
+                            className="w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-champagne focus:outline-none transition-colors"
                         />
                     </div>
                     <div>
@@ -244,12 +244,12 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
                             type="time"
                             value={newTime}
                             onChange={(e) => setNewTime(e.target.value)}
-                            className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#FF8A00] focus:outline-none transition-colors"
+                            className="w-full bg-obsidian border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-champagne focus:outline-none transition-colors"
                         />
                     </div>
                     <button
                         onClick={handleschedule}
-                        className="w-full py-3 bg-[#FF8A00] text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-[#e67c00] transition-colors shadow-lg shadow-orange-500/20 mt-2 flex justify-center items-center gap-2 cursor-pointer"
+                        className="w-full py-3 bg-champagne text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-champagne-dark transition-colors shadow-lg shadow-champagne/20 mt-2 flex justify-center items-center gap-2 cursor-pointer"
                     >
                         <Check size={14} />
                         Confirm Change

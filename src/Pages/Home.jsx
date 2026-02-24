@@ -9,30 +9,6 @@ import {
     ArrowRight
 } from 'lucide-react'
 
-/* ═══════════════════════════════════════════════════════════
-   ASSET_ROADMAP
-   ─────────────────────────────────────────────────────────
-   The following images are temporary placeholders.
-   Replace with high-resolution .webp assets when available:
-
-   Hero:
-     Landing.webp  → hero-visual.webp   (cinematic wide hero bg, 2560×1440)
-     barber.webp   → hero-portrait.webp (editorial barber portrait, 1200×1600)
-
-   Services (editorial macro photography):
-     Unsplash URL #1 → service-macro-1.webp  (Classic Haircut close-up)
-     Unsplash URL #2 → service-macro-2.webp  (Straight razor shave detail)
-     Unsplash URL #3 → service-macro-3.webp  (Facial treatment close-up)
-     Unsplash URL #4 → service-macro-4.webp  (Beard sculpting detail)
-     Unsplash URL #5 → service-macro-5.webp  (Styling product application)
-     Unsplash URL #6 → service-macro-6.webp  (Hair coloring process)
-
-   About:
-     About.webp    → about-editorial.webp (workspace editorial shot)
-
-   To swap: update the import path below. No component changes needed.
-   ═══════════════════════════════════════════════════════════ */
-
 import barberImg from '../assets/barber.webp'
 import Landing from '../assets/Landing.webp'
 import About from '../assets/About.webp'
@@ -47,16 +23,6 @@ import Header from '../Components/Header.jsx'
 
 function Home() {
     const heroRef = useRef(null)
-    /* GSAP: useGSAP(() => {
-       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
-       tl.from('[data-hero-tagline]', { y: 20, opacity: 0, duration: 0.8 })
-         .from('[data-hero-heading] > *', { y: 60, opacity: 0, duration: 1.2, stagger: 0.15 }, '-=0.4')
-         .from('[data-hero-description]', { y: 30, opacity: 0, duration: 0.8 }, '-=0.6')
-         .from('[data-hero-cta]', { y: 20, opacity: 0, duration: 0.8 }, '-=0.4')
-         .from('[data-hero-image]', { scale: 1.1, opacity: 0, duration: 1.4 }, 0)
-         .from('[data-hero-badge]', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
-         .from('[data-stats-item]', { y: 30, opacity: 0, stagger: 0.1, duration: 0.6 }, '-=0.4')
-    }, { scope: heroRef }) */
 
     const servicesData = [
         {
@@ -118,7 +84,7 @@ function Home() {
             <section
                 ref={heroRef}
                 data-scroll-section
-                className="relative min-h-screen overflow-hidden bg-obsidian"
+                className="relative min-h-fit md:min-h-svh overflow-hidden bg-obsidian"
                 id="main-hero"
             >
                 {/* Background Image Layer */}
@@ -133,43 +99,40 @@ function Home() {
                     }}
                 ></div>
 
-                {/* Cinematic Gradient Overlay — heavier on left for text contrast */}
-                <div className="absolute inset-0 z-[1]" style={{
-                    background: 'linear-gradient(105deg, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.75) 40%, rgba(5,5,5,0.3) 70%, rgba(5,5,5,0.15) 100%)'
+                {/* Cinematic Gradient Overlay — full coverage on mobile, left-heavy on desktop */}
+                <div className="absolute inset-0 z-1 bg-obsidian/80 sm:bg-transparent" style={{
+                    background: 'linear-gradient(105deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.85) 35%, rgba(5,5,5,0.4) 65%, rgba(5,5,5,0.2) 100%)'
                 }}></div>
 
-                {/* Canvas integration point for future scrub engine */}
-                {/* <canvas data-hero-canvas className="absolute inset-0 z-[2] pointer-events-none" /> */}
+                {/* ── Hero Content Grid ── */}
+                <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 pt-20 sm:pt-16 pb-0">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0 md:min-h-[calc(100svh-120px)]">
 
-                {/* ── Hero Content Grid: Asymmetrical 55/45 split ── */}
-                <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-28 md:pt-36 pb-12 md:pb-0">
-                    <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-4 min-h-[calc(100vh-180px)]">
+                        {/* ── Left Content — Bold Masculine Typography ── */}
+                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-2 sm:pt-4 lg:pt-16 xl:pt-20 z-10">
 
-                        {/* ── Left Content — Editorial Typography ── */}
-                        <div className="w-full lg:w-[55%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 xl:pt-24 z-10">
+                            {/* Tagline — horizontal line + text */}
+                            <div data-hero-tagline className="flex items-center gap-4 mb-6 sm:mb-8 lg:mb-10">
+                                <div className="w-8 sm:w-12 h-px bg-champagne/50"></div>
+                                <p className="font-sans text-champagne/80 text-[9px] sm:text-[10px] md:text-xs tracking-[0.4em] sm:tracking-[0.5em] uppercase font-semibold">
+                                    Est. 2011 — Gentlemen's Grooming
+                                </p>
+                            </div>
 
-                            {/* Tagline */}
-                            <p
-                                data-hero-tagline
-                                className="font-sans text-champagne/70 text-[10px] sm:text-xs tracking-[0.5em] uppercase mb-8 lg:mb-10"
-                            >
-                                Est. 2011 — Gentlemen's Grooming
-                            </p>
-
-                            {/* Main Heading — High-contrast editorial type pairing */}
-                            <div data-hero-heading className="heading-text text-center lg:text-left space-y-1 md:space-y-2 mb-8 lg:mb-10">
-                                {/* Line 1: Thin italic serif */}
-                                <h1 className="font-serif italic font-light text-champagne text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-none tracking-wide">
+                            {/* Main Heading — Bold, aggressive spacing */}
+                            <div data-hero-heading className="heading-text text-center lg:text-left mb-6">
+                                {/* Line 1 */}
+                                <h1 className="font-serif font-bold text-champagne text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-[1.1] uppercase">
                                     The Art of
                                 </h1>
 
-                                {/* Line 2: Heavy uppercase sans — widest element */}
-                                <h2 className="font-sans font-black text-white text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-[5.5rem] 2xl:text-[6.5rem] uppercase leading-[0.9] tracking-tight">
+                                {/* Line 2: Massive, dominant */}
+                                <h2 className="font-sans font-black text-white text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-[6rem] 2xl:text-[7rem] uppercase leading-[0.9] -tracking-[0.02em] my-2 sm:my-3 md:my-4">
                                     Masculine
                                 </h2>
 
-                                {/* Line 3: Thin italic serif (mirrors line 1) */}
-                                <h3 className="font-serif italic font-light text-champagne text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-none tracking-wide">
+                                {/* Line 3 */}
+                                <h3 className="font-serif font-bold text-champagne text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl leading-[1.1]  uppercase">
                                     Grooming
                                 </h3>
                             </div>
@@ -177,87 +140,82 @@ function Home() {
                             {/* Description */}
                             <p
                                 data-hero-description
-                                className="font-sans font-light text-gray-400 text-sm sm:text-base md:text-lg max-w-md leading-relaxed tracking-wider text-center lg:text-left mb-10 lg:mb-12 px-4 lg:px-0"
+                                className="font-sans font-light text-white/50 text-xs sm:text-sm md:text-base max-w-sm leading-relaxed tracking-wide text-center lg:text-left mb-6 sm:mb-8 lg:mb-10 px-2 sm:px-0"
                             >
-                                Experience the art of traditional grooming with modern techniques. Where style meets sophistication.
+                                Where precision meets sophistication. Traditional craft, modern edge.
                             </p>
 
-                            {/* CTA — "Book Ritual" Magnetic Button */}
-                            {/* GSAP MAGNETIC: Wrap data-magnetic container with magnetic physics
-                                gsap.to('[data-magnetic-text]', {
-                                  x: pointer.x * 0.3, y: pointer.y * 0.3,
-                                  ease: 'power3.out', duration: 0.6
-                                }) */}
-                            <div data-hero-cta className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                            {/* CTA Row */}
+                            <div data-hero-cta className="flex flex-row items-center gap-4 sm:gap-6 mb-12">
                                 <a href="#appointment">
                                     <div data-magnetic className="group relative">
-                                        <button className="relative px-10 py-4 sm:px-12 sm:py-5 border border-champagne/60 bg-transparent text-champagne font-sans font-semibold text-xs sm:text-sm uppercase tracking-[0.3em] transition-all duration-700 ease-luxury hover:bg-champagne hover:text-obsidian hover:border-champagne overflow-hidden">
-                                            <span data-magnetic-text className="relative z-10 inline-flex items-center gap-3">
-                                                Book Ritual
-                                                <ArrowRight className="w-4 h-4 transition-transform duration-500 ease-luxury group-hover:translate-x-1" strokeWidth={1} />
+                                        <button className="relative px-7 py-3 sm:px-10 sm:py-4 md:px-12 md:py-5 border border-champagne/60 bg-transparent text-champagne font-sans font-black text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne overflow-hidden">
+                                            <span data-magnetic-text className="relative z-10 inline-flex items-center gap-2 sm:gap-3">
+                                                Book Now
+                                                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-500 ease-luxury group-hover:translate-x-1" strokeWidth={2} />
                                             </span>
                                         </button>
                                     </div>
                                 </a>
 
-                                <a href="#services" className="group inline-flex items-center gap-2 text-gray-500 hover:text-champagne font-sans text-xs uppercase tracking-[0.25em] transition-colors duration-500 ease-luxury">
-                                    Explore Services
-                                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-500 ease-luxury group-hover:translate-x-1.5" strokeWidth={1} />
+                                <a href="#services" className="group inline-flex items-center gap-2 text-white/40 hover:text-champagne font-sans font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-colors duration-500 ease-luxury">
+                                    Services
+                                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-500 ease-luxury group-hover:translate-x-1.5" strokeWidth={2} />
                                 </a>
                             </div>
                         </div>
 
-                        {/* ── Right Visual — Asymmetric Editorial Image ── */}
-                        <div className="w-full lg:w-[45%] relative hidden md:flex justify-center lg:justify-end items-end self-end">
-                            {/* SWAP: Replace barberImg with hero-portrait.webp when available */}
+                        {/* ── Right Visual — Large Editorial Image ── */}
+                        <div className="w-full lg:w-[50%] relative hidden md:flex justify-center lg:justify-end items-end self-end">
                             <div
                                 data-hero-image
                                 data-scroll
                                 data-scroll-speed="0.5"
                                 data-parallax
-                                className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg"
+                                className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
                             >
-                                {/* Editorial image with soft clip */}
-                                <div className="overflow-hidden rounded-t-[2rem] rounded-b-none">
+                                {/* Image with soft top clip */}
+                                <div className="overflow-hidden rounded-t-3xl">
                                     <img
                                         src={barberImg}
                                         alt="Professional Barber"
-                                        className="w-full h-auto object-contain transition-transform duration-[1200ms] ease-luxury hover:scale-[1.03]"
+                                        className="w-full h-auto object-contain transition-transform duration-1200 ease-luxury hover:scale-[1.03]"
                                     />
                                 </div>
 
                                 {/* Glassmorphism floating badge */}
                                 <div
                                     data-hero-badge
-                                    className="absolute -bottom-4 -left-4 lg:-left-8 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl px-6 py-4 shadow-2xl"
+                                    className="absolute bottom-6 -left-6 lg:-left-14 backdrop-blur-xl bg-obsidian/40 border border-champagne/15 rounded-lg px-5 py-3 shadow-2xl"
                                 >
-                                    <p className="font-serif text-champagne text-2xl font-semibold leading-tight">15+</p>
-                                    <p className="font-sans text-gray-400 text-[10px] uppercase tracking-[0.3em]">Years of Craft</p>
+                                    <p className="font-sans text-champagne text-xl font-black leading-tight">15+</p>
+                                    <p className="font-sans text-white/40 text-[8px] uppercase tracking-[0.3em] font-semibold">Years of Craft</p>
                                 </div>
 
-                                {/* Subtle champagne accent line */}
-                                <div className="absolute top-8 -right-3 w-px h-24 bg-linear-to-b from-champagne/40 to-transparent"></div>
+                                {/* Accent line */}
+                                <div className="absolute top-12 -right-4 w-px h-20 bg-linear-to-b from-champagne/30 to-transparent"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ── Stats Strip — Full-width below hero content ── */}
-                <div className="relative z-10 border-t border-champagne/10 bg-obsidian/60 backdrop-blur-sm">
-                    <div className="container mx-auto px-6 lg:px-12">
-                        <div className="flex flex-wrap justify-center lg:justify-start divide-x divide-champagne/10">
+                {/* ── Stats Strip — Aligned with hero container ── */}
+                <div className="relative z-10  bg-obsidian-card">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+                        <div className="grid grid-cols-4">
                             {[
                                 { value: '15+', label: 'Years Experience' },
-                                { value: '5,000+', label: 'Gentlemen Served' },
-                                { value: '4.9', label: 'Client Rating' }
+                                { value: '5K+', label: 'Gentlemen Served' },
+                                { value: '100+', label: '5-Star Reviews' },
+                                { value: '10', label: 'Expert Stylists' }
                             ].map((stat, i) => (
                                 <div
                                     key={i}
                                     data-stats-item
-                                    className="flex items-center gap-4 px-6 lg:px-10 py-6 lg:py-8"
+                                    className="flex flex-row items-center px-0 sm:px-2 lg:px-8 py-4 sm:py-8 gap-4"
                                 >
-                                    <span className="font-serif text-champagne text-3xl lg:text-4xl font-semibold leading-none">{stat.value}</span>
-                                    <span className="font-sans text-gray-500 text-[10px] lg:text-xs uppercase tracking-[0.25em]">{stat.label}</span>
+                                    <span className="font-sans text-champagne text-lg sm:text-2xl lg:text-3xl font-black leading-none">{stat.value}</span>
+                                    <span className="font-sans text-white/30 text-[6px] sm:text-[9px] lg:text-[11px] uppercase tracking-widest sm:tracking-[0.2em] mt-1 font-semibold">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -275,20 +233,20 @@ function Home() {
                     {/* right content - responsive sizing */}
                     <div className="w-full md:w-1/2 flex flex-col justify-start md:items-start text-center md:text-left px-4 md:px-0">
                         <div className="f1-head">
-                            <h2 className="font-serif text-4xl lg:text-6xl text-gray-300">WE ARE <span className="text-white font-bold uppercase">Elegance</span></h2>
+                            <h2 className="font-serif text-4xl lg:text-6xl text-gray-300 uppercase font-bold">WE ARE <span className="text-white font-bold uppercase">Elegance</span></h2>
                         </div>
                         <div className="f2-head mt-2">
                             <h2 className='font-serif text-4xl lg:text-6xl font-bold text-champagne'>THE BARBER SHOP</h2>
                         </div>
                         <div className="description space-y-4 mt-8 md:mt-6">
                             <div className="f-para1">
-                                <p className="font-sans font-light text-gray-400 text-sm md:text-base lg:text-lg leading-relaxed tracking-wide">
+                                <p className="font-serif font-light text-champagne-muted text-sm md:text-base lg:text-xl leading-relaxed tracking-wide">
                                     Elegance have been at the forefront of mens grooming, and have set the agenda for style-conscious gentleman in Karachi. Our focus on empowering gentleman to look and feel fantastic every day.
                                 </p>
                             </div>
                             <hr className='border-gray-800' />
                             <div className="f-para1">
-                                <p className="font-sans font-light text-gray-400 text-sm md:text-base lg:text-lg leading-relaxed tracking-wide">
+                                <p className="font-sans font-light text-champagne-muted text-sm md:text-base lg:text-lg leading-relaxed tracking-wide">
                                     Elegance combines the comfort behind traditional with the modern conveniences of a full service salon.
                                 </p>
                             </div>
@@ -296,15 +254,15 @@ function Home() {
                         <div className="icons mt-14 md:mt-12 flex flex-wrap justify-center md:justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-28">
                             <div className="f1-icon flex flex-col justify-center items-center">
                                 <i className="fas fa-cut text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-gray-400 text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Haircut</span>
+                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Haircut</span>
                             </div>
                             <div className="f2-icon flex flex-col justify-center items-center">
                                 <i className="fas fa-cut text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-gray-400 text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Shaving</span>
+                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Shaving</span>
                             </div>
                             <div className="f3-icon flex flex-col justify-center items-center">
                                 <i className="fas fa-spa text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-gray-400 text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Facials</span>
+                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Facials</span>
                             </div>
                         </div>
 
@@ -320,20 +278,20 @@ function Home() {
                }) */}
             <section
                 data-scroll-section
-                className="service-section bg-obsidian-card text-white py-24 lg:py-32 relative"
+                className="service-section bg-obsidian-card text-white py-28 relative"
                 id='services'
             >
-                <div className='mx-auto px-6 lg:px-16 max-w-7xl'>
+                <div className='mx-auto px-6 lg:px-16 max-w-11/12'>
                     {/* Section Header — Editorial type pairing */}
                     <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-16 lg:mb-24 gap-6">
                         <div className="text-center md:text-left">
                             <span className="font-sans text-champagne/70 tracking-[0.5em] text-[10px] sm:text-xs uppercase mb-3 block">Our Menu</span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
                                 Curated{' '}
-                                <span className='font-serif italic font-light text-champagne normal-case'>Services</span>
+                                <span className='font-sans font-black text-champagne normal-case'>Services</span>
                             </h2>
                         </div>
-                        <p className="font-sans font-light text-gray-500 max-w-sm text-right hidden md:block text-sm tracking-wide leading-relaxed">
+                        <p className="font-sans font-light text-champagne-muted max-w-sm text-right hidden md:block text-sm tracking-wide leading-relaxed">
                             Precision cuts, classic shaves, and premium grooming services tailored for the modern gentleman.
                         </p>
                     </div>
@@ -376,8 +334,8 @@ function Home() {
             {/* ═══════════════════════ PRICE LIST ═══════════════════════ */}
             <section className="price-section bg-obsidian-card text-white">
                 <div className='pb-8 mx-auto flex flex-col gap-8 lg:gap-12'>
-                    <div className="heading w-full mt-8 mb-2 md:mb-8 text-center">
-                        <h1 className="text-5xl font-serif font-bold text-champagne">PRICE LIST</h1>
+                    <div className="heading w-full mb-2 md:mb-8 text-center">
+                        <h1 className="text-6xl font-sans font-black text-champagne">PRICE LIST</h1>
                     </div>
                     <PriceCard />
                 </div>
@@ -388,10 +346,10 @@ function Home() {
                 <div className='pb-8 mx-auto flex flex-col gap-2'>
                     <div className="heading w-full text-center text-4xl lg:text-5xl font-black uppercase">
                         <h1 className='text-white font-sans'>Make</h1>
-                        <h1 className='text-champagne font-serif italic font-semibold normal-case text-5xl lg:text-6xl'>An Appointment</h1>
+                        <h1 className='text-champagne font-sans font-black normal-case text-4xl lg:text-5xl'>An Appointment</h1>
                         <hr className='max-w-115 mx-auto border-obsidian-elevated border mt-5' />
                     </div>
-                    <div className='mx-auto max-w-7xl w-full px-4 md:px-6 lg:px-8 py-4 md:py-12 mb-8'>
+                    <div className='mx-auto max-w-7xl w-full px-8 md:px-6 lg:px-8 py-4 md:py-12 mb-8'>
                         <AppointmentForm />
                     </div>
                 </div>
@@ -402,9 +360,9 @@ function Home() {
                 {/* Section Title */}
                 <div className="text-center mb-16">
                     <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-wider mb-2 font-sans">
-                        Trusted <span className="font-serif italic font-light text-champagne normal-case">Brands</span>
+                        Trusted <span className="font-sans font-black text-champagne normal-case">Brands</span>
                     </h2>
-                    <p className="font-sans font-light text-gray-500 text-sm tracking-wide">Premium products for exceptional results</p>
+                    <p className="font-sans font-light text-champagne-muted text-sm tracking-wide">Premium products for exceptional results</p>
                 </div>
 
                 <BrandCarousel />
@@ -419,7 +377,7 @@ function Home() {
             <section className="customer-reviews-section bg-obsidian-card text-white pt-12">
                 <div className='mx-auto flex flex-col gap-4 md:gap-6'>
                     <div className="heading w-full text-center">
-                        <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase font-sans'>Customer <span className='font-serif italic font-light text-champagne normal-case'>Reviews</span></h1>
+                        <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase font-sans'>Customer <span className='font-sans font-black text-champagne normal-case'>Reviews</span></h1>
                         <hr className='max-w-xs sm:max-w-md md:max-w-lg mx-auto border-obsidian-elevated border mt-3 md:mt-5' />
                     </div>
                     <div className='mx-auto max-w-7xl w-full px-4 sm:px-6 md:px-8 lg:px-10 py-6 md:py-8 mb-4 md:mb-8'>

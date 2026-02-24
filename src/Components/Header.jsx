@@ -455,7 +455,7 @@ function Header({ bgImage = "bg-transparent" }) {
                                                     <p className="text-white font-semibold text-sm uppercase tracking-wide group-hover:text-champagne transition-colors">My Account</p>
                                                     <p className="text-gray-400 text-xs">Login / Register</p>
                                                 </div>
-                                                <i className="fas fa-chevron-right text-gray-500 group-hover:text-champagne group-hover:translate-x-1 transition-all"></i>
+                                                <i className="fas fa-chevron-right text-champagne-muted group-hover:text-champagne group-hover:translate-x-1 transition-all"></i>
                                             </div>
                                         </Link>
                                     )}

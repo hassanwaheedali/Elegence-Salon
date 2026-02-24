@@ -58,7 +58,7 @@ const StaffMenu = ({ staff, onCheckAppts, onViewDetails, onDelete, onEdit }) => 
                         left: `${position.left}px`,
                         zIndex: 9999
                     }}
-                    className="w-48 bg-[#121212] border border-[#333] rounded-lg shadow-xl py-1 animate-scale-in origin-top-right"
+                    className="w-48 bg-obsidian-surface border border-[#333] rounded-lg shadow-xl py-1 animate-scale-in origin-top-right"
                 >
                     <button
                         onClick={() => {
@@ -67,7 +67,7 @@ const StaffMenu = ({ staff, onCheckAppts, onViewDetails, onDelete, onEdit }) => 
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white flex items-center gap-2 transition-colors cursor-pointer"
                     >
-                        <Calendar size={14} className="text-[#FF8A00]" />
+                        <Calendar size={14} className="text-champagne" />
                         Check Appointments
                     </button>
                     <button
