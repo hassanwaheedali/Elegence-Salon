@@ -105,7 +105,7 @@ function Home() {
                 }}></div>
 
                 {/* ── Hero Content Grid ── */}
-                <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-12 pt-24 pb-0">
+                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-10 pt-24 pb-0">
                     <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
