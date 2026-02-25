@@ -80,7 +80,7 @@ function Home() {
     }, []);
 
     useGSAP(() => {
-        // Setup GSAP stagger reveal for Service Cards
+        // Setup GSAP stagger reveal for Service Cards across the whole page scope
         gsap.utils.toArray('.service-card-marker').forEach((card) => {
             gsap.fromTo(card,
                 { y: 50, opacity: 0 },
@@ -89,15 +89,16 @@ function Home() {
                     opacity: 1,
                     duration: 0.7,
                     ease: "power3.out",
+                    force3D: true, // Forces hardware acceleration for smooth GPU panning
                     scrollTrigger: {
                         trigger: card,
-                        start: "top 85%",
+                        start: "top 95%",
                         toggleActions: "play none none reverse"
                     }
                 }
             )
         })
-    }, { scope: heroRef }) // Using heroRef context just as a scope base, or rely on global
+    }) // Removed { scope: heroRef } so it can find elements in the Services section
 
     return (
         <>
@@ -114,10 +115,7 @@ function Home() {
                 className="relative min-h-fit overflow-hidden bg-obsidian py-6 md:py-0"
                 id="main-hero"
             >
-                {/* 3D WebGL Background Layer */}
-                <HeroCanvas />
-
-                {/* Background Image Layer */}
+                {/* Background Image Layer (Base) */}
                 {/* SWAP: Replace Landing with hero-visual.webp when available */}
                 <div
                     className="absolute inset-0 z-0"
@@ -129,17 +127,20 @@ function Home() {
                     }}
                 ></div>
 
-                {/* Cinematic Gradient Overlay — full coverage on mobile, left-heavy on desktop */}
-                <div className="absolute inset-0 z-1 bg-obsidian/80 sm:bg-transparent" style={{
+                {/* 3D WebGL Background Layer (Embers/Dust) renders right on top of background */}
+                <HeroCanvas />
+
+                {/* Cinematic Gradient Overlay (Fog) — full coverage on mobile, left-heavy on desktop */}
+                <div className="absolute inset-0 z-2 bg-obsidian/80 sm:bg-transparent pointer-events-none" style={{
                     background: 'linear-gradient(105deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.85) 35%, rgba(5,5,5,0.4) 65%, rgba(5,5,5,0.2) 100%)'
                 }}></div>
 
                 {/* ── Hero Content Grid ── */}
-                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-10 pt-24 pb-0">
+                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-12 pt-20 pb-0">
                     <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
-                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 xl:pt-20 z-10">
+                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 mb-1.5 z-10">
 
                             {/* Tagline — horizontal line + text */}
                             <div data-hero-tagline className="flex items-center gap-4 mb-6 sm:mb-8 lg:mb-10">
@@ -202,7 +203,7 @@ function Home() {
                                 data-scroll
                                 data-scroll-speed="0.5"
                                 data-parallax
-                                className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-xl"
+                                className="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl"
                             >
                                 {/* Image with soft top clip */}
                                 <div className="overflow-hidden rounded-t-3xl">
@@ -328,32 +329,32 @@ function Home() {
 
                     <div className="flex flex-col gap-8 lg:gap-6">
                         {/* Row 1: Full-width feature card */}
-                        <div className="w-full service-card-marker">
+                        <div className="w-full service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                             <ServiceCard {...servicesData[0]} index={0} variant="featured" />
                         </div>
 
                         {/* Row 2: Two cards, offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div className="w-full lg:w-[55%] service-card-marker">
+                            <div className="w-full lg:w-[55%] service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                                 <ServiceCard {...servicesData[1]} index={1} />
                             </div>
-                            <div className="w-full lg:w-[45%] lg:mt-12 service-card-marker">
+                            <div className="w-full lg:w-[45%] lg:mt-12 service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                                 <ServiceCard {...servicesData[2]} index={2} />
                             </div>
                         </div>
 
                         {/* Row 3: Two cards, reverse offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div className="w-full lg:w-[45%] lg:mt-8 service-card-marker">
+                            <div className="w-full lg:w-[45%] lg:mt-8 service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                                 <ServiceCard {...servicesData[3]} index={3} />
                             </div>
-                            <div className="w-full lg:w-[55%] service-card-marker">
+                            <div className="w-full lg:w-[55%] service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                                 <ServiceCard {...servicesData[4]} index={4} />
                             </div>
                         </div>
 
                         {/* Row 4: Full-width feature card */}
-                        <div className="w-full service-card-marker">
+                        <div className="w-full service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
                             <ServiceCard {...servicesData[5]} index={5} variant="featured" />
                         </div>
                     </div>

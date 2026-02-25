@@ -48,8 +48,11 @@ const HeroCanvas = () => {
         // Animation Loop
         let animationFrameId;
         const clock = new THREE.Clock();
+        let isVisible = true;
 
         const render = () => {
+            if (!isVisible) return; // Don't request next frame if out of viewport
+
             const elapsedTime = clock.getElapsedTime();
 
             // Slow, drifting rotation
@@ -60,7 +63,25 @@ const HeroCanvas = () => {
             animationFrameId = window.requestAnimationFrame(render);
         };
 
-        render();
+        // Initialize IntersectionObserver for Smart Resource Management
+        const observer = new IntersectionObserver((entries) => {
+            const [entry] = entries;
+            isVisible = entry.isIntersecting;
+
+            if (isVisible) {
+                // Resume animation loop
+                if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
+                render();
+            } else {
+                // Pause animation loop
+                if (animationFrameId) {
+                    window.cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+            }
+        }, { threshold: 0 }); // Fires correctly when exactly fully out of view
+
+        if (mount) observer.observe(mount);
 
         // Handle Window Resize
         const handleResize = () => {
@@ -76,22 +97,30 @@ const HeroCanvas = () => {
 
         window.addEventListener('resize', handleResize);
 
-        // Cleanup
+        // Strict Cleanup
         return () => {
+            if (mount) observer.unobserve(mount);
             window.removeEventListener('resize', handleResize);
-            window.cancelAnimationFrame(animationFrameId);
-            if (mount) mount.removeChild(renderer.domElement);
+            if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
+
+            if (mount && renderer.domElement && mount.contains(renderer.domElement)) {
+                mount.removeChild(renderer.domElement);
+            }
+
+            // Strictly dispose geometries and materials to avoid memory leaks
             particlesGeometry.dispose();
             particlesMaterial.dispose();
             renderer.dispose();
+            // Force WebGL context loss to ensure garbage collection
+            renderer.forceContextLoss();
         };
     }, []);
 
     return (
         <div
             ref={mountRef}
-            className="absolute inset-0 z-0 pointer-events-none"
-            style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}
+            className="absolute top-0 left-0 w-full h-full z-1 pointer-events-none"
+            style={{ width: '100%', height: '100%', overflow: 'hidden' }}
         />
     );
 };
