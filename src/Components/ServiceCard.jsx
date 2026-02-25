@@ -1,9 +1,19 @@
 import { ArrowRight } from 'lucide-react'
 
 const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
+    const handleCardClick = (e) => {
+        if (onClick) onClick(e);
+        const element = document.getElementById('appointment');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.hash = 'appointment';
+        }
+    };
+
     return (
         <div
-            onClick={onClick}
+            onClick={handleCardClick}
             className="group relative h-112.5 w-full overflow-hidden rounded-2xl bg-obsidian-elevated shadow-lg transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
         >
             {/* Background Image with Zoom Effect */}
@@ -52,12 +62,10 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
                         <span className="text-xl md:text-2xl font-black text-champagne tracking-wider shadow-black shadow-sm">
                             {price}
                         </span>
-                        <a href="#appointment">
-                            <button className="group/btn flex items-center gap-2 rounded-full bg-black/40 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors duration-300 hover:bg-champagne border border-champagne hover:border-champagne">
-                                <span>Book Now</span>
-                                <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1 will-change-transform" />
-                            </button>
-                        </a>
+                        <button className="group/btn flex items-center gap-2 rounded-full bg-black/40 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors duration-300 hover:bg-champagne border border-champagne hover:border-champagne">
+                            <span>Book Now</span>
+                            <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1 will-change-transform" />
+                        </button>
                     </div>
                 </div>
             </div>

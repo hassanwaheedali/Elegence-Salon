@@ -26,9 +26,13 @@ import { sampleImages } from '../data/sample-images.js'
 import BrandCarousel from '../Components/BrandCarousel.jsx'
 import Header from '../Components/Header.jsx'
 import HeroCanvas from '../Components/HeroCanvas.jsx'
+import { useMagnetic } from '../hooks/useMagnetic.jsx'
 
 function Home() {
     const heroRef = useRef(null)
+
+    // Initialize Magnetic interaction engine
+    useMagnetic();
 
     const servicesData = [
         {
@@ -136,11 +140,11 @@ function Home() {
                 }}></div>
 
                 {/* ── Hero Content Grid ── */}
-                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-12 pt-20 pb-0">
+                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-13 pt-20 pb-0">
                     <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
-                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 mb-1.5 z-10">
+                        <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start pt-4 lg:pt-16 mb-2 z-10">
 
                             {/* Tagline — horizontal line + text */}
                             <div data-hero-tagline className="flex items-center gap-4 mb-6 sm:mb-8 lg:mb-10">
@@ -217,10 +221,11 @@ function Home() {
                                 {/* Glassmorphism floating badge */}
                                 <div
                                     data-hero-badge
+                                    data-magnetic
                                     className="absolute bottom-6 -left-6 lg:-left-14 backdrop-blur-xl bg-obsidian/40 border border-champagne/15 rounded-lg px-5 py-3 shadow-2xl"
                                 >
-                                    <p className="font-sans text-champagne text-xl font-black leading-tight">15+</p>
-                                    <p className="font-sans text-white/40 text-[8px] uppercase tracking-[0.3em] font-semibold">Years of Craft</p>
+                                    <p data-magnetic-text className="font-sans text-champagne text-xl font-black leading-tight">15+</p>
+                                    <p data-magnetic-text className="font-sans text-white/40 text-[8px] uppercase tracking-[0.3em] font-semibold">Years of Craft</p>
                                 </div>
 
                                 {/* Accent line */}
