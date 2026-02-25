@@ -1,4 +1,9 @@
 import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+
+gsap.registerPlugin(ScrollTrigger)
 import {
     Scissors,
     Feather, // For Shaves (Smooth)
@@ -20,6 +25,7 @@ import { customerReviews } from '../data/reviews.js'
 import { sampleImages } from '../data/sample-images.js'
 import BrandCarousel from '../Components/BrandCarousel.jsx'
 import Header from '../Components/Header.jsx'
+import HeroCanvas from '../Components/HeroCanvas.jsx'
 
 function Home() {
     const heroRef = useRef(null)
@@ -72,6 +78,27 @@ function Home() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    useGSAP(() => {
+        // Setup GSAP stagger reveal for Service Cards
+        gsap.utils.toArray('.service-card-marker').forEach((card) => {
+            gsap.fromTo(card,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.7,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            )
+        })
+    }, { scope: heroRef }) // Using heroRef context just as a scope base, or rely on global
+
     return (
         <>
             <Header bgImage="bg-transparent" />
@@ -87,6 +114,9 @@ function Home() {
                 className="relative min-h-fit overflow-hidden bg-obsidian py-6 md:py-0"
                 id="main-hero"
             >
+                {/* 3D WebGL Background Layer */}
+                <HeroCanvas />
+
                 {/* Background Image Layer */}
                 {/* SWAP: Replace Landing with hero-visual.webp when available */}
                 <div
@@ -236,18 +266,18 @@ function Home() {
                             <h2 className="font-serif text-4xl lg:text-6xl text-gray-300 uppercase font-bold">WE ARE <span className="text-white font-bold uppercase font-sans">Elegance</span></h2>
                         </div>
                         <div className="f2-head mt-2">
-                            <h2 className='font-serif text-4xl lg:text-6xl font-bold text-champagne tracking-wide'>THE BARBER SHOP</h2>
+                            <h2 className='font-serif text-4xl lg:text-5xl font-bold text-champagne tracking-wide'>THE ART OF GROOMING</h2>
                         </div>
                         <div className="description space-y-4 mt-8 md:mt-6">
                             <div className="f-para1">
                                 <p className="font-serif font-light text-champagne-muted text-sm md:text-base lg:text-xl leading-relaxed tracking-wide">
-                                    Elegance have been at the forefront of mens grooming, and have set the agenda for style-conscious gentleman in Karachi. Our focus on empowering gentleman to look and feel fantastic every day.
+                                    Elegance has been at the forefront of men's grooming, setting the standard for the style-conscious gentleman in Karachi. Our dedication lies in empowering every gentleman to look and feel exceptional every day.
                                 </p>
                             </div>
                             <hr className='border-gray-800' />
                             <div className="f-para1">
                                 <p className="font-sans font-light text-champagne-muted text-sm md:text-base lg:text-lg leading-relaxed tracking-wide">
-                                    Elegance combines the comfort behind traditional with the modern conveniences of a full service salon.
+                                    Elegance seamlessly merges the heritage of traditional barbering with the sophisticated amenities of a premium, full-service salon.
                                 </p>
                             </div>
                         </div>
@@ -296,35 +326,34 @@ function Home() {
                         </p>
                     </div>
 
-                    {/* Editorial Staggered Layout */}
                     <div className="flex flex-col gap-8 lg:gap-6">
                         {/* Row 1: Full-width feature card */}
-                        <div data-service-card data-scroll data-scroll-speed="0.1" className="w-full">
+                        <div className="w-full service-card-marker">
                             <ServiceCard {...servicesData[0]} index={0} variant="featured" />
                         </div>
 
                         {/* Row 2: Two cards, offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div data-service-card data-scroll data-scroll-speed="0.15" className="w-full lg:w-[55%]">
+                            <div className="w-full lg:w-[55%] service-card-marker">
                                 <ServiceCard {...servicesData[1]} index={1} />
                             </div>
-                            <div data-service-card data-scroll data-scroll-speed="0.05" className="w-full lg:w-[45%] lg:mt-12">
+                            <div className="w-full lg:w-[45%] lg:mt-12 service-card-marker">
                                 <ServiceCard {...servicesData[2]} index={2} />
                             </div>
                         </div>
 
                         {/* Row 3: Two cards, reverse offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div data-service-card data-scroll data-scroll-speed="0.05" className="w-full lg:w-[45%] lg:mt-8">
+                            <div className="w-full lg:w-[45%] lg:mt-8 service-card-marker">
                                 <ServiceCard {...servicesData[3]} index={3} />
                             </div>
-                            <div data-service-card data-scroll data-scroll-speed="0.15" className="w-full lg:w-[55%]">
+                            <div className="w-full lg:w-[55%] service-card-marker">
                                 <ServiceCard {...servicesData[4]} index={4} />
                             </div>
                         </div>
 
                         {/* Row 4: Full-width feature card */}
-                        <div data-service-card data-scroll data-scroll-speed="0.1" className="w-full">
+                        <div className="w-full service-card-marker">
                             <ServiceCard {...servicesData[5]} index={5} variant="featured" />
                         </div>
                     </div>

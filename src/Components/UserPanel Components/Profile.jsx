@@ -94,7 +94,7 @@ function Profile() {
                             name="name"
                             value={profileData.name}
                             onChange={handleProfileChange}
-                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5"
+                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5"
                             placeholder="Enter your full name"
                             id='name'
                         />
@@ -108,7 +108,7 @@ function Profile() {
                             name="email"
                             value={profileData.email}
                             onChange={handleProfileChange}
-                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5 cursor-not-allowed"
+                            className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5 cursor-not-allowed"
                             placeholder="Enter your email"
                             id='email'
                             readOnly
@@ -124,7 +124,7 @@ function Profile() {
                         name="phone"
                         value={profileData.phone}
                         onChange={handleProfileChange}
-                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5"
+                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-white tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5"
                         placeholder="Enter your phone number"
                         id='phone'
                     />

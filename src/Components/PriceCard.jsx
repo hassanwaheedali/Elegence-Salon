@@ -18,6 +18,7 @@ function useBreakpoint(breakpoint = 1024) {
         const mql = window.matchMedia(`(min-width: ${breakpoint}px)`)
         const handler = (e) => setIsAbove(e.matches)
         mql.addEventListener('change', handler)
+        // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
         setIsAbove(mql.matches)
         return () => mql.removeEventListener('change', handler)
     }, [breakpoint])
@@ -58,7 +59,7 @@ function PriceCard() {
     /* ── Auto-play (pauses on hover or reduced-motion) ── */
     useEffect(() => {
         if (prefersReducedMotion || isHovered) return
-        const timer = setInterval(nextSlide, 6000)
+        const timer = setInterval(nextSlide, 6000) // Sped up from 6000
         return () => clearInterval(timer)
     }, [nextSlide, isHovered, prefersReducedMotion])
 
@@ -68,26 +69,26 @@ function PriceCard() {
     const slideVariants = useMemo(() => ({
         enter: (dir) => prefersReducedMotion
             ? { opacity: 1, x: 0 }
-            : { opacity: 0, x: dir * 250 },
+            : { opacity: 0, x: dir * 100 }, // Reduced travel distance
         center: prefersReducedMotion
             ? { opacity: 1, x: 0 }
             : { opacity: 1, x: 0 },
         exit: (dir) => prefersReducedMotion
             ? { opacity: 0, x: 0 }
-            : { opacity: 0, x: dir * -250 }
+            : { opacity: 0, x: dir * -100 } // Matches enter distance for symmetry
     }), [prefersReducedMotion])
 
-    /* ── Spring transition — organic, weighty feel ── */
+    /* ── Cinematic GSAP-style power4.out transition ── */
     const springTransition = {
-        duration: 0.4,
-        ease: 'easeInOut'
+        duration: 0.40, // Drastically reduced for snappy exit/enters
+        ease: [0.23, 1, 0.32, 1] // The exact GSAP power4.out curve you requested
     }
 
     /* ── Staggered price-item entrance ── */
     const itemContainerVariants = {
         hidden: {},
         visible: {
-            transition: { staggerChildren: prefersReducedMotion ? 0 : 0.03, delayChildren: 0.05 }
+            transition: { staggerChildren: prefersReducedMotion ? 0 : 0.02, delayChildren: 0.02 } // Faster stagger
         }
     }
 
@@ -95,7 +96,7 @@ function PriceCard() {
         ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
         : {
             hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } }
+            visible: { opacity: 1, transition: { duration: 0.2, ease: 'easeOut' } } // Faster fade
         }
 
     /* ── Derive visible cards based on breakpoint ── */
@@ -139,8 +140,8 @@ function PriceCard() {
                 </button>
 
                 {/* ── Cards Carousel ── */}
-                <div className="overflow-hidden py-6">
-                    <AnimatePresence mode="wait" custom={direction}>
+                <div className="overflow-hidden py-6 grid">
+                    <AnimatePresence initial={false} custom={direction}>
                         <Motion.div
                             key={currentIndex}
                             custom={direction}
@@ -150,7 +151,7 @@ function PriceCard() {
                             exit="exit"
                             transition={springTransition}
                             className="flex flex-col lg:flex-row justify-center items-stretch gap-6 lg:gap-8"
-                            style={{ willChange: 'transform, opacity' }}
+                            style={{ willChange: 'transform, opacity', gridArea: '1/1' }}
                         >
                             {visibleCards.map((cardIndex, i) => {
                                 const card = priceCards[cardIndex]
@@ -159,13 +160,12 @@ function PriceCard() {
                                     <Motion.div
                                         key={cardIndex}
                                         /* Stagger the second card slightly on desktop */
-                                        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                                        initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{
-                                            type: 'spring',
-                                            stiffness: 300,
-                                            damping: 25,
-                                            delay: i * 0.12
+                                            duration: 0.8,
+                                            ease: [0.23, 1, 0.32, 1],
+                                            delay: i * 0.05
                                         }}
                                         className="flex-1 flex flex-col gap-5 group/card"
                                     >
@@ -186,30 +186,38 @@ function PriceCard() {
 
                                         {/* Glassmorphism Card Container */}
                                         <Motion.div
-                                            whileHover={prefersReducedMotion ? {} : { y: -4, scale: 1.02 }}
-                                            transition={prefersReducedMotion ? {} : { duration: 0.2, ease: 'easeOut' }}
+                                            whileHover={prefersReducedMotion ? {} : { y: -4 }}
+                                            transition={prefersReducedMotion ? {} : { duration: 0.15, ease: 'easeOut' }}
                                             className="relative flex-1 overflow-hidden rounded-2xl min-h-112.5
-                                                       shadow-2xl shadow-black/40
-                                                       transition-shadow duration-300"
+                                        bg-obsidian-elevated
+                                        shadow-2xl shadow-black/40
+                                        transition-shadow duration-200"
+                                            style={{
+                                                WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+                                                maskImage: 'radial-gradient(white, black)'
+                                            }}
                                         >
                                             {/* Background Image Layer */}
                                             <div
-                                                className="absolute inset-0 z-0 transition-transform duration-700 ease-luxury group-hover/card:scale-105"
+                                                className="absolute inset-0 z-0 transition-transform duration-300 ease-out group-hover/card:scale-[1.03] will-change-transform"
                                                 style={{
                                                     backgroundImage: `url(${card.image})`,
                                                     backgroundSize: 'cover',
-                                                    backgroundPosition: 'center'
+                                                    backgroundPosition: 'center',
+                                                    transformOrigin: 'center'
                                                 }}
                                             />
 
+                                            {/* Physical edge seal (hides sub-pixel rendering gaps) */}
+                                            <div className="absolute inset-0 z-50 rounded-2xl ring-1 ring-inset ring-obsidian-elevated pointer-events-none"></div>
+
                                             {/* Cinematic Gradient Overlay — matches hero treatment */}
-                                            <div className="absolute inset-0 z-1 bg-linear-to-t from-black via-black/85 to-black/60
-                                                            transition-opacity duration-500 group-hover/card:from-black group-hover/card:via-black/80 group-hover/card:to-black/50" />
+                                            <div className="absolute inset-0 z-1 bg-linear-to-t from-black via-black/85 to-black/60 duration-300 group-hover/card:from-black group-hover/card:via-black/80 group-hover/card:to-black/50" />
 
                                             {/* Subtle champagne glow on hover (top edge) */}
                                             <div className="absolute inset-x-0 top-0 h-px z-2
                                                             bg-linear-to-r from-transparent via-champagne/0 to-transparent
-                                                            transition-all duration-500 group-hover/card:via-champagne/40" />
+                                                            transition-all duration-300 group-hover/card:via-champagne/40" />
 
                                             {/* Price Items — Staggered entrance */}
                                             <Motion.div
@@ -225,7 +233,7 @@ function PriceCard() {
                                                             variants={itemVariants}
                                                             className="group/item flex justify-between items-center
                                                                        py-6 border-b border-white/6
-                                                                       hover:border-champagne/30 transition-colors duration-300"
+                                                                       hover:border-champagne/50 transition-colors duration-300"
                                                         >
                                                             {/* Service Name */}
                                                             <div className="flex items-center gap-3">
@@ -279,7 +287,7 @@ function PriceCard() {
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

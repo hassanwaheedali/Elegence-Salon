@@ -71,7 +71,7 @@ function Feedback() {
                         value={feedbackData.experience}
                         onChange={handleFeedbackChange}
                         rows="5"
-                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5 resize-none"
+                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5 resize-none"
                         placeholder="Tell us about your experience at Elegance Barber Shop..."
                     />
                 </div>
@@ -84,7 +84,7 @@ function Feedback() {
                         value={feedbackData.suggestions}
                         onChange={handleFeedbackChange}
                         rows="4"
-                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne] mt-1.5 resize-none"
+                        className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5 resize-none"
                         placeholder="What can we improve?"
                     />
                 </div>

@@ -2,6 +2,7 @@ import Footer from './Components/Footer.jsx'
 import { Outlet } from 'react-router-dom'
 import { useMessage } from './Context/MessageContext.jsx'
 import { useState, useLayoutEffect } from 'react'
+import { ReactLenis } from '@studio-freight/react-lenis'
 
 // Message Component
 const Message = ({ type, text, visible, isClosing, onClose }) => {
@@ -45,7 +46,7 @@ function Layout() {
     const { message, hideMessage } = useMessage()
 
     return (
-        <>
+        <ReactLenis root options={{ lerp: 0.1, duration: 1.0, smoothWheel: true }}>
             <Message
                 type={message.type}
                 text={message.text}
@@ -53,15 +54,9 @@ function Layout() {
                 isClosing={message.isClosing}
                 onClose={hideMessage}
             />
-            {/* LENIS: Wrap <Outlet /> in <ReactLenis root> when @studio-freight/lenis is installed.
-                import ReactLenis from '@studio-freight/react-lenis'
-                <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true }}>
-                  <Outlet />
-                </ReactLenis>
-            */}
             <Outlet />
             <Footer />
-        </>
+        </ReactLenis>
     )
 }
 

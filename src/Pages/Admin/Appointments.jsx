@@ -535,7 +535,7 @@ function Appointments() {
                                                             <div className="flex items-center gap-2">
                                                                 <div className="font-bold text-white text-sm">{appointment.name}</div>
                                                                 {appointment.userId == null && (
-                                                                    <div className="inline-flex items-center px-2 py-0.5 rounded-full bg-[text-champagne] text-black text-[10px] font-bold uppercase">Guest</div>
+                                                                    <div className="inline-flex items-center px-2 py-0.5 rounded-full bg-champagne text-black text-[10px] font-bold uppercase">Guest</div>
                                                                 )}
                                                             </div>
                                                             <div className="text-[#777] text-xs flex items-center gap-1 mt-0.5">

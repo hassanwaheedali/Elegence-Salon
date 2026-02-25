@@ -130,7 +130,7 @@ function StaffDashboard() {
                     <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-champagne flex items-center gap-2 sm:gap-3">
                         <span className="text-white">Recent</span> Appointments
                     </h2>
-                    <button className="px-4 sm:px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-[text-champagne] hover:text-champagne text-[10px] sm:text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
+                    <button className="px-4 sm:px-6 py-2 bg-obsidian text-white border border-[#333] hover:border-champagne hover:text-champagne text-[10px] sm:text-xs font-bold rounded-lg transition-all uppercase tracking-wider shadow-lg cursor-pointer">
                         <Link to="/staff/appointments" className="flex items-center gap-1">
                             View All My Appointments
                         </Link>
@@ -162,7 +162,7 @@ function StaffDashboard() {
                                             <span className="font-semibold text-white text-sm">
                                                 {appointment.name}
                                                 {appointment.userId == null && (
-                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-[text-champagne] text-black text-[10px] font-bold uppercase">Guest</span>
+                                                    <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-champagne text-black text-[10px] font-bold uppercase">Guest</span>
                                                 )}
                                             </span>
                                         </div>

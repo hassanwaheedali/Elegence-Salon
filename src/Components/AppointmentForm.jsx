@@ -100,12 +100,12 @@ function Appointment() {
     return (
         <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <input type="text" placeholder="NAME" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
-                <input type="email" placeholder="EMAIL" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
-                <input type="tel" placeholder="PHONE NUMBER" id='phonenumber' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
+                <input type="text" placeholder="NAME" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" required />
+                <input type="email" placeholder="EMAIL" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" required />
+                <input type="tel" placeholder="PHONE NUMBER" id='phonenumber' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" required />
                 <div className="date-time-section flex flex-col sm:flex-row gap-3 md:gap-5">
-                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
-                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" required />
+                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" required />
+                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" required />
                 </div>
                 <div className="service-select w-full relative" ref={dropdownRef}>
                     {/* Custom Multi-Select Dropdown */}
@@ -114,7 +114,7 @@ function Appointment() {
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`w-full font-black border-2 md:border-5 p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base tracking-tight bg-obsidian text-left flex justify-between items-center transition-colors ${isOpen ? 'border-[text-champagne] text-champagne' : 'border-[#454545] text-champagne-muted hover:border-[text-champagne]'
+                            className={`w-full font-black border-2 md:border-5 p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base tracking-tight bg-obsidian text-left flex justify-between items-center transition-colors ${isOpen ? 'border-champagne text-champagne' : 'border-[#454545] text-champagne-muted hover:border-champagne'
                                 }`}
                         >
                             <span>
@@ -127,7 +127,7 @@ function Appointment() {
 
                         {/* Dropdown Menu */}
                         {isOpen && (
-                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-[text-champagne] z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
+                            <div className="absolute top-full left-0 w-full bg-[#1b1b1b] border-2 md:border-5 border-champagne z-50 mt-1 max-h-60 md:max-h-70 overflow-y-auto">
                                 {services.map((serviceCategory) => (
                                     <div key={serviceCategory.title}>
                                         {/* Category Header */}
@@ -144,12 +144,12 @@ function Appointment() {
                                                     type="button"
                                                     onClick={() => toggleService(service)}
                                                     className={`w-full text-left px-3 md:px-4 py-2 md:py-3 transition-colors font-black tracking-tight text-xs md:text-sm flex items-center justify-between gap-2 ${isSelected
-                                                        ? 'bg-[text-champagne]/10 text-champagne'
-                                                        : 'text-[#bfbdbd] hover:bg-[text-champagne]/5 hover:text-white'
+                                                        ? 'bg-champagne/10 text-champagne'
+                                                        : 'text-[#bfbdbd] hover:bg-champagne/5 hover:text-white'
                                                         }`}
                                                 >
                                                     <span>{service.name} — {service.price}</span>
-                                                    <span className={`shrink-0 w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] transition-colors ${isSelected ? 'border-[text-champagne] bg-[text-champagne] text-black' : 'border-[#555]'
+                                                    <span className={`shrink-0 w-4 h-4 border-2 rounded-sm flex items-center justify-center text-[10px] transition-colors ${isSelected ? 'border-champagne bg-champagne text-black' : 'border-[#555]'
                                                         }`}>
                                                         {isSelected && '✓'}
                                                     </span>
@@ -168,7 +168,7 @@ function Appointment() {
                             {selectedService.map(s => (
                                 <span
                                     key={s.name}
-                                    className="inline-flex items-center gap-1.5 bg-[text-champagne]/15 border border-[text-champagne]/40 text-champagne text-xs font-black px-2 py-1 rounded-sm tracking-tight mt-1.5"
+                                    className="inline-flex items-center gap-1.5 bg-champagne/15 border border-champagne/40 text-champagne text-xs font-black px-2 py-1 rounded-sm tracking-tight mt-1.5"
                                 >
                                     {s.name} — {s.price}
                                     <button
@@ -191,7 +191,7 @@ function Appointment() {
                     )}
                 </div>
                 <div className="message-section">
-                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-[text-champagne] transition-colors focus:outline-none focus:border-[text-champagne]" rows={1} />
+                    <textarea placeholder="MESSAGE" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-black border-2 md:border-5 border-[#454545] p-2 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne" rows={1} />
                 </div>
             </div>
             <div className="submit-btn w-full mt-4">
