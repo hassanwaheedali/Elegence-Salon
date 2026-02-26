@@ -27,10 +27,10 @@ function StaffDashboard() {
 
     const getAssignedServices = useCallback((appointment) => {
         if (!currentUser) return []
-        return appointment.services?.filter((_, i) => {
-            const stylist = appointment.stylists?.[i]
+        return (appointment.items || []).filter(item => {
+            const stylist = item.stylist
             return stylist && (stylist.id === currentUser.id || stylist.email?.toLowerCase() === currentUser.email?.toLowerCase())
-        }) || []
+        }).map(item => item.service) || []
     }, [currentUser])
 
     const getAssignedTotal = useCallback((appointment) =>
@@ -50,16 +50,18 @@ function StaffDashboard() {
     const totalRevenue = useMemo(() => {
         if (!currentUser) return 0
         return myAppointments.reduce((acc, curr) => {
-            const assigned = getAssignedServices(curr)
-            const sumForAppointment = assigned.reduce((sub, svc, i) => {
-                const price = parseFloat(svc.price?.toString().replace('$', '') || 0)
-                const stylist = curr.stylists?.[i]
-                const commission = parseFloat(stylist?.commission || currentUser?.commission || 0)
+            const assignedItems = (curr.items || []).filter(item => {
+                const stylist = item.stylist
+                return stylist && (stylist.id === currentUser.id || stylist.email?.toLowerCase() === currentUser.email?.toLowerCase())
+            })
+            const sumForAppointment = assignedItems.reduce((sub, item) => {
+                const price = parseFloat(item.service.price?.toString().replace('$', '') || 0)
+                const commission = parseFloat(item.stylist?.commission || currentUser?.commission || 0)
                 return sub + (price * commission)
             }, 0)
             return acc + sumForAppointment
         }, 0)
-    }, [currentUser, getAssignedServices, myAppointments])
+    }, [currentUser, myAppointments])
 
     const pendingJobs = useMemo(
         () => myAppointments.filter(a => a.status === 'Awaiting Confirmation' || a.status === 'Confirmed' || a.status === 'Checked In').length,

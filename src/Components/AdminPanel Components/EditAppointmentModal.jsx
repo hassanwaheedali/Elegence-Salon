@@ -5,16 +5,20 @@ import { useMessage } from '../../Context/MessageContext'
 import { useStaff } from '../../Context/StaffContext'
 import { services as serviceCatalog } from '../../data/services'
 
-// Convert MM/DD/YYYY to YYYY-MM-DD for date input
+// Normalise any date string to YYYY-MM-DD for <input type="date">.
 const convertToInputFormat = (dateStr) => {
     if (!dateStr) return ''
-    const date = new Date(dateStr)
-    if (isNaN(date.getTime())) return ''
-
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
+    // Already YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr
+    // MM/DD/YYYY → YYYY-MM-DD
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+        const [month, day, year] = dateStr.split('/')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    }
+    // Fallback: try Date parsing (may have tz shift, but better than NaN)
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return ''
+    return d.toISOString().slice(0, 10)
 }
 
 // Keep storage format consistent (use ISO YYYY-MM-DD).
@@ -32,10 +36,8 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [formData, setFormData] = useState({
         ...appointment,
-        // normalize appointment.date for input (accept MM/DD/YYYY or YYYY-MM-DD)
         date: convertToInputFormat(appointment.date),
-        services: appointment.services || [],
-        stylists: appointment.stylists || []
+        items: appointment.items || []
     })
     const [loading, setLoading] = useState(false)
 
@@ -70,21 +72,19 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
         setFormData({ ...formData, [name]: value })
     }
 
-    const totalPrice = formData.services.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0)
+    const totalPrice = formData.items.reduce((sum, item) => sum + parseFloat(item.service.price?.replace('$', '') || 0), 0)
 
     const toggleService = (service) => {
         setFormData(prev => {
-            const currentServices = prev.services || []
-            const currentStylists = prev.stylists || []
-            const existsIndex = currentServices.findIndex(s => s.name === service.name)
+            const currentItems = prev.items || []
+            const existsIndex = currentItems.findIndex(item => item.service.name === service.name)
 
             if (existsIndex >= 0) {
-                const nextServices = currentServices.filter((_, i) => i !== existsIndex)
-                const nextStylists = currentStylists.filter((_, i) => i !== existsIndex)
-                return { ...prev, services: nextServices, stylists: nextStylists }
+                const nextItems = currentItems.filter((_, i) => i !== existsIndex)
+                return { ...prev, items: nextItems }
             }
 
-            const alreadyAssignedIds = currentStylists.map(s => s.id)
+            const alreadyAssignedIds = currentItems.map(item => item.stylist?.id).filter(Boolean)
             const available = getAvailableStaff(prev.date, prev.time, service.name)
             const chosen = available.find(s => !alreadyAssignedIds.includes(s.id))
 
@@ -95,13 +95,15 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
 
             return {
                 ...prev,
-                services: [...currentServices, { name: service.name, price: service.price }],
-                stylists: [...currentStylists, {
-                    id: chosen.id,
-                    name: chosen.name,
-                    email: chosen.email,
-                    phone: chosen.phone,
-                    commission: chosen.commission
+                items: [...currentItems, {
+                    service: { name: service.name, price: service.price },
+                    stylist: {
+                        id: chosen.id,
+                        name: chosen.name,
+                        email: chosen.email,
+                        phone: chosen.phone,
+                        commission: chosen.commission
+                    }
                 }]
             }
         })
@@ -145,11 +147,11 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
 
             // Prepare data (store date as YYYY-MM-DD for consistency)
             const assignedIds = []
-            const newStylists = []
+            const newItems = []
 
-            for (let i = 0; i < formData.services.length; i++) {
-                const svc = formData.services[i]
-                const currentStylist = formData.stylists[i]
+            for (const item of formData.items) {
+                const svc = item.service
+                const currentStylist = item.stylist
                 const available = getAvailableStaff(formData.date, formData.time, svc.name)
 
                 if (!available.length) {
@@ -170,12 +172,15 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                 }
 
                 assignedIds.push(chosen.id)
-                newStylists.push({
-                    id: chosen.id,
-                    name: chosen.name,
-                    email: chosen.email,
-                    phone: chosen.phone,
-                    commission: chosen.commission
+                newItems.push({
+                    service: { name: svc.name, price: svc.price },
+                    stylist: {
+                        id: chosen.id,
+                        name: chosen.name,
+                        email: chosen.email,
+                        phone: chosen.phone,
+                        commission: chosen.commission
+                    }
                 })
             }
 
@@ -183,7 +188,7 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                 ...formData,
                 date: convertToStorageFormat(formData.date),
                 totalPrice,
-                stylists: newStylists
+                items: newItems
             }
 
             const response = await updateAppointment(appointment.id, dataToSave)
@@ -254,9 +259,9 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                                 }`}
                         >
                             <span>
-                                {formData.services.length === 0
+                                {formData.items.length === 0
                                     ? 'Select services'
-                                    : `${formData.services.length} service${formData.services.length > 1 ? 's' : ''} selected`}
+                                    : `${formData.items.length} service${formData.items.length > 1 ? 's' : ''} selected`}
                             </span>
                             <span className={`text-xs transition-transform ${isOpen ? 'rotate-180' : ''}`}>▼</span>
                         </button>
@@ -269,7 +274,7 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                                             {category.title}
                                         </div>
                                         {category.items.map((service) => {
-                                            const isSelected = formData.services.some(s => s.name === service.name)
+                                            const isSelected = formData.items.some(item => item.service.name === service.name)
                                             return (
                                                 <button
                                                     key={service.name}
@@ -293,24 +298,24 @@ const EditAppointmentModal = ({ appointment, onClose }) => {
                             </div>
                         )}
 
-                        {formData.services.length > 0 && (
+                        {formData.items.length > 0 && (
                             <div className="mt-2 flex flex-wrap gap-2">
-                                {formData.services.map((s, i) => (
-                                    <span key={`${s.name}-${i}`} className="inline-flex items-center gap-1.5 bg-champagne/10 border border-champagne/30 text-champagne text-xs font-bold px-2 py-1 rounded-md">
-                                        {s.name} — {s.price}
-                                        <button type="button" onClick={() => toggleService(s)} className="hover:text-white">✕</button>
+                                {formData.items.map((item, i) => (
+                                    <span key={`${item.service.name}-${i}`} className="inline-flex items-center gap-1.5 bg-champagne/10 border border-champagne/30 text-champagne text-xs font-bold px-2 py-1 rounded-md">
+                                        {item.service.name} — {item.service.price}
+                                        <button type="button" onClick={() => toggleService(item.service)} className="hover:text-white">✕</button>
                                     </span>
                                 ))}
                             </div>
                         )}
 
-                        {formData.stylists.length > 0 && (
+                        {formData.items.length > 0 && (
                             <div className="mt-2 text-xs text-gray-400">
-                                Stylists: <span className="text-white font-semibold">{formData.stylists.map(s => s.name).join(', ')}</span>
+                                Stylists: <span className="text-white font-semibold">{formData.items.map(item => item.stylist?.name).filter(Boolean).join(', ')}</span>
                             </div>
                         )}
 
-                        {formData.services.length > 0 && (
+                        {formData.items.length > 0 && (
                             <div className="mt-2 text-xs text-gray-400">
                                 Total: <span className="text-champagne font-bold">${totalPrice}</span>
                             </div>

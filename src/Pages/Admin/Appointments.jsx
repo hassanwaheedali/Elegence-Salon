@@ -48,19 +48,19 @@ function Appointments() {
     const [selectedPreset, setSelectedPreset] = useState(null)
 
     const getServiceText = (appointment) =>
-        appointment.services?.map(s => s.name).join(', ') || appointment.service || ''
+        appointment.items?.map(item => item.service.name).join(', ') || appointment.service || ''
 
     const getStylistText = (appointment) =>
-        appointment.stylists?.map(s => s.name).join(', ') || appointment.stylistName || ''
+        appointment.items?.map(item => item.stylist?.name).filter(Boolean).join(', ') || appointment.stylistName || ''
 
     const getTotalPrice = (appointment) => {
         if (Number.isFinite(Number(appointment.totalPrice))) return Number(appointment.totalPrice)
-        return appointment.services?.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0) || 0
+        return appointment.items?.reduce((sum, item) => sum + parseFloat(item.service.price?.replace('$', '') || 0), 0) || 0
     }
 
     // Derived state - memoized for performance
     const uniqueStylists = useMemo(() =>
-        [...new Set(appointments.flatMap(a => a.stylists?.map(s => s.name) || []).filter(Boolean))],
+        [...new Set(appointments.flatMap(a => a.items?.map(item => item.stylist?.name) || []).filter(Boolean))],
         [appointments]
     )
 
@@ -188,7 +188,7 @@ function Appointments() {
             }
 
             // Stylist filter
-            const matchedStylist = stylistFilter === 'all' || appointment.stylists?.some(s => s.name === stylistFilter)
+            const matchedStylist = stylistFilter === 'all' || appointment.items?.some(item => item.stylist?.name === stylistFilter)
 
             return matchedSearch && matchedStatus && matchedDate && matchedTime && matchedStylist
         })

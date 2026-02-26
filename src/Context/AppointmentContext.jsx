@@ -15,7 +15,8 @@ export function AppointmentProvider({ children }) {
         const fetchAppointments = async () => {
             const storedAppointments = await localStorage.getItem("Appointments");
             if (storedAppointments) {
-                setAppointments(JSON.parse(storedAppointments));
+                const parsed = JSON.parse(storedAppointments);
+                setAppointments(parsed);
             }
         };
         fetchAppointments();
@@ -29,7 +30,7 @@ export function AppointmentProvider({ children }) {
             const alreadyBookedAtSlot = (stylistId) =>
                 appointments.some(a => {
                     if (a.date !== appointmentData.date || a.time !== appointmentData.time || a.status === 'Cancelled') return false
-                    return a.stylists?.some(s => s.id === stylistId)
+                    return a.items?.some(item => item.stylist?.id === stylistId)
                 })
 
             // For each service find a free stylist and build assignments
@@ -40,9 +41,6 @@ export function AppointmentProvider({ children }) {
                     appointmentData.time,
                     service.name
                 )
-
-                // // IDs already assigned in THIS booking session
-                // const sessionAssignedIds = assignments.map(a => a.stylist.id)
 
                 // Filter out: already booked elsewhere 
                 const trulyFree = availableStylists.filter(
@@ -59,7 +57,7 @@ export function AppointmentProvider({ children }) {
                 assignments.push({ service, stylist: trulyFree[0] })
             }
 
-            // ONE appointment — services[] and stylists[] are separate, paired by index
+            // ONE appointment — items[] pairs each service with its stylist
             const newAppointment = {
                 id: appointments.length > 0 ? Math.max(...appointments.map(a => a.id)) + 1 : 1,
                 name: appointmentData.name,
@@ -71,16 +69,15 @@ export function AppointmentProvider({ children }) {
                 totalPrice: appointmentData.totalPrice,
                 status: "Awaiting Confirmation",
                 userId: currentUser ? currentUser.id : null,
-                services: assignments.map(({ service }) => ({
-                    name: service.name,
-                    price: service.price
-                })),
-                stylists: assignments.map(({ stylist }) => ({
-                    id: stylist.id,
-                    name: stylist.name,
-                    email: stylist.email,
-                    phone: stylist.phone,
-                    commission: stylist.commission
+                items: assignments.map(({ service, stylist }) => ({
+                    service: { name: service.name, price: service.price },
+                    stylist: {
+                        id: stylist.id,
+                        name: stylist.name,
+                        email: stylist.email,
+                        phone: stylist.phone,
+                        commission: stylist.commission
+                    }
                 }))
             }
 
@@ -104,7 +101,7 @@ export function AppointmentProvider({ children }) {
     const displayAppointmentsByUser = async () => {
         try {
             if (!currentUser) return { success: false, error: 'User not authenticated' };
-            const userAppointments = appointments.filter(a => a.userId === currentUser.id);
+            const userAppointments = appointments.filter(a => a.userId === currentUser.id || a.email === currentUser.email);
             return userAppointments.length ? { success: true, data: userAppointments } : { success: false, error: 'Appointments not Found' };
         }
         catch (error) {
@@ -132,22 +129,21 @@ export function AppointmentProvider({ children }) {
                 return { success: false, error: 'Appointment not found' };
             }
 
-            // For each service, verify its stylist is still available at the new slot
+            // For each item, verify its stylist is still available at the new slot
             // or find a replacement. Track assigned IDs to avoid double-booking.
             const alreadyBookedAtNewSlot = (stylistId) =>
                 appointments.some(a => {
                     if (a.id === appointmentId) return false // ignore self
                     if (a.date !== newDate || a.time !== newTime || a.status === 'Cancelled') return false
-                    return a.stylists?.some(s => s.id === stylistId)
+                    return a.items?.some(item => item.stylist?.id === stylistId)
                 })
 
-            const updatedServices = []
-            const updatedStylists = []
+            const updatedItems = []
             const sessionAssignedIds = []
 
-            for (let i = 0; i < appointment.services.length; i++) {
-                const svc = appointment.services[i]
-                const currentStylist = appointment.stylists[i]
+            for (const item of (appointment.items || [])) {
+                const svc = item.service
+                const currentStylist = item.stylist
                 const available = getAvailableStaff(newDate, newTime, svc.name)
 
                 if (!available || available.length === 0) {
@@ -159,6 +155,7 @@ export function AppointmentProvider({ children }) {
 
                 // Keep current stylist if still free, otherwise pick a new one
                 const currentStillFree =
+                    currentStylist &&
                     available.find(s => s.id === currentStylist.id) &&
                     !alreadyBookedAtNewSlot(currentStylist.id) &&
                     !sessionAssignedIds.includes(currentStylist.id)
@@ -175,13 +172,15 @@ export function AppointmentProvider({ children }) {
                 }
 
                 sessionAssignedIds.push(chosen.id)
-                updatedServices.push({ name: svc.name, price: svc.price })
-                updatedStylists.push({
-                    id: chosen.id,
-                    name: chosen.name,
-                    email: chosen.email,
-                    phone: chosen.phone,
-                    commission: chosen.commission
+                updatedItems.push({
+                    service: { name: svc.name, price: svc.price },
+                    stylist: {
+                        id: chosen.id,
+                        name: chosen.name,
+                        email: chosen.email,
+                        phone: chosen.phone,
+                        commission: chosen.commission
+                    }
                 })
             }
 
@@ -190,8 +189,7 @@ export function AppointmentProvider({ children }) {
                 date: newDate,
                 time: newTime,
                 status: "Awaiting Confirmation",
-                services: updatedServices,
-                stylists: updatedStylists
+                items: updatedItems
             }
 
             const updatedAppointments = appointments.map(a =>
@@ -238,17 +236,16 @@ export function AppointmentProvider({ children }) {
                     error: 'Selected stylist is not available for the chosen date, time, and service. Please select a different stylist or time slot.'
                 };
             }
-            // Update the stylist at the same index as the matching service
-            const serviceIndex = appointment.services.findIndex(svc => svc.name === appointmentService)
-            if (serviceIndex === -1) {
+            // Update the stylist on the matching item
+            const updatedItems = (appointment.items || []).map(item =>
+                item.service.name === appointmentService
+                    ? { ...item, stylist: { id: newStylist.id, name: newStylist.name, email: newStylist.email, phone: newStylist.phone, commission: newStylist.commission } }
+                    : item
+            )
+            if (!appointment.items?.some(item => item.service.name === appointmentService)) {
                 return { success: false, error: `Service "${appointmentService}" not found in this appointment.` }
             }
-            const updatedStylists = appointment.stylists.map((s, i) =>
-                i === serviceIndex
-                    ? { id: newStylist.id, name: newStylist.name, email: newStylist.email, phone: newStylist.phone, commission: newStylist.commission }
-                    : s
-            )
-            const updatedAppointment = { ...appointment, stylists: updatedStylists };
+            const updatedAppointment = { ...appointment, items: updatedItems };
             const updatedAppointments = appointments.map(a =>
                 a.id === appointmentId ? updatedAppointment : a
             );
@@ -270,23 +267,21 @@ export function AppointmentProvider({ children }) {
 
             const updatedAppointment = { ...appointment, ...updatedData };
 
-            // If date or time changed, verify every service's stylist is still available
+            // If date or time changed, verify every item's stylist is still available
             const dateChanged = updatedData.date && updatedData.date !== appointment.date
             const timeChanged = updatedData.time && updatedData.time !== appointment.time
-            if ((dateChanged || timeChanged) && updatedAppointment.services) {
+            if ((dateChanged || timeChanged) && updatedAppointment.items) {
                 const checkDate = updatedAppointment.date
                 const checkTime = updatedAppointment.time
-                for (let i = 0; i < updatedAppointment.services.length; i++) {
-                    const svc = updatedAppointment.services[i]
-                    const sty = updatedAppointment.stylists[i]
-                    const available = getAvailableStaff(checkDate, checkTime, svc.name)
+                for (const item of updatedAppointment.items) {
+                    const available = getAvailableStaff(checkDate, checkTime, item.service.name)
                     const stylistStillAvailable = available.some(
-                        s => s.id === sty.id || s.email.toLowerCase() === sty.email?.toLowerCase()
+                        s => s.id === item.stylist.id || s.email.toLowerCase() === item.stylist.email?.toLowerCase()
                     )
                     if (!stylistStillAvailable) {
                         return {
                             success: false,
-                            error: `Stylist for "${svc.name}" is not available at the new date/time. Please reassign before changing the slot.`
+                            error: `Stylist for "${item.service.name}" is not available at the new date/time. Please reassign before changing the slot.`
                         }
                     }
                 }
@@ -320,9 +315,9 @@ export function AppointmentProvider({ children }) {
     const getAppointmentsForStaff = (staffId) => {
         const currentStaff = staff.find(s => s.id === Number(staffId));
         return appointments.filter(a =>
-            a.stylists?.some(s =>
-                s.id === Number(staffId) ||
-                (currentStaff && s.email?.toLowerCase() === currentStaff.email.toLowerCase())
+            a.items?.some(item =>
+                item.stylist?.id === Number(staffId) ||
+                (currentStaff && item.stylist?.email?.toLowerCase() === currentStaff.email.toLowerCase())
             )
         )
     };

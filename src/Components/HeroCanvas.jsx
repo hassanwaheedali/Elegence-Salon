@@ -47,13 +47,16 @@ const HeroCanvas = () => {
 
         // Animation Loop
         let animationFrameId;
-        const clock = new THREE.Clock();
+        // Clock has been deprecated in favor of Timer
+        const timer = new THREE.Timer();
         let isVisible = true;
 
-        const render = () => {
+        const render = (timestamp) => {
             if (!isVisible) return; // Don't request next frame if out of viewport
 
-            const elapsedTime = clock.getElapsedTime();
+            // update timer with current frame timestamp
+            timer.update(timestamp);
+            const elapsedTime = timer.getElapsed();
 
             // Slow, drifting rotation
             particleMesh.rotation.y = elapsedTime * 0.05;

@@ -4,36 +4,26 @@ import { useMessage } from '../../Context/MessageContext.jsx'
 import { useState, useEffect } from 'react'
 import ConfirmModal from '../ConfirmModal'
 
-// Convert MM/DD/YYYY to YYYY-MM-DD for date input
-const convertToInputFormat = (dateStr) => {
+// Normalize any date string to YYYY-MM-DD (required by <input type="date">).
+// Handles YYYY-MM-DD (pass-through) and MM/DD/YYYY (legacy) without timezone shift.
+const toInputDate = (dateStr) => {
     if (!dateStr) return ''
-    const date = new Date(dateStr)
-    if (isNaN(date.getTime())) return ''
-
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
+    // Already YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr
+    // MM/DD/YYYY → YYYY-MM-DD
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+        const [month, day, year] = dateStr.split('/')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    }
+    return ''
 }
 
-// Convert YYYY-MM-DD to MM/DD/YYYY for storage
-const convertToStorageFormat = (dateStr) => {
-    if (!dateStr) return ''
-    const date = new Date(dateStr)
-    if (isNaN(date.getTime())) return ''
-
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    const year = date.getFullYear()
-    return `${month}/${day}/${year}`
-}
-
-function AppointmentCards({ name, date, time, services, stylists, totalPrice, status, appointmentId }) {
+function AppointmentCards({ name, date, time, items, totalPrice, status, appointmentId, isGuest }) {
     const { cancelAppointment, rescheduleAppointment } = useAppointment()
     const { showMessage } = useMessage()
 
     const [isRescheduling, setIsRescheduling] = useState(false)
-    const [newDate, setNewDate] = useState(convertToInputFormat(date))
+    const [newDate, setNewDate] = useState(toInputDate(date))
     const [newTime, setNewTime] = useState(time)
     const [isVisible, setIsVisible] = useState(false)
 
@@ -73,9 +63,7 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
             showMessage('error', 'Please select both date and time for rescheduling')
             return
         }
-        // Convert date back to MM/DD/YYYY format for storage
-        const formattedDate = convertToStorageFormat(newDate)
-        const result = await rescheduleAppointment(appointmentId, formattedDate, newTime)
+        const result = await rescheduleAppointment(appointmentId, newDate, newTime)
         if (result.success) {
             showMessage('success', 'Appointment rescheduled successfully')
             setIsRescheduling(false)
@@ -94,8 +82,9 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
         }
     }
 
-    const serviceItems = services || []
-    const stylistItems = stylists || []
+    const appointmentItems = items || []
+    const serviceItems = appointmentItems.map(item => item.service)
+    const stylistItems = appointmentItems.map(item => item.stylist).filter(Boolean)
     const displayTotal = Number.isFinite(Number(totalPrice)) ? Number(totalPrice) : 0
 
     return (
@@ -104,10 +93,14 @@ function AppointmentCards({ name, date, time, services, stylists, totalPrice, st
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
                 <div>
-                    <h3 className="text-white font-bold text-lg tracking-wide mb-1">{name}</h3>
-                    {/* <p className="text-[#777] text-xs uppercase tracking-widest font-semibold flex items-center gap-1">
-                        ID: <span className="font-mono text-[#555]">{appointmentId?.slice(-6) || '...'}</span>
-                    </p> */}
+                    <h3 className="text-white font-bold text-lg tracking-wide mb-1 flex items-center gap-2">
+                        {name}
+                        {isGuest && (
+                            <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-champagne text-black text-[10px] font-bold uppercase">
+                                Guest
+                            </span>
+                        )}
+                    </h3>
                 </div>
                 <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg border ${getStatusStyle(status)}`}>
                     {status}

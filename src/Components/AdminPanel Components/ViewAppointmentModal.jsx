@@ -39,11 +39,11 @@ const ViewAppointmentModal = ({ appointment, onClose }) => {
     if (!appointment) return null;
 
 
-    const serviceSummary = appointment.services?.length
-        ? appointment.services.map(s => `${s.name} (${s.price})`).join(', ')
+    const serviceSummary = appointment.items?.length
+        ? appointment.items.map(item => `${item.service.name} (${item.service.price})`).join(', ')
         : '—'
-    const stylistSummary = appointment.stylists?.length
-        ? appointment.stylists.map(s => s.name).join(', ')
+    const stylistSummary = appointment.items?.length
+        ? appointment.items.map(item => item.stylist?.name).filter(Boolean).join(', ')
         : 'Unassigned'
     const totalPrice = Number.isFinite(Number(appointment.totalPrice)) ? Number(appointment.totalPrice) : 0
 

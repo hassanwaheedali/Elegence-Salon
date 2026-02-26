@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { CustomEase } from "gsap/CustomEase"
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, CustomEase)
+
 import {
     Scissors,
     Feather, // For Shaves (Smooth)
@@ -22,6 +24,7 @@ import ServiceCard from '../Components/ServiceCard.jsx'
 import PriceCard from '../Components/PriceCard.jsx'
 import AppointmentForm from '../Components/AppointmentForm.jsx'
 import CustomerReview from '../Components/CustomerReview.jsx'
+import GalleryItem from '../Components/GalleryItem.jsx'
 import { customerReviews } from '../data/reviews.js'
 import { sampleImages } from '../data/sample-images.js'
 import BrandCarousel from '../Components/BrandCarousel.jsx'
@@ -86,6 +89,36 @@ function Home() {
     }, []);
 
     useGSAP(() => {
+        // Register the CustomEase for the exact luxury curve mapping
+        if (!CustomEase.get("luxury")) {
+            CustomEase.create("luxury", "0.23, 1, 0.32, 1");
+        }
+
+        // ──────── GALLERY CINEMATIC REVEAL (PHASE 4.2) ────────
+        const galleryItems = gsap.utils.toArray('.gallery-reveal-item');
+        if (galleryItems.length > 0) {
+            // Initial state - hidden below clip path point with subtle y offset
+            gsap.set(galleryItems, {
+                clipPath: 'inset(100% 0 0 0)',
+                y: 40
+            });
+
+            ScrollTrigger.create({
+                trigger: ".sample-images",
+                start: "top 80%",
+                onEnter: () => {
+                    gsap.to(galleryItems, {
+                        clipPath: 'inset(0% 0 0 0)',
+                        y: 0,
+                        duration: 1.4,
+                        stagger: 0.1, // Progressive rendering delay
+                        ease: "luxury", // Matches --ease-luxury token per instructions
+                        force3D: true // Hardware acceleration for WebGL feel
+                    });
+                }
+            });
+        }
+
         // Setup GSAP stagger reveal for Service Cards across the whole page scope
         gsap.utils.toArray('.service-card-marker').forEach((card) => {
             gsap.fromTo(card,
@@ -146,12 +179,7 @@ function Home() {
                 }, 0.2
             );
 
-            // SVG Signature draw animation
-            tl.fromTo('.signature-path',
-                { strokeDasharray: 1000, strokeDashoffset: 1000 },
-                { strokeDashoffset: 0, duration: 2.5, ease: "power2.inOut" },
-                0.8
-            );
+
 
             // Floating Heritage Card entrance
             tl.fromTo('.heritage-card',
@@ -160,6 +188,102 @@ function Home() {
                 1.0
             );
         }
+
+        // ──────── TESTIMONIAL THEATER (UNIVERSAL HORIZONTAL SCROLL) ────────
+        // No matchMedia — pin + horizontal scroll forced on ALL screen sizes
+        const trackWrapper = document.querySelector('.testimonial-track-wrapper');
+        const slides = gsap.utils.toArray('.testimonial-slide');
+
+        if (trackWrapper && slides.length > 0) {
+            // Force flex-nowrap on the track to guarantee filmstrip layout
+            trackWrapper.style.display = 'flex';
+            trackWrapper.style.flexWrap = 'nowrap';
+
+            // Pin the entire theater section and scroll horizontally
+            const scrollTween = gsap.to(slides, {
+                xPercent: -100 * (slides.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".testimonial-theater-container",
+                    pin: true,
+                    start: "top 80px", // Header offset
+                    scrub: 1, // Smooth dragging tied to Lenis
+                    snap: {
+                        snapTo: 1 / (slides.length - 1),
+                        duration: 0.5,
+                        ease: "power1.inOut"
+                    },
+                    end: () => "+=" + trackWrapper.offsetWidth, // Scroll distance equals track width
+                    onUpdate: (self) => {
+                        const index = Math.min(
+                            slides.length - 1,
+                            Math.max(0, Math.round(self.progress * (slides.length - 1)))
+                        );
+
+                        // Update fractional counter dynamically
+                        const counter = document.querySelector('.testimonial-counter');
+                        if (counter) {
+                            counter.innerText = `${(index + 1).toString().padStart(2, '0')} / ${slides.length.toString().padStart(2, '0')}`;
+                        }
+                    }
+                }
+            });
+
+            // Set up internal parallax and reveal animations PER slide
+            slides.forEach((slide) => {
+                const image = slide.querySelector('.portrait-image');
+                const words = slide.querySelectorAll('.quote-word');
+                const meta = slide.querySelector('.review-meta');
+
+                // 1. Subtle image parallax (moves counter to scroll direction)
+                if (image) {
+                    gsap.fromTo(image,
+                        { xPercent: -15 },
+                        {
+                            xPercent: 15,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: slide,
+                                containerAnimation: scrollTween, // Hook into the horizontal scroll tween
+                                start: "left right",
+                                end: "right left",
+                                scrub: true
+                            }
+                        }
+                    );
+                }
+
+                // 2. Text Reveal Content (Triggers when slide comes into center view)
+                if (words.length > 0) {
+                    const tlReveal = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: slide,
+                            containerAnimation: scrollTween,
+                            start: "left center", // Trigger when left edge of slide hits center of viewport
+                            toggleActions: "play reverse play reverse"
+                        }
+                    });
+
+                    tlReveal.to(words, {
+                        y: "0%",
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.03, // Fast machine-gun stagger
+                        ease: "power3.out"
+                    })
+                        .to(meta, {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            ease: "power3.out"
+                        }, "-=0.4"); // Overlap with text reveal
+                }
+            });
+
+            // Force recalculation after setup to ensure tracking lengths are accurate
+            ScrollTrigger.refresh();
+        }
+
     }) // Removed { scope: heroRef } so it can find elements in the Services section
 
     return (
@@ -174,7 +298,7 @@ function Home() {
             <section
                 ref={heroRef}
                 data-scroll-section
-                className="relative min-h-fit overflow-hidden bg-obsidian py-6 md:py-0"
+                className="relative min-h-fit overflow-hidden bg-obsidian pt-6 md:pt-0"
                 id="main-hero"
             >
                 {/* Background Image Layer (Base) */}
@@ -198,7 +322,7 @@ function Home() {
                 }}></div>
 
                 {/* ── Hero Content Grid ── */}
-                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-13 pt-20 pb-0">
+                <div className="relative z-10 container mx-auto px-4 sm:pl-6 lg:pl-13 pt-22 md:pt-20 pb-0">
                     <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-4 sm:gap-6 lg:gap-0 min-h-0">
 
                         {/* ── Left Content — Bold Masculine Typography ── */}
@@ -239,7 +363,7 @@ function Home() {
                             </p>
 
                             {/* CTA Row */}
-                            <div data-hero-cta className="flex flex-row items-center gap-4 sm:gap-6 mb-12">
+                            <div data-hero-cta className="flex flex-row items-center gap-4 sm:gap-6 mb-7 md:mb-12">
                                 <a href="#appointment">
                                     <div data-magnetic className="group relative">
                                         <button className="relative px-7 py-3 sm:px-10 sm:py-4 md:px-12 md:py-5 border border-champagne/60 bg-transparent text-champagne font-sans font-black text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all duration-500 ease-luxury hover:bg-champagne hover:text-white hover:border-champagne overflow-hidden">
@@ -308,8 +432,8 @@ function Home() {
                                     data-stats-item
                                     className="flex flex-col sm:flex-row items-center sm:items-center px-4 sm:px-2 lg:px-8 py-6 sm:py-8 gap-2 sm:gap-4 text-center sm:text-left"
                                 >
-                                    <span className="font-sans text-champagne text-xl sm:text-2xl lg:text-3xl font-black leading-none">{stat.value}</span>
-                                    <span className="font-sans text-white/30 text-[8px] sm:text-[9px] lg:text-[11px] uppercase tracking-widest sm:tracking-[0.2em] mt-1 sm:mt-0 font-semibold">{stat.label}</span>
+                                    <span className="font-sans text-champagne text-lg sm:text-2xl lg:text-3xl font-black leading-none">{stat.value}</span>
+                                    <span className="font-sans text-white/30 text-[6px] sm:text-[9px] lg:text-[11px] uppercase tracking-tightest sm:tracking-[0.2em]  sm:mt-0 font-semibold">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -320,17 +444,17 @@ function Home() {
             {/* ═══════════════════════ ABOUT EDITORIAL SPREAD ═══════════════════════ */}
             <section
                 ref={aboutRef}
-                className='about relative bg-obsidian text-white overflow-hidden py-24 md:py-28 md:pb-36'
+                className='about relative bg-obsidian text-white overflow-hidden py-20 md:py-28 md:pb-36'
                 id='about'
             >
                 {/* Decorative Background Text */}
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center pointer-events-none z-0 overflow-hidden">
-                    <h2 className="about-bg-text font-serif text-[15vw] leading-none text-white/[0.02] font-black uppercase whitespace-nowrap select-none">
+                    <h2 className="about-bg-text font-serif text-[15vw] leading-none text-white/2 font-black uppercase whitespace-nowrap select-none">
                         Elegance
                     </h2>
                 </div>
 
-                <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+                <div className="container mx-auto px-8 md:px-12 lg:px-20 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-center">
 
                         {/* Left Column: Image Composition */}
@@ -378,7 +502,7 @@ function Home() {
                             </div>
 
                             {/* Lucide Icons Strip */}
-                            <div className="manifesto-line flex gap-8 lg:gap-38 mt-3">
+                            <div className="manifesto-line flex justify-between md:justify-start lg:gap-38 mt-3">
                                 <div className="flex flex-col items-center group">
                                     <Scissors className="text-champagne mb-3 transition-transform duration-500 ease-luxury group-hover:scale-110" size={40} strokeWidth={1} />
                                     <span className="font-sans text-white/40 text-[9px] tracking-[0.2em] uppercase font-semibold pl-1">Haircut</span>
@@ -462,7 +586,7 @@ function Home() {
             <section className="price-section bg-obsidian-card text-white py-10 md:pt-4 md:py-24">
                 <div className='mx-auto flex flex-col'>
                     {/* Section Header — Editorial type pairing (matches Services section) */}
-                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-18 gap-6 px-4 md:px-6 lg:px-16 max-w-11/12 mx-auto w-full">
+                    <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end mb-12 md:mb-18 gap-6 px-4 md:px-6 lg:px-16 max-w-11/12 mx-auto w-full">
                         <div className="text-center md:text-left">
                             <span className="font-sans text-champagne/70 tracking-[0.5em] text-[9px] sm:text-xs uppercase mb-3 block">Our Rates</span>
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
@@ -480,24 +604,24 @@ function Home() {
             </section>
 
             {/* ═══════════════════════ APPOINTMENT ═══════════════════════ */}
-            <section className="appoinment-section bg-obsidian-card text-white my-0 md:my-0" id='appointment'>
+            <section className="appoinment-section bg-obsidian-card text-white py-8 md:py-4" id='appointment'>
                 <div className='pb-8 mx-auto flex flex-col gap-2'>
                     <div className="heading w-full text-center text-3xl lg:text-5xl font-black uppercase">
                         <h1 className='text-white font-serif'>Make</h1>
                         <h1 className='text-champagne font-sans font-black normal-case text-3xl lg:text-5xl'>An Appointment</h1>
                         <hr className='max-w-115 mx-auto border-obsidian-elevated border mt-5' />
                     </div>
-                    <div className='mx-auto max-w-7xl w-full px-8 md:px-6 lg:px-8 py-4 md:py-12 mb-8'>
+                    <div className='mx-auto max-w-7xl w-full px-8 md:px-6 lg:px-8 py-6 md:py-12 mb-8'>
                         <AppointmentForm />
                     </div>
                 </div>
             </section>
 
             {/* ═══════════════════════ BRANDS ═══════════════════════ */}
-            <section className="brand-images bg-obsidian-card overflow-hidden pt-4 pb-16">
+            <section className="brand-images bg-obsidian-card overflow-hidden pt-2 md:pt-12 pb-28">
                 {/* Section Title */}
                 <div className="text-center mb-16">
-                    <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-wide mb-2 font-serif">
+                    <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-wide mb-2 font-serif">
                         Trusted <span className="font-sans font-black text-champagne normal-case">Brands</span>
                     </h2>
                     <p className="font-sans font-light text-champagne-muted text-sm tracking-wide">Premium products for exceptional results</p>
@@ -511,33 +635,47 @@ function Home() {
                 </div>
             </section>
 
-            {/* ═══════════════════════ CUSTOMER REVIEWS ═══════════════════════ */}
-            <section className="customer-reviews-section bg-obsidian-card text-white pt-12">
-                <div className='mx-auto flex flex-col gap-4 md:gap-6'>
-                    <div className="heading w-full text-center">
-                        <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase font-serif'>Customer <span className='font-sans font-black text-champagne normal-case'>Reviews</span></h1>
-                        <hr className='max-w-xs sm:max-w-md md:max-w-lg mx-auto border-obsidian-elevated border mt-3 md:mt-5' />
-                    </div>
-                    <div className='mx-auto max-w-7xl w-full px-4 sm:px-6 md:px-8 lg:px-10 py-6 md:py-8 mb-4 md:mb-8'>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
-                            {customerReviews.map((review) => (
-                                <div className="review-card bg-obsidian-surface p-4 md:p-6 rounded-lg hover:bg-obsidian-elevated transition-all duration-500 ease-luxury" key={review.id}>
-                                    <CustomerReview name={review.name} image={review.img} review={review.review} />
-                                </div>
-                            ))}
+            {/* ═══════════════════════ TESTIMONIAL THEATER (SOCIAL PROOF) ═══════════════════════ */}
+            <section
+                ref={heroRef} // For keeping GSAP scope if needed elsewhere, although local refs are better setup
+                className="testimonial-theater-container relative z-10 bg-obsidian text-white w-full overflow-hidden"
+                id='reviews'
+            >
+                {/* Horizontal / Vertical Scroll Track Wrapper */}
+                <div
+                    className="testimonial-track-wrapper w-[calc(100vw*var(--slide-count))]"
+                    style={{ '--slide-count': customerReviews.length, display: 'flex', flexWrap: 'nowrap' }}
+                >
+                    {customerReviews.map((review) => (
+                        <div key={review.id} className="testimonial-slide min-w-screen w-screen h-dvh shrink-0">
+                            <CustomerReview
+                                name={review.name}
+                                image={review.img}
+                                review={review.review}
+                                service={review.service}
+                            />
                         </div>
-                    </div>
+                    ))}
                 </div>
             </section>
 
-            {/* ═══════════════════════ SAMPLE GALLERY ═══════════════════════ */}
+            {/* ═══════════════════════ GALLERY (PHASE 4.2 INTERACTIVE) ═══════════════════════ */}
             <section className="sample-images bg-obsidian-card overflow-hidden">
-                <div className="mx-auto px-4 sm:px-6 md:px-16 py-12 mb-6">
-                    <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
+                <div className="mx-auto px-4 sm:px-6 md:px-16 pt-0 md:pt-20 pb-20 md:pb-24">
+                    <div className="heading w-full text-center mb-14 mt-12">
+                        <h1 className='text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase font-serif tracking-tight'>The <span className='font-sans font-black text-champagne normal-case tracking-normal'>Gallery</span></h1>
+                        <hr className='max-w-25 sm:max-w-37.5 mx-auto border-champagne/30 border mt-6 md:mt-8 mb-10' />
+                    </div>
+                    {/* Responsive Grid: 3 cols mobile, 6 cols desktop */}
+                    <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-6 mt-6">
                         {sampleImages.map((sample) => (
-                            <div key={sample.id} className="sample-image-card overflow-hidden hover:scale-105 transition-transform duration-500 ease-luxury">
-                                <img src={sample.img} alt={`Sample ${sample.id}`} className="w-full h-auto object-cover" />
-                            </div>
+                            <GalleryItem
+                                key={sample.id}
+                                img={sample.img}
+                                title={sample.title}
+                                barber={sample.barber}
+                                category={sample.category}
+                            />
                         ))}
                     </div>
                 </div>

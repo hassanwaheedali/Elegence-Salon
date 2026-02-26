@@ -119,10 +119,10 @@ function StaffAppointments() {
 
     const getAssignedServices = useCallback((appointment) => {
         if (!currentUser) return []
-        return appointment.services?.filter((_, i) => {
-            const stylist = appointment.stylists?.[i]
+        return (appointment.items || []).filter(item => {
+            const stylist = item.stylist
             return stylist && (stylist.id === currentUser.id || stylist.email?.toLowerCase() === currentUser.email?.toLowerCase())
-        }) || []
+        }).map(item => item.service) || []
     }, [currentUser])
 
     const getAssignedServiceText = useCallback((appointment) => {

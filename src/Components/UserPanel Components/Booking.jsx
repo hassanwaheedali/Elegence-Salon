@@ -48,11 +48,11 @@ function Booking() {
                                 name={appointment.name}
                                 date={appointment.date}
                                 time={appointment.time}
-                                services={appointment.services}
-                                stylists={appointment.stylists}
+                                items={appointment.items}
                                 totalPrice={appointment.totalPrice}
                                 status={appointment.status}
                                 appointmentId={appointment.id}
+                                isGuest={appointment.userId == null}
                             />
                         ))}
                     </div>

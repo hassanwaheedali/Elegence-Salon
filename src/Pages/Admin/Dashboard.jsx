@@ -57,14 +57,14 @@ function Dashboard() {
         if (Number.isFinite(Number(appointment.totalPrice))) {
             return Number(appointment.totalPrice)
         }
-        return appointment.services?.reduce((sum, s) => sum + parseFloat(s.price?.replace('$', '') || 0), 0) || 0
+        return appointment.items?.reduce((sum, item) => sum + parseFloat(item.service.price?.replace('$', '') || 0), 0) || 0
     }
 
     const getServiceSummary = (appointment) =>
-        appointment.services?.map(s => s.name).join(', ') || appointment.service || '—'
+        appointment.items?.map(item => item.service.name).join(', ') || appointment.service || '—'
 
     const getStylistSummary = (appointment) =>
-        appointment.stylists?.map(s => s.name).join(', ') || appointment.stylistName || 'Unassigned'
+        appointment.items?.map(item => item.stylist?.name).filter(Boolean).join(', ') || appointment.stylistName || 'Unassigned'
 
     // Calculate Total Revenue
     useEffect(() => {

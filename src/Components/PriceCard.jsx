@@ -167,14 +167,14 @@ function PriceCard() {
                                             ease: [0.23, 1, 0.32, 1],
                                             delay: i * 0.05
                                         }}
-                                        className="flex-1 flex flex-col gap-5 group/card"
+                                        className="flex-1 flex flex-col gap-9 group/card"
                                     >
                                         {/* Card Title — Outside the card for editorial feel */}
                                         <div className="text-center space-y-4">
                                             <span className="font-sans text-champagne/60 tracking-[0.4em] text-[9px] sm:text-[10px] uppercase block">
                                                 Menu
                                             </span>
-                                            <h2 className="font-sans text-2xl sm:text-3xl font-black uppercase tracking-wider text-white">
+                                            <h2 className="font-sans text-3xl sm:text-3xl font-black uppercase tracking-wider text-white">
                                                 {card.title}
                                             </h2>
                                             <div className="flex items-center justify-center gap-3">
@@ -239,7 +239,7 @@ function PriceCard() {
                                                             <div className="flex items-center gap-3">
                                                                 <span className="w-1.5 h-1.5 rounded-full bg-champagne/30
                                                                                group-hover/item:bg-champagne transition-colors duration-300" />
-                                                                <span className="font-sans text-xs md:text-lg font-medium text-white/85
+                                                                <span className="font-sans text-sm md:text-lg font-medium text-white/85
                                                                                group-hover/item:text-white transition-colors duration-300 tracking-wide">
                                                                     {item.name}
                                                                 </span>

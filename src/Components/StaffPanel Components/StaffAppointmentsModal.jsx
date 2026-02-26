@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useAppointment } from '../../Context/AppointmentContext';
-import { X, Calendar, User, Clock, Scissors, Phone, Mail } from 'lucide-react';
+import { X, Calendar, User, Clock } from 'lucide-react';
 import StatusBadge from '../AdminPanel Components/StatusBadge';
 
 const StaffAppointmentsModal = ({ staff, onClose }) => {
@@ -10,20 +10,19 @@ const StaffAppointmentsModal = ({ staff, onClose }) => {
     const stylistAppointments = useMemo(() => {
         if (!staff || !appointments.length) return [];
         return appointments.filter(app =>
-            app.stylists?.some(s =>
-                s.id === staff.id ||
-                s.email?.toLowerCase() === staff.email?.toLowerCase() ||
-                s.name?.toLowerCase() === staff.name.toLowerCase()
+            app.items?.some(item =>
+                item.stylist?.id === staff.id ||
+                item.stylist?.email?.toLowerCase() === staff.email?.toLowerCase() ||
+                item.stylist?.name?.toLowerCase() === staff.name.toLowerCase()
             )
         ).sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
     }, [staff, appointments]);
 
     const getStaffServices = (app) => {
-        if (!app.services?.length || !app.stylists?.length) return []
-        return app.services.filter((_, i) => {
-            const stylist = app.stylists[i]
-            return stylist && (stylist.id === staff.id || stylist.email?.toLowerCase() === staff.email?.toLowerCase())
-        })
+        if (!app.items?.length) return []
+        return app.items.filter(item => {
+            return item.stylist && (item.stylist.id === staff.id || item.stylist.email?.toLowerCase() === staff.email?.toLowerCase())
+        }).map(item => item.service)
     }
 
     const getStaffTotal = (app) =>

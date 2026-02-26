@@ -213,7 +213,15 @@ export function StaffProvider({ children }) {
                 return false;
             }
 
-            if (!member.specialties.includes(service)) {
+            // specialty check should be forgiving: service name may differ slightly
+            // (e.g. "Shave" vs "Shaving"). compare lowercased and allow
+            // startsWith so that "shaving" matches "shave" and vice‑versa.
+            const normalizedService = service.toLowerCase();
+            const hasSpecialty = member.specialties.some(spec => {
+                const norm = spec.toLowerCase();
+                return norm === normalizedService || norm.startsWith(normalizedService) || normalizedService.startsWith(norm);
+            });
+            if (!hasSpecialty) {
                 return false;
             }
 
