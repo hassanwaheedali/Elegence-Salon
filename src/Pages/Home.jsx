@@ -11,7 +11,8 @@ import {
     Sparkles, // For Beard Trim (Clean/Sharp)
     Crown, // For Hair Styling (Premium)
     Palette, // For Hair Color
-    ArrowRight
+    ArrowRight,
+    Waves
 } from 'lucide-react'
 
 import barberImg from '../assets/barber.webp'
@@ -30,6 +31,7 @@ import { useMagnetic } from '../hooks/useMagnetic.jsx'
 
 function Home() {
     const heroRef = useRef(null)
+    const aboutRef = useRef(null)
 
     // Initialize Magnetic interaction engine
     useMagnetic();
@@ -102,6 +104,62 @@ function Home() {
                 }
             )
         })
+
+        // ──────── ABOUT SECTION ANIMATIONS ────────
+        if (aboutRef.current) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: aboutRef.current,
+                    start: "top 75%",
+                    toggleActions: "play reverse play reverse",
+                }
+            });
+
+            // Image Reveal (Mask sliding away)
+            tl.to('.about-image-mask', {
+                yPercent: -100,
+                duration: 1.5,
+                ease: "power4.inOut"
+            }, 0);
+
+            // Large ELEGANCE text parallax via ScrollTrigger scrub directly on the element
+            gsap.to('.about-bg-text', {
+                yPercent: -30,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: aboutRef.current,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1.5, // Parallax roughly 1.5x
+                }
+            });
+
+            // Manifesto Line-by-Line Reveal
+            tl.fromTo('.manifesto-line',
+                { y: 40, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: "power4.out" // Closest standard GSAP to var(--ease-luxury)
+                }, 0.2
+            );
+
+            // SVG Signature draw animation
+            tl.fromTo('.signature-path',
+                { strokeDasharray: 1000, strokeDashoffset: 1000 },
+                { strokeDashoffset: 0, duration: 2.5, ease: "power2.inOut" },
+                0.8
+            );
+
+            // Floating Heritage Card entrance
+            tl.fromTo('.heritage-card',
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power4.out" },
+                1.0
+            );
+        }
     }) // Removed { scope: heroRef } so it can find elements in the Services section
 
     return (
@@ -259,49 +317,83 @@ function Home() {
                 </div>
             </section>
 
-            {/* ═══════════════════════ ABOUT ═══════════════════════ */}
-            <section className='about bg-obsidian-card text-white' id='about'>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pt-10 md:pt-26 pb-8 px-4 md:px-6 lg:px-0 gap-8 md:gap-12">
-                    {/* left image - responsive sizing */}
-                    <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end">
-                        <img src={About} alt="About Us" className="w-full max-w-sm md:max-w-xl h-auto object-contain" />
-                    </div>
-                    {/* right content - responsive sizing */}
-                    <div className="w-full md:w-1/2 flex flex-col justify-start md:items-start text-center md:text-left px-4 md:px-0">
-                        <div className="f1-head">
-                            <h2 className="font-serif text-4xl lg:text-6xl text-gray-300 uppercase font-bold">WE ARE <span className="text-white font-bold uppercase font-sans">Elegance</span></h2>
-                        </div>
-                        <div className="f2-head mt-2">
-                            <h2 className='font-serif text-4xl lg:text-5xl font-bold text-champagne tracking-wide'>THE ART OF GROOMING</h2>
-                        </div>
-                        <div className="description space-y-4 mt-8 md:mt-6">
-                            <div className="f-para1">
-                                <p className="font-serif font-light text-champagne-muted text-sm md:text-base lg:text-xl leading-relaxed tracking-wide">
-                                    Elegance has been at the forefront of men's grooming, setting the standard for the style-conscious gentleman in Karachi. Our dedication lies in empowering every gentleman to look and feel exceptional every day.
-                                </p>
+            {/* ═══════════════════════ ABOUT EDITORIAL SPREAD ═══════════════════════ */}
+            <section
+                ref={aboutRef}
+                className='about relative bg-obsidian text-white overflow-hidden py-24 md:py-28 md:pb-36'
+                id='about'
+            >
+                {/* Decorative Background Text */}
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center pointer-events-none z-0 overflow-hidden">
+                    <h2 className="about-bg-text font-serif text-[15vw] leading-none text-white/[0.02] font-black uppercase whitespace-nowrap select-none">
+                        Elegance
+                    </h2>
+                </div>
+
+                <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-center">
+
+                        {/* Left Column: Image Composition */}
+                        <div className="md:col-span-12 lg:col-span-6 relative flex justify-center md:justify-start z-20">
+                            <div className="relative w-full max-w-sm md:max-w-md lg:max-w-xl overflow-hidden rounded-sm mx-auto md:mx-0">
+                                {/* The Image Mask */}
+                                <div className="about-image-mask absolute inset-0 bg-obsidian z-10 origin-top"></div>
+                                <img
+                                    src={About}
+                                    alt="Elegance Master Barber"
+                                    className="w-full h-auto block object-contain grayscale hover:grayscale-0 transition-all duration-1000 ease-luxury relative"
+                                />
                             </div>
-                            <hr className='border-gray-800' />
-                            <div className="f-para1">
-                                <p className="font-sans font-light text-champagne-muted text-sm md:text-base lg:text-lg leading-relaxed tracking-wide">
-                                    Elegance seamlessly merges the heritage of traditional barbering with the sophisticated amenities of a premium, full-service salon.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="icons mt-14 md:mt-12 flex flex-wrap justify-center md:justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-28">
-                            <div className="f1-icon flex flex-col justify-center items-center">
-                                <i className="fas fa-cut text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Haircut</span>
-                            </div>
-                            <div className="f2-icon flex flex-col justify-center items-center">
-                                <i className="fas fa-cut text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Shaving</span>
-                            </div>
-                            <div className="f3-icon flex flex-col justify-center items-center">
-                                <i className="fas fa-spa text-champagne text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mr-2"></i>
-                                <span className="font-sans text-champagne-muted text-xs sm:text-xs md:text-sm tracking-[0.2em] mt-2 sm:mt-3 uppercase">Facials</span>
+
+                            {/* Tactile Glassmorphism Detail */}
+                            <div className="heritage-card absolute -bottom-6 right-0 md:-right-8 lg:-right-12 backdrop-blur-xl bg-obsidian-card/40 border border-white/10 p-6 shadow-2xl z-20 w-48 rounded-sm">
+                                <p className="font-sans text-champagne text-xs tracking-[0.3em] uppercase mb-2 font-bold">Heritage</p>
+                                <p className="font-serif text-3xl text-white font-light">Est. 2011</p>
+                                <div className="w-12 h-px bg-champagne/30 mt-4"></div>
                             </div>
                         </div>
 
+                        {/* Right Column: Brand Manifesto */}
+                        <div className="md:col-span-12 lg:col-span-6 flex flex-col justify-center mt-12 md:mt-0 md:pl-8 lg:pl-16">
+
+                            <h3 className="manifesto-line font-serif italic text-champagne text-2xl lg:text-3xl font-light mb-6">
+                                Our Philosophy
+                            </h3>
+
+                            <h2 className="manifesto-line font-sans font-black text-white text-4xl md:text-5xl lg:text-6xl uppercase mb-10">
+                                The Art of <br />
+                                <span className="font-serif block text-transparent bg-clip-text bg-linear-to-r from-white via-champagne to-white/50 text-5xl tracking-tighter">Masculine Grooming</span>
+                            </h2>
+
+                            {/* Brand Manifesto Text with Drop Cap */}
+                            <div className="manifesto-content max-w-xl">
+                                <p className="manifesto-line font-sans font-light text-white/70 text-base md:text-lg leading-[1.8] mb-6 tracking-wide">
+                                    <span className="float-left text-6xl font-serif text-champagne pr-3 pb-2 leading-none mt-1">E</span>
+                                    legance has been at the forefront of men's grooming, setting the standard for the style-conscious gentleman in Karachi. Our dedication lies in empowering every individual to look and feel exceptional every day, stepping out with enduring confidence.
+                                </p>
+
+                                <p className="manifesto-line font-sans font-light text-white/50 text-sm md:text-base leading-[1.8] mb-12 tracking-wide pl-4 border-l border-champagne/30">
+                                    We seamlessly merge the heritage of traditional barbering with the sophisticated amenities of a premium, full-service salon concept.
+                                </p>
+                            </div>
+
+                            {/* Lucide Icons Strip */}
+                            <div className="manifesto-line flex gap-8 lg:gap-38 mt-3">
+                                <div className="flex flex-col items-center group">
+                                    <Scissors className="text-champagne mb-3 transition-transform duration-500 ease-luxury group-hover:scale-110" size={40} strokeWidth={1} />
+                                    <span className="font-sans text-white/40 text-[9px] tracking-[0.2em] uppercase font-semibold pl-1">Haircut</span>
+                                </div>
+                                <div className="flex flex-col items-center group">
+                                    <Waves className="text-champagne mb-3 transition-transform duration-500 ease-luxury group-hover:scale-110" size={40} strokeWidth={1} />
+                                    <span className="font-sans text-white/40 text-[10px] tracking-[0.2em] uppercase font-semibold pl-1.5">Shaving</span>
+                                </div>
+                                <div className="flex flex-col items-center group">
+                                    <Sparkles className="text-champagne mb-3 transition-transform duration-500 ease-luxury group-hover:scale-110" size={40} strokeWidth={1} />
+                                    <span className="font-sans text-white/40 text-[10px] tracking-[0.2em] uppercase font-semibold pl-1.5">Facials</span>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </section>

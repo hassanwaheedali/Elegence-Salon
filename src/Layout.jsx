@@ -57,11 +57,11 @@ function Layout() {
         // 2. Guarantee curtain is drawn down perfectly over the new render immediately
         gsap.set(curtainRef.current, { y: '0%' })
 
-        // 3. Smoothly unveil the new screen
-        // setTimeout ensures React has fully painted the DOM before we lift the curtain
+        // 3. Smoothly unveil the new screen (sliding down)
+        // setTimeout ensures React has fully painted the DOM before we drop the curtain
         setTimeout(() => {
             gsap.to(curtainRef.current, {
-                y: '-100%',
+                y: '100%',
                 duration: 1.2,
                 ease: 'cubic-bezier(0.23, 1, 0.32, 1)', // ease-luxury
                 force3D: true
