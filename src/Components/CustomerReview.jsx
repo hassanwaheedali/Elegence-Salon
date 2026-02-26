@@ -1,3 +1,5 @@
+import customerFallback from '../assets/reviews/customer-1.webp'
+
 function CustomerReview({ name, review, image, service }) {
     // Utility to split text into words wrapped in spans for staggering
     const splitTextToSpans = (text) => {
@@ -23,7 +25,7 @@ function CustomerReview({ name, review, image, service }) {
                     alt={`Portrait of ${name}`}
                     className="portrait-image w-full h-full object-contain filter grayscale transition-all duration-700 ease-luxury group-hover:grayscale-0 relative z-0"
                     onError={(e) => {
-                        e.target.src = 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1287&auto=format&fit=crop';
+                        e.target.src = customerFallback;
                     }}
                 />
             </div>

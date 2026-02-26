@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react'
+import serviceHaircutFallback from '../assets/services/service-haircut.webp'
 
 const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
     const handleCardClick = (e) => {
@@ -14,13 +15,13 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
     return (
         <div
             onClick={handleCardClick}
-            className="group relative h-112.5 w-full overflow-hidden rounded-2xl bg-obsidian-elevated shadow-lg transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
+            className="group relative h-112.5 w-full overflow-hidden rounded-2xl bg-obsidian-elevated shadow-lg transition-[transform,box-shadow] duration-500 hover:-translate-y-2 cursor-pointer border border-white/5"
         >
             {/* Background Image with Zoom Effect */}
             <div
                 className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.05] will-change-transform"
                 style={{
-                    backgroundImage: `url(${image || 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop'})`,
+                    backgroundImage: `url(${image || serviceHaircutFallback})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     transformOrigin: 'center'
@@ -38,7 +39,7 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
 
                 {/* Icon Circle - Floating effect */}
                 <div className="flex">
-                    <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-black/40 border border-white/20 text-champagne transition-all duration-500 group-hover:scale-110 group-hover:bg-champagne group-hover:text-white group-hover:border-champagne shadow-lg will-change-transform">
+                    <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-black/40 border border-white/20 text-champagne transition-[transform,background-color,color,border-color] duration-500 group-hover:scale-110 group-hover:bg-champagne group-hover:text-white group-hover:border-champagne shadow-lg will-change-transform">
                         <span className="text-3xl transition-transform duration-300">
                             {icon}
                         </span>
@@ -51,7 +52,7 @@ const ServiceCard = ({ icon, title, description, price, onClick, image }) => {
                         {title}
                     </h3>
 
-                    <div className="mb-4 h-0.5 w-12 bg-champagne transition-all duration-500 group-hover:w-full" />
+                    <div className="mb-4 h-0.5 w-12 bg-champagne transition-[width] duration-500 group-hover:w-full" />
 
                     <p className="mb-6 text-xs md:text-sm text-champagne-muted line-clamp-3 group-hover:text-white transition-colors duration-300 leading-relaxed font-medium">
                         {description}

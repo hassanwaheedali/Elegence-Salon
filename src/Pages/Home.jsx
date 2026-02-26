@@ -20,6 +20,12 @@ import {
 import barberImg from '../assets/barber.webp'
 import Landing from '../assets/Landing.webp'
 import About from '../assets/About.webp'
+import serviceHaircut from '../assets/services/service-haircut.webp'
+import serviceStyling from '../assets/services/service-styling.webp'
+import serviceColoring from '../assets/services/service-coloring.webp'
+import serviceShaving from '../assets/services/service-shaving.webp'
+import serviceTreatment from '../assets/services/service-treatment.webp'
+import serviceGrooming from '../assets/services/service-grooming.webp'
 import ServiceCard from '../Components/ServiceCard.jsx'
 import PriceCard from '../Components/PriceCard.jsx'
 import AppointmentForm from '../Components/AppointmentForm.jsx'
@@ -45,42 +51,42 @@ function Home() {
             title: "Classic Haircut",
             description: "Our stylist can recommend what will work excellent for your hair type and face shape.",
             price: "$30.00",
-            image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop"
+            image: serviceHaircut
         },
         {
             icon: <Feather size={24} strokeWidth={1} />,
             title: "Shaves",
             description: "Special stylists for men who just want their shave done with precision and comfort.",
             price: "$20.00",
-            image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
+            image: serviceStyling
         },
         {
             icon: <Droplets size={24} strokeWidth={1} />,
             title: "Facials & Wash",
             description: "The right hair and skincare treatment with high quality products.",
             price: "$30.00",
-            image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop"
+            image: serviceColoring
         },
         {
             icon: <Sparkles size={24} strokeWidth={1} />,
             title: "Beard Trim",
             description: "Expert beard sculpting and conditioning to keep your facial hair looking sharp.",
             price: "$15.00",
-            image: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2070&auto=format&fit=crop"
+            image: serviceShaving
         },
         {
             icon: <Crown size={24} strokeWidth={1} />,
             title: "Hair Styling",
             description: "Top-rated salon with talented stylists for the best in customer service.",
             price: "$60.00",
-            image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=2074&auto=format&fit=crop"
+            image: serviceTreatment
         },
         {
             icon: <Palette size={24} strokeWidth={1} />,
             title: "Hair Color",
             description: "Want to spice up your look with a new color? Allow us to customize!",
             price: "$60.00",
-            image: "https://images.unsplash.com/photo-1662125502527-bb106378d560?q=80&w=687&auto=format&fit=crop"
+            image: serviceGrooming
         }
     ]
 
@@ -119,24 +125,32 @@ function Home() {
             });
         }
 
-        // Setup GSAP stagger reveal for Service Cards across the whole page scope
-        gsap.utils.toArray('.service-card-marker').forEach((card) => {
-            gsap.fromTo(card,
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power3.out",
-                    force3D: true, // Forces hardware acceleration for smooth GPU panning
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 95%",
-                        toggleActions: "play none none reverse"
-                    }
+        // ──────── SERVICE CARDS — Batched reveal (single ScrollTrigger) ────────
+        const serviceCards = gsap.utils.toArray('.service-card-marker');
+        if (serviceCards.length > 0) {
+            // Pre-set initial state in one pass (no per-card ScrollTrigger)
+            gsap.set(serviceCards, { y: 60, opacity: 0, willChange: 'transform, opacity' });
+
+            ScrollTrigger.batch(serviceCards, {
+                start: 'top 92%',
+                once: true,               // Fire once — no reverse recalculation
+                onEnter: (batch) => {
+                    gsap.to(batch, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.12,     // Progressive per-batch stagger
+                        ease: 'power3.out',
+                        force3D: true,
+                        overwrite: 'auto',
+                        onComplete: function () {
+                            // Remove will-change after animation to free GPU layers
+                            batch.forEach(el => el.style.willChange = 'auto');
+                        }
+                    });
                 }
-            )
-        })
+            });
+        }
 
         // ──────── ABOUT SECTION ANIMATIONS ────────
         if (aboutRef.current) {
@@ -550,32 +564,32 @@ function Home() {
 
                     <div className="flex flex-col gap-8 lg:gap-6">
                         {/* Row 1: Full-width feature card */}
-                        <div className="w-full service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                        <div className="w-full service-card-marker">
                             <ServiceCard {...servicesData[0]} index={0} variant="featured" />
                         </div>
 
                         {/* Row 2: Two cards, offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div className="w-full lg:w-[55%] service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                            <div className="w-full lg:w-[55%] service-card-marker">
                                 <ServiceCard {...servicesData[1]} index={1} />
                             </div>
-                            <div className="w-full lg:w-[45%] lg:mt-12 service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                            <div className="w-full lg:w-[45%] lg:mt-12 service-card-marker">
                                 <ServiceCard {...servicesData[2]} index={2} />
                             </div>
                         </div>
 
                         {/* Row 3: Two cards, reverse offset */}
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-6">
-                            <div className="w-full lg:w-[45%] lg:mt-8 service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                            <div className="w-full lg:w-[45%] lg:mt-8 service-card-marker">
                                 <ServiceCard {...servicesData[3]} index={3} />
                             </div>
-                            <div className="w-full lg:w-[55%] service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                            <div className="w-full lg:w-[55%] service-card-marker">
                                 <ServiceCard {...servicesData[4]} index={4} />
                             </div>
                         </div>
 
                         {/* Row 4: Full-width feature card */}
-                        <div className="w-full service-card-marker will-change-transform" style={{ transform: 'translateZ(0)' }}>
+                        <div className="w-full service-card-marker">
                             <ServiceCard {...servicesData[5]} index={5} variant="featured" />
                         </div>
                     </div>

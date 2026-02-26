@@ -1,3 +1,8 @@
+import serviceHaircut from '../assets/services/service-haircut.webp'
+import serviceStyling from '../assets/services/service-styling.webp'
+import serviceColoring from '../assets/services/service-coloring.webp'
+import serviceTreatment from '../assets/services/service-treatment.webp'
+
 export const services = [
     {
         title: "Hair Services",
@@ -9,7 +14,7 @@ export const services = [
             { name: "Mustache Trim", price: "$10" },
             { name: "Wash & Blowout", price: "$40" }
         ],
-        image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop"
+        image: serviceHaircut
     },
     {
         title: "Skin",
@@ -21,7 +26,7 @@ export const services = [
             { name: "Face Steam", price: "$10" },
             { name: "Full Body Massage", price: "$40" }
         ],
-        image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
+        image: serviceStyling
     },
     {
         title: "Wax & Threading",
@@ -33,7 +38,7 @@ export const services = [
             { name: "Arm Wax", price: "$30" },
             { name: "Leg Wax", price: "$45" }
         ],
-        image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop"
+        image: serviceColoring
     },
     {
         title: "Hair Styling",
@@ -45,6 +50,6 @@ export const services = [
             { name: "Hair Straightening", price: "$80" },
             { name: "Special Event Styling", price: "$60" }
         ],
-        image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=2074&auto=format&fit=crop"
+        image: serviceTreatment
     }
 ]

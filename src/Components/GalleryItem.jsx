@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import galleryFallback from '../assets/gallery/gallery-fallback.webp';
 
 function GalleryItem({ img, title, barber, category }) {
     const itemRef = useRef(null);
@@ -68,7 +69,7 @@ function GalleryItem({ img, title, barber, category }) {
     return (
         <div
             ref={itemRef}
-            className="gallery-reveal-item relative overflow-hidden group w-full h-full aspect-4/5 cursor-pointer"
+            className="gallery-reveal-item relative overflow-hidden group w-full h-full aspect-5/5 cursor-pointer"
             style={{ willChange: "clip-path, transform" }} // GPU Hint for upcoming ScrollTrigger
         >
             {/* SVG Filter Definition for Liquid Refraction */}
@@ -89,7 +90,7 @@ function GalleryItem({ img, title, barber, category }) {
                 className="w-full h-full object-cover origin-center"
                 style={{ filter: `url(#${filterId})` }}
                 onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=1287&auto=format&fit=crop';
+                    e.target.src = galleryFallback;
                 }}
             />
 
