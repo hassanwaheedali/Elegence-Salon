@@ -37,6 +37,8 @@ import BrandCarousel from '../Components/BrandCarousel.jsx'
 import Header from '../Components/Header.jsx'
 import HeroCanvas from '../Components/HeroCanvas.jsx'
 import { useMagnetic } from '../hooks/useMagnetic.jsx'
+import { Link } from 'react-router-dom'
+import { useStaff } from '../Context/StaffContext.jsx'
 
 function Home() {
     const heroRef = useRef(null)
@@ -44,6 +46,10 @@ function Home() {
 
     // Initialize Magnetic interaction engine
     useMagnetic();
+
+    // Load Artisans data
+    const { staff } = useStaff()
+    const featuredArtisans = staff.slice(0, 4)
 
     const servicesData = [
         {
@@ -149,6 +155,48 @@ function Home() {
                         }
                     });
                 }
+            });
+        }
+
+        // ──────── MASTERS OF THE RITUAL (ARTISANS) ────────
+        const artisanCards = gsap.utils.toArray('.artisan-card-marker');
+        if (artisanCards.length > 0) {
+            gsap.set(artisanCards, { y: 60, opacity: 0 });
+
+            ScrollTrigger.batch(artisanCards, {
+                start: 'top 85%',
+                once: true,
+                onEnter: (batch) => {
+                    gsap.to(batch, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        stagger: 0.2, // requested 0.2s stagger
+                        ease: 'luxury',
+                        force3D: true,
+                        overwrite: 'auto'
+                    });
+                }
+            });
+
+            // Touch-device disabled hover animations
+            let mm = gsap.matchMedia();
+            mm.add("(hover: hover)", () => {
+                artisanCards.forEach(card => {
+                    const svg = card.querySelector('.artisan-tool-svg');
+                    const img = card.querySelector('.artisan-portrait');
+
+                    if (svg && img) {
+                        card.addEventListener('mouseenter', () => {
+                            gsap.to(svg, { scale: 1.2, opacity: 0.2, duration: 0.6, ease: 'luxury' });
+                            gsap.to(img, { filter: 'grayscale(0%)', duration: 0.6, ease: 'luxury' });
+                        });
+                        card.addEventListener('mouseleave', () => {
+                            gsap.to(svg, { scale: 0.8, opacity: 0, duration: 0.6, ease: 'luxury' });
+                            gsap.to(img, { filter: 'grayscale(100%)', duration: 0.6, ease: 'luxury' });
+                        });
+                    }
+                });
             });
         }
 
@@ -673,15 +721,76 @@ function Home() {
                 </div>
             </section>
 
+            {/* ═══════════════════════ MASTERS OF THE RITUAL ═══════════════════════ */}
+            <section
+                id="artisans"
+                className="bg-obsidian-card text-white pt-20 md:pt-36 pb-18 md:pb-22 overflow-hidden relative"
+            >
+                <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-11/12">
+                    <div className="text-center mb-20">
+                        <span className="font-sans text-champagne/70 tracking-[0.5em] text-[10px] sm:text-xs uppercase mb-3 block">Masters of the Ritual</span>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none font-sans">
+                            Meet Our <span className='font-serif text-champagne normal-case tracking-wide'>Artisans</span>
+                        </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                        {featuredArtisans.map((member) => {
+                            // Determine tool icon based on role
+                            let ToolIcon = Scissors;
+                            const roleLower = (member.role || "").toLowerCase();
+                            if (roleLower.includes('color')) ToolIcon = Palette;
+                            else if (roleLower.includes('barber') || roleLower.includes('shave')) ToolIcon = Feather;
+                            else if (roleLower.includes('makeup') || roleLower.includes('facial')) ToolIcon = Droplets;
+
+                            return (
+                                <Link
+                                    to={`/artisan/${member.id}`}
+                                    key={member.id}
+                                    className="artisan-card-marker group relative block bg-obsidian rounded-md overflow-hidden"
+                                >
+                                    <div className="relative aspect-3/4 w-full overflow-hidden bg-[#111]">
+                                        {/* Background Tool SVG */}
+                                        <div className="artisan-tool-svg absolute inset-0 flex items-center justify-center p-8 text-champagne opacity-0 scale-80 pointer-events-none z-0">
+                                            <ToolIcon className="w-full h-full opacity-50" strokeWidth={1} />
+                                        </div>
+
+                                        {/* Image */}
+                                        <img
+                                            src={barberImg}
+                                            alt={member.name}
+                                            className="artisan-portrait absolute inset-0 w-full h-full object-cover z-10 filter grayscale pointer-events-none"
+                                        />
+
+                                        {/* Gradient Overlay for Text */}
+                                        <div className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/40 to-transparent z-20 pointer-events-none"></div>
+
+                                        {/* Text Info */}
+                                        <div className="absolute flex flex-col items-center justify-end bottom-0 left-0 right-0 p-6 z-30 pointer-events-none">
+                                            <h3 className="font-sans font-black text-2xl uppercase tracking-wider text-white mb-1 group-hover:text-champagne transition-colors duration-500 ease-luxury text-center">
+                                                {member.name}
+                                            </h3>
+                                            <p className="font-serif text-champagne text-sm lg:text-base italic tracking-wide text-center">
+                                                {member.role || "Master Artisan"}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
             {/* ═══════════════════════ GALLERY (PHASE 4.2 INTERACTIVE) ═══════════════════════ */}
             <section className="sample-images bg-obsidian-card overflow-hidden">
-                <div className="mx-auto px-4 sm:px-6 md:px-16 pt-0 md:pt-20 pb-20 md:pb-24">
+                <div className="mx-auto px-4 sm:px-6 md:px-16 pb-20 md:pb-24">
                     <div className="heading w-full text-center mb-14 mt-12">
                         <h1 className='text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase font-serif tracking-tight'>The <span className='font-sans font-black text-champagne normal-case tracking-normal'>Gallery</span></h1>
                         <hr className='max-w-25 sm:max-w-37.5 mx-auto border-champagne/30 border mt-6 md:mt-8 mb-10' />
                     </div>
                     {/* Responsive Grid: 3 cols mobile, 6 cols desktop */}
-                    <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-6 mt-6">
+                    <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-4 mt-6">
                         {sampleImages.map((sample) => (
                             <GalleryItem
                                 key={sample.id}

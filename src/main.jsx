@@ -12,6 +12,7 @@ import { StaffProvider } from './Context/StaffContext.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 const Home = lazy(() => import('./Pages/Home'));
+const ArtisanProfile = lazy(() => import('./Pages/ArtisanProfile'));
 const Contact = lazy(() => import('./Pages/Contact'));
 const Login = lazy(() => import('./Pages/Login'));
 const Register = lazy(() => import('./Pages/Register'));
@@ -34,6 +35,11 @@ const Router = createBrowserRouter(
         <Route path='' element={
           <Suspense fallback={<LoadingSpinner />}>
             <Home />
+          </Suspense>
+        } />
+        <Route path='/artisan/:id' element={
+          <Suspense fallback={<LoadingSpinner />}>
+            <ArtisanProfile />
           </Suspense>
         } />
         <Route path='/contact' element={

@@ -69,7 +69,7 @@ function GalleryItem({ img, title, barber, category }) {
     return (
         <div
             ref={itemRef}
-            className="gallery-reveal-item relative overflow-hidden group w-full h-full aspect-5/5 cursor-pointer"
+            className="gallery-reveal-item relative overflow-hidden group w-full h-full aspect-square cursor-pointer"
             style={{ willChange: "clip-path, transform" }} // GPU Hint for upcoming ScrollTrigger
         >
             {/* SVG Filter Definition for Liquid Refraction */}

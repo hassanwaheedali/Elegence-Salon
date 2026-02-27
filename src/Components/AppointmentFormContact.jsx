@@ -107,27 +107,27 @@ function AppointmentFormContact() {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
     return (
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-4 mt-1">
             <div>
                 <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="name">Full Name *</label>
-                <input type="text" placeholder="Hassan Waheed Ali" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-bold border-4  rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
+                <input type="text" placeholder="Hassan Waheed Ali" id='name' value={name} onChange={(e) => setName(e.target.value)} className="w-full font-bold border-3  rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
             </div>
             <div>
                 <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="email">Email Address *</label>
-                <input type="email" placeholder="hassanwaheedalis@gmail.com" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
+                <input type="email" placeholder="hassanwaheedalis@gmail.com" id='email' value={email} onChange={(e) => setEmail(e.target.value)} className="w-full font-bold border-3 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
             </div>
             <div>
                 <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="phone">Phone Number *</label>
-                <input type="tel" placeholder="0336-3090793" id='phone' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
+                <input type="tel" placeholder="0336-3090793" id='phone' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full font-bold border-3 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-champagne-muted tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
             </div>
             <div className="date-time-section flex flex-col sm:flex-row gap-3 md:gap-5">
                 <div className="flex-1">
                     <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="date">Date *</label>
-                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
+                    <input type="date" placeholder="DATE" id='date' value={date} onChange={(e) => setDate(e.target.value)} className="w-full font-bold border-3 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
                 </div>
                 <div className="flex-1">
                     <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="time">Time *</label>
-                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-bold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
+                    <input type="time" placeholder="TIME" id='time' value={time} onChange={(e) => setTime(e.target.value)} className="w-full font-bold border-3 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#77777786] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5" required />
                 </div>
             </div>
             <div className="service-select w-full relative" ref={dropdownRef}>
@@ -138,7 +138,7 @@ function AppointmentFormContact() {
                     <button
                         type="button"
                         onClick={() => setIsOpen(!isOpen)}
-                        className={`w-full font-bold border-4 rounded-md p-2 px-3 md:px-4 py-2 md:py-3 text-sm tracking-tight bg-obsidian text-left flex justify-between items-center transition-colors ${isOpen ? 'border-champagne text-champagne' : 'border-[#454545] text-[#77777786] hover:border-champagne'
+                        className={`w-full font-bold border-3 rounded-md p-2 px-3 md:px-4 py-2 md:py-3 text-sm tracking-tight bg-obsidian text-left flex justify-between items-center transition-colors ${isOpen ? 'border-champagne text-champagne' : 'border-[#454545] text-[#77777786] hover:border-champagne'
                             }`}
                     >
                         <span>
@@ -216,10 +216,10 @@ function AppointmentFormContact() {
             </div>
             <div className="message-area">
                 <label className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm text-champagne-muted ml-0.5" htmlFor="message">Message</label>
-                <textarea placeholder="Please Write Your Message" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-semibold border-4 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#b5b3b3] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5 h-24" rows={1} />
+                <textarea placeholder="Please Write Your Message" id='message' value={message} onChange={(e) => setMessage(e.target.value)} className="w-full font-semibold border-3 rounded-md border-[#454545] px-2 md:px-3 py-2 md:py-3 text-sm text-[#b5b3b3] tracking-tight bg-obsidian hover:border-champagne transition-colors focus:outline-none focus:border-champagne mt-1.5 h-24" rows={1} />
             </div>
-            <div>
-                <button type="submit" className="w-full bg-obsidian hover:bg-yellow-600 text-white border-5 border-[#454545] hover:border-white font-extrabold py-4 rounded-md text-sm md:text-base transition-colors cursor-pointer focus:outline-none mt-2 resize-none ">Book An Appointment</button>
+            <div className='pt-3'>
+                <button type="submit" className="w-full border-2 border-champagne/50 hover:border-champagne text-champagne font-black p-3 px-6 hover:bg-champagne hover:text-white transition-all duration-300 cursor-pointer uppercase tracking-widest">Book An Appointment</button>
             </div>
         </form >
     )
