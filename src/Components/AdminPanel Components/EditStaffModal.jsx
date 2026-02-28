@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock, BriefcaseBusiness, Star } from 'lucide-react';
+import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock, BriefcaseBusiness, Star, ImagePlus } from 'lucide-react';
 import { useStaff } from '../../Context/StaffContext';
 
 const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
@@ -26,6 +26,8 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [avatarPreview, setAvatarPreview] = useState(null);
+    const fileInputRef = useRef(null);
 
     // Populate form with passed prop data on mount/change
     useEffect(() => {
@@ -66,7 +68,35 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
             schedule: schedule
         });
 
+        // Pre-populate avatar preview from existing staff data
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setAvatarPreview(staffToEdit.avatar || null);
+
     }, [staffToEdit, onClose]);
+
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validate WebP format
+        if (file.type !== 'image/webp') {
+            setError('Only WebP format images are supported. Please select a .webp file.');
+            e.target.value = '';
+            return;
+        }
+
+        setError('');
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setAvatarPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleRemoveAvatar = () => {
+        setAvatarPreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -118,7 +148,8 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
             experience: formData.experience,
             rating: parseFloat(formData.rating),
             commission: parseFloat(formData.commission),
-            schedule: updatedSchedule
+            schedule: updatedSchedule,
+            avatar: avatarPreview || null
         };
 
         // Call update staff function
@@ -166,6 +197,46 @@ const EditStaffModal = ({ onClose, onStaffUpdated, staffToEdit }) => {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Profile Picture Upload */}
+                        <div className="space-y-1.5">
+                            <label className="text-gray-400 text-xs font-bold uppercase ml-1">Profile Picture (Optional)</label>
+                            <div className="flex items-center gap-4">
+                                <div className="relative w-16 h-16 rounded-full overflow-hidden bg-obsidian-elevated border-2 border-dashed border-[#333] flex items-center justify-center shrink-0 group">
+                                    {avatarPreview ? (
+                                        <img src={avatarPreview} alt="Avatar preview" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <ImagePlus size={20} className="text-[#555]" />
+                                    )}
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                    <button
+                                        type="button"
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="text-xs font-bold text-champagne hover:text-champagne-dark transition-colors cursor-pointer"
+                                    >
+                                        {avatarPreview ? 'Change Photo' : 'Upload Photo'}
+                                    </button>
+                                    {avatarPreview && (
+                                        <button
+                                            type="button"
+                                            onClick={handleRemoveAvatar}
+                                            className="text-xs font-bold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
+                                        >
+                                            Remove
+                                        </button>
+                                    )}
+                                    <p className="text-[#555] text-[10px]">WebP format only (.webp)</p>
+                                </div>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept=".webp,image/webp"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                />
+                            </div>
+                        </div>
+
                         {/* Basic Info */}
                         <div className="space-y-4">
                             <h3 className="text-xs font-bold text-champagne uppercase tracking-wider mb-2">Personal Details</h3>

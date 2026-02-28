@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock, Lock } from 'lucide-react';
+import { X, Save, User, Mail, Phone, Briefcase, Scissors, Clock, Lock, ImagePlus } from 'lucide-react';
 import { useStaff } from '../../Context/StaffContext';
 
 const AddStaffModal = ({ onClose, onStaffAdded }) => {
@@ -35,6 +35,32 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
     });
 
     const [error, setError] = useState('');
+    const [avatarPreview, setAvatarPreview] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validate WebP format
+        if (file.type !== 'image/webp') {
+            setError('Only WebP format images are supported. Please select a .webp file.');
+            e.target.value = '';
+            return;
+        }
+
+        setError('');
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setAvatarPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleRemoveAvatar = () => {
+        setAvatarPreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -84,7 +110,8 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
             rating: formData.rating,
             commission: formData.commission,
             schedule: updatedSchedule,
-            specialties: formData.specialties.split(',').map(s => s.trim()).filter(s => s)
+            specialties: formData.specialties.split(',').map(s => s.trim()).filter(s => s),
+            avatar: avatarPreview || null
         };
 
         const result = await addNewStaff(newStaffMember);
@@ -125,6 +152,46 @@ const AddStaffModal = ({ onClose, onStaffAdded }) => {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Profile Picture Upload */}
+                        <div className="space-y-1.5">
+                            <label className="text-gray-400 text-xs font-bold uppercase ml-1">Profile Picture (Optional)</label>
+                            <div className="flex items-center gap-4">
+                                <div className="relative w-16 h-16 rounded-full overflow-hidden bg-obsidian-elevated border-2 border-dashed border-[#333] flex items-center justify-center shrink-0 group">
+                                    {avatarPreview ? (
+                                        <img src={avatarPreview} alt="Avatar preview" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <ImagePlus size={20} className="text-[#555]" />
+                                    )}
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                    <button
+                                        type="button"
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="text-xs font-bold text-champagne hover:text-champagne-dark transition-colors cursor-pointer"
+                                    >
+                                        {avatarPreview ? 'Change Photo' : 'Upload Photo'}
+                                    </button>
+                                    {avatarPreview && (
+                                        <button
+                                            type="button"
+                                            onClick={handleRemoveAvatar}
+                                            className="text-xs font-bold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
+                                        >
+                                            Remove
+                                        </button>
+                                    )}
+                                    <p className="text-[#555] text-[10px]">WebP format only (.webp)</p>
+                                </div>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept=".webp,image/webp"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                />
+                            </div>
+                        </div>
+
                         {/* Name and Role Row */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-1.5">

@@ -270,6 +270,7 @@ function Dashboard() {
                                     time={staffMember.time}
                                     commission={`${(staffMember.commission * 100)}%`}
                                     online={staffMember.online}
+                                    avatar={staffMember.avatar}
                                 />
                             ))
                         ) : (

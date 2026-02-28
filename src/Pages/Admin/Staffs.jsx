@@ -175,8 +175,12 @@ const Staffs = () => {
                                         <tr key={member.id} className="hover:bg-white/2 transition-colors group">
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#27272a] to-[#18181b] flex items-center justify-center text-white font-bold text-sm shadow-inner ring-1 ring-white/10 group-hover:ring-champagne/50 transition-all">
-                                                        {member.name.charAt(0)}
+                                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#27272a] to-[#18181b] flex items-center justify-center text-white font-bold text-sm shadow-inner ring-1 ring-white/10 group-hover:ring-champagne/50 transition-all overflow-hidden">
+                                                        {member.avatar ? (
+                                                            <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            member.name.charAt(0)
+                                                        )}
                                                     </div>
                                                     <div>
                                                         <div className="font-bold text-white text-sm">{member.name}</div>
@@ -240,8 +244,12 @@ const Staffs = () => {
                                 <div key={member.id} className="bg-obsidian-elevated border border-white/5 rounded-xl p-3 sm:p-4 space-y-3 sm:space-y-4">
                                     <div className="flex justify-between items-start">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-[#27272a] flex items-center justify-center text-white font-bold text-sm ring-1 ring-white/10">
-                                                {member.name.charAt(0)}
+                                            <div className="w-10 h-10 rounded-full bg-[#27272a] flex items-center justify-center text-white font-bold text-sm ring-1 ring-white/10 overflow-hidden">
+                                                {member.avatar ? (
+                                                    <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    member.name.charAt(0)
+                                                )}
                                             </div>
                                             <div>
                                                 <h3 className="font-bold text-white text-sm">{member.name}</h3>

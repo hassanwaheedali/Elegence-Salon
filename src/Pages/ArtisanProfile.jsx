@@ -154,9 +154,9 @@ function ArtisanProfile() {
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <div className="hero-reveal group relative aspect-3/4 max-w-md mx-auto lg:mx-0 w-full rounded-md overflow-hidden bg-obsidian-card shadow-lg transition-all duration-700">
-                            <img src={barberImg} alt={artisan.name} className="w-full h-full object-cover grayscale opacity-90 transition-all duration-700 ease-luxury group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100" />
+                            <img src={artisan.avatar || barberImg} alt={artisan.name} className="w-full h-full object-cover grayscale opacity-90 transition-all duration-700 ease-luxury group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100" />
                             <div className="absolute inset-0 bg-linear-to-t from-[rgba(15,15,15,0.9)] via-[rgba(15,15,15,0.2)] to-transparent pointer-events-none"></div>
-                            <div className="absolute bottom-6 left-6 right-6 transition-transform duration-700 ease-luxury group-hover:translate-y-[-8px]">
+                            <div className="absolute bottom-6 left-6 right-6 transition-transform duration-700 ease-luxury group-hover:-translate-y-2">
                                 <div className="backdrop-blur-md bg-obsidian/40 border border-champagne/20 p-4 rounded-sm shadow-xl group-hover:border-champagne/40 transition-colors duration-700">
                                     <p className="font-sans text-champagne text-[10px] md:text-xs uppercase tracking-[0.3em] font-bold mb-1">Experience</p>
                                     <p className="font-serif text-2xl lg:text-3xl text-white">{artisan.experience || "7 Years"} of Mastery</p>
@@ -171,7 +171,7 @@ function ArtisanProfile() {
                             </h2>
                             <h1 className="hero-reveal text-5xl sm:text-7xl lg:text-8xl font-black text-white uppercase tracking-tight leading-[0.9] font-sans mb-8">
                                 {artisan.name.split(' ')[0]} <br />
-                                <span className="font-serif text-champagne normal-case tracking-wide uppercase">
+                                <span className="font-serif text-champagne normal-case tracking-wide">
                                     {artisan.name.split(' ').slice(1).join(' ')}
                                 </span>
                             </h1>
@@ -202,7 +202,7 @@ function ArtisanProfile() {
 
                             return (
                                 <div key={i} data-magnetic className="magnetic-badge group inline-block">
-                                    <div className="backdrop-blur-md bg-obsidian border border-champagne/20 px-8 py-8 sm:px-12 sm:py-10 rounded-xl transition-all duration-500 ease-luxury group-hover:bg-champagne group-hover:border-champagne group-hover:shadow-[0_0_30px_rgba(255,138,0,0.2)] flex flex-col items-center justify-center gap-4 min-w-sm sm:min-w-[180px]">
+                                    <div className="backdrop-blur-md bg-obsidian border border-champagne/20 px-8 py-8 sm:px-12 sm:py-10 rounded-xl transition-all duration-500 ease-luxury group-hover:bg-champagne group-hover:border-champagne group-hover:shadow-[0_0_30px_rgba(255,138,0,0.2)] flex flex-col items-center justify-center gap-4 min-w-sm sm:min-w-45">
                                         <Icon className="w-10 h-10 text-champagne group-hover:text-obsidian transition-colors duration-500" strokeWidth={1} />
                                         <span data-magnetic-text className="font-sans font-bold text-xs sm:text-sm text-champagne uppercase tracking-[0.2em] group-hover:text-obsidian transition-colors duration-500 block text-center">
                                             {spec}

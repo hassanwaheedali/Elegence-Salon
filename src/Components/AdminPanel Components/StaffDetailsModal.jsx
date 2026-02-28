@@ -48,8 +48,12 @@ const StaffDetailsModal = ({ staff, onClose }) => {
                 {/* Cover / Profile Header */}
                 <div className="h-32 bg-linear-to-r from-champagne to-champagne-dark relative">
                     <div className="absolute -bottom-12 left-6">
-                        <div className="w-24 h-24 rounded-full border-4 border-[#121212] bg-obsidian-elevated flex items-center justify-center text-white text-3xl font-black shadow-xl">
-                            {staff.name.charAt(0)}
+                        <div className="w-24 h-24 rounded-full border-4 border-[#121212] bg-obsidian-elevated flex items-center justify-center text-white text-3xl font-black shadow-xl overflow-hidden">
+                            {staff.avatar ? (
+                                <img src={staff.avatar} alt={staff.name} className="w-full h-full object-cover" />
+                            ) : (
+                                staff.name.charAt(0)
+                            )}
                         </div>
                     </div>
                 </div>

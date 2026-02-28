@@ -757,7 +757,7 @@ function Home() {
 
                                         {/* Image */}
                                         <img
-                                            src={barberImg}
+                                            src={member.avatar || barberImg}
                                             alt={member.name}
                                             className="artisan-portrait absolute inset-0 w-full h-full object-cover z-10 filter grayscale pointer-events-none"
                                         />

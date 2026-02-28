@@ -1,5 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState, createContext, useContext, useEffect } from "react"
+import defaultAvatarImg from "../assets/BARBER.webp"
+import defaultAvatarImg2 from "../assets/accountbarber.webp"
+import MikeRoss from "../assets/MikeRoss.webp"
+import OsmanAhmed from "../assets/osmanAhmed.webp"
 
 const STORAGE_KEY = "EleganceStaff"
 
@@ -16,6 +20,7 @@ const defaultStaff = [
         rating: 4.8,
         experience: "5 years",
         commission: 0.4,
+        avatar: defaultAvatarImg,
         schedule: {
             monday: { start: "09:00", end: "17:00" },
             tuesday: { start: "09:00", end: "15:00" },
@@ -39,6 +44,7 @@ const defaultStaff = [
         rating: 4.9,
         experience: "7 years",
         commission: 0.45,
+        avatar: defaultAvatarImg2,
         schedule: {
             monday: { start: "10:00", end: "18:00" },
             tuesday: { start: "10:00", end: "18:00" },
@@ -55,13 +61,14 @@ const defaultStaff = [
         name: "Mike Ross",
         email: "mike@elegancesalon.com",
         phone: "+1234567892",
-        role: "Junior Barber",
+        role: "Senior Barber",
         accountRole: "staff",
         password: "staff123",
         specialties: ["Haircut", "Beard Trim", "Shaving"],
         rating: 4.6,
         experience: "2 years",
         commission: 0.3,
+        avatar: MikeRoss,
         schedule: {
             monday: { start: "11:00", end: "19:00" },
             tuesday: { start: "11:00", end: "19:00" },
@@ -75,8 +82,8 @@ const defaultStaff = [
     },
     {
         id: 4,
-        name: "Sarah Lee",
-        email: "sarah@elegancesalon.com",
+        name: "Osman Ahmed",
+        email: "osman@elegancesalon.com",
         phone: "+1234567893",
         role: "Makeup Artist",
         accountRole: "staff",
@@ -85,6 +92,7 @@ const defaultStaff = [
         rating: 4.7,
         experience: "4 years",
         commission: 0.35,
+        avatar: OsmanAhmed,
         schedule: {
             monday: { start: "09:00", end: "14:00" },
             tuesday: { start: "09:00", end: "14:00" },
