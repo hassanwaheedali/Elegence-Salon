@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useStaff } from '../Context/StaffContext.jsx';
 import { customerReviews } from '../data/reviews.js';
 import Header from '../Components/Header.jsx';
-import barberImg from '../assets/barber.webp';
+import barberImg from '../assets/BARBER.webp';
 import { useMagnetic } from '../hooks/useMagnetic.jsx';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';

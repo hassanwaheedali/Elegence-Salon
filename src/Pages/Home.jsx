@@ -17,7 +17,7 @@ import {
     Waves
 } from 'lucide-react'
 
-import barberImg from '../assets/barber.webp'
+import barberImg from '../assets/BARBER.webp'
 import Landing from '../assets/Landing.webp'
 import About from '../assets/About.webp'
 import serviceHaircut from '../assets/services/service-haircut.webp'
