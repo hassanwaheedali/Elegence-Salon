@@ -239,7 +239,7 @@ Elegance/
 
 ```bash
 # 1. Clone the repository
-git clone <repository-url>
+git clone https://github.com/hassanwaheedali/EleganceSalon
 cd "Elegence React Version"
 
 # 2. Navigate to the project directory
@@ -370,6 +370,6 @@ To change the default admin password or seed staff, edit the respective context 
 
 ## License
 
-This project is open source and available as a portfolio demonstration. You are free to use this code for learning purposes, portfolio inspiration, or as a starting point for your own projects. Please provide attribution if you use significant portions of this codebase.
+This project is open source and available as a portfolio demonstration. Please provide attribution if you use significant portions of this codebase.
 
 **MIT License** — See LICENSE file for details _(or feel free to adapt as needed)_.
